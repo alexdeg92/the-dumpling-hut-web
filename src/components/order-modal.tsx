@@ -190,14 +190,6 @@ function PlatformIcon({ platform }: { platform: DeliveryKey }) {
       </svg>
     );
   }
-  if (platform === "skipthedishes") {
-    // plate + cutlery
-    return (
-      <svg viewBox="0 0 24 24" className="size-6" fill="currentColor" aria-hidden="true">
-        <path d="M6 3c.6 0 1 .4 1 1v4a2 2 0 0 1-1 1.7V20a1 1 0 1 1-2 0V9.7A2 2 0 0 1 3 8V4a1 1 0 1 1 2 0v4h.5V4c0-.6.4-1 .5-1Zm12 0a1 1 0 0 1 1 1v16a1 1 0 1 1-2 0v-6h-1a1 1 0 0 1-1-1V8a5 5 0 0 1 3-5Z" />
-      </svg>
-    );
-  }
   // doordash — chevron "dash" mark
   return (
     <svg viewBox="0 0 24 24" className="size-6" fill="currentColor" aria-hidden="true">

@@ -53,7 +53,7 @@ export const instagramPostHref = (shortcode: string) =>
 /*  Delivery / online ordering platforms                               */
 /* ------------------------------------------------------------------ */
 
-export type DeliveryKey = "doordash" | "ubereats" | "skipthedishes";
+export type DeliveryKey = "doordash" | "ubereats";
 
 export type DeliveryPlatform = {
   key: DeliveryKey;
@@ -87,17 +87,6 @@ export const deliveryPlatforms: DeliveryPlatform[] = [
       zh: "送货上门",
     },
     color: "#06c167",
-  },
-  {
-    key: "skipthedishes",
-    name: "Skip the Dishes",
-    href: "https://www.skipthedishes.com/fr/the-dumpling-hut-3591-rue-clark?serviceType=delivery&utm_source=google&utm_medium=organic&utm_campaign=foodorder",
-    tagline: {
-      en: "Delivery across Montreal",
-      fr: "Livraison partout à Montréal",
-      zh: "蒙特利尔全城外送",
-    },
-    color: "#ff6900",
   },
 ];
 
