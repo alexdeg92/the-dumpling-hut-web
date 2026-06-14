@@ -13,9 +13,11 @@ hand-built SVG art, animated steam, and motion throughout.
   / veg / sides), dietary + signature filter chips, live sorting (featured,
   price, spice), animated result count, and a per-dish detail modal. All
   client-side via `useMemo` over a single tagged data source.
-- **Social feed** — Instagram-style generated grid with hover captions linking
-  to `@thedumplinghut`, plus TikTok CTA. (Drop in live oEmbed when an API
-  token is available.)
+- **Social feed** — real photos pulled from the public `@thedumplinghut`
+  Instagram feed (square-cropped + optimized into `/public/feed`), each tile
+  linking back to its original post for attribution, with hover captions and a
+  TikTok CTA. Captions are trilingual; the shared image list lives in
+  `content.ts` as `feedImages`.
 - **Custom art & animation** — hand-built SVG dumplings, bamboo steamer,
   lanterns, chili sprig, gold seal; CSS-keyframe steam, lantern glow, floats,
   marquee; IntersectionObserver scroll reveals (one observer per section).

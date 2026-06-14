@@ -27,6 +27,28 @@ export const restaurant = {
     "https://www.google.com/maps?q=3591+Rue+Clark,+Montr%C3%A9al,+QC+H2X+2R9&output=embed",
 } as const;
 
+/**
+ * Real posts pulled from the public @thedumplinghut Instagram feed.
+ * Images are downloaded, square-cropped and web-optimized into /public/feed.
+ * `shortcode` links each tile back to the original post on Instagram so the
+ * account keeps full attribution. Captions live per-language in `feed.posts`,
+ * zipped against this list by index. Keep both arrays the same length.
+ */
+export const feedImages: Array<{ src: string; shortcode: string }> = [
+  { src: "/feed/01-chili-oil-dumplings.jpg", shortcode: "CO6Mxk9DRqR" },
+  { src: "/feed/02-steamed-plate.jpg", shortcode: "CMaZ33DjG18" },
+  { src: "/feed/03-pan-fried-window.jpg", shortcode: "CQjaYzlDwxW" },
+  { src: "/feed/04-chicken-coriander-combo.jpg", shortcode: "CMp0YqHDult" },
+  { src: "/feed/05-dumplings-chili-chopsticks.jpg", shortcode: "CMcpem2jbhe" },
+  { src: "/feed/06-hand-rolled-wrappers.jpg", shortcode: "CMpdDM1DKOq" },
+  { src: "/feed/07-folding-the-filling.jpg", shortcode: "CNBMjLrhTpt" },
+  { src: "/feed/08-fresh-dumpling-plate.jpg", shortcode: "CMcswb5DWTI" },
+  { src: "/feed/09-cold-dessert.jpg", shortcode: "DZa3HrTlb5J" },
+];
+
+export const instagramPostHref = (shortcode: string) =>
+  `https://www.instagram.com/p/${shortcode}/`;
+
 export type NavKey = "menu" | "story" | "visit" | "feed";
 
 export const navItems: Array<{ key: NavKey; href: string }> = [
@@ -597,12 +619,15 @@ export const copy = {
       follow: "Follow on Instagram",
       followTk: "We're on TikTok too",
       posts: [
-        ["Fresh off the pan", "Golden pork & chive, the way Friday should look."],
-        ["Pleat by pleat", "Every wrapper rolled and folded by hand, all day."],
-        ["Chili oil season", "A fresh batch of the house oil, slow-toasted today."],
-        ["The lamb order", "Cumin-warm lamb & coriander, our boldest fold."],
-        ["Open kitchen", "Come watch the steam. The little room fills up fast."],
-        ["Veg plate", "Cabbage, mushroom, tofu — fully vegan, fully loaded."],
+        ["Chili oil season", "A fresh batch of the house oil, spooned over hot dumplings."],
+        ["Straight off the steam", "A full plate of hand-folded dumplings, the way Friday should look."],
+        ["By the window", "Pan-fried, crisp bottoms, caught in the afternoon light."],
+        ["Chicken & coriander combo", "Chicken-coriander and the egg-carrot fold, plated together."],
+        ["Dip and go", "Steamed dumplings, chili oil, an egg, and the red chopsticks."],
+        ["Rolled by hand", "Every wrapper rolled out one at a time, all day long."],
+        ["Folding the filling", "Hands-deep in the prep — this is where each dumpling starts."],
+        ["A fresh plate", "Just folded, just cooked, ready for the table."],
+        ["Cold desserts now", "Ice cream and cold sweets are back for the hot season."],
       ] as [string, string][],
     },
     visit: {
@@ -761,12 +786,15 @@ export const copy = {
       follow: "Suivre sur Instagram",
       followTk: "On est aussi sur TikTok",
       posts: [
-        ["Sorti de la poêle", "Porc et ciboulette dorés, comme un vendredi devrait être."],
-        ["Pli après pli", "Chaque pâte roulée et pliée à la main, toute la journée."],
-        ["Saison de l'huile pimentée", "Un nouveau lot d'huile maison, grillée aujourd'hui."],
-        ["La commande agneau", "Agneau et coriandre au cumin, notre pli le plus audacieux."],
-        ["Cuisine ouverte", "Venez voir la vapeur. La petite salle se remplit vite."],
-        ["Assiette végé", "Chou, champignon, tofu — entièrement végane, bien garni."],
+        ["Saison de l'huile pimentée", "Un nouveau lot d'huile maison, versé sur les dumplings chauds."],
+        ["Tout droit de la vapeur", "Une pleine assiette de dumplings pliés à la main."],
+        ["Près de la fenêtre", "Poêlés, fonds croustillants, saisis dans la lumière de l'après-midi."],
+        ["Combo poulet-coriandre", "Poulet-coriandre et le pli œuf-carotte, servis ensemble."],
+        ["On trempe et c'est parti", "Dumplings vapeur, huile pimentée, un œuf et les baguettes rouges."],
+        ["Roulé à la main", "Chaque pâte étalée une à une, toute la journée."],
+        ["On garnit le pli", "Les mains dans la prépa — c'est là que chaque dumpling commence."],
+        ["Une assiette fraîche", "Tout juste plié, tout juste cuit, prêt pour la table."],
+        ["Desserts froids de retour", "La crème glacée et les douceurs froides reviennent pour l'été."],
       ] as [string, string][],
     },
     visit: {
@@ -920,12 +948,15 @@ export const copy = {
       follow: "在 Instagram 关注",
       followTk: "我们也在 TikTok",
       posts: [
-        ["刚出锅", "金黄的猪肉韭菜，周五就该是这样。"],
-        ["一褶一褶", "整天，每张皮都手工擀制、手工包好。"],
-        ["辣油季", "今天新炒的一批自制辣油。"],
-        ["羊肉那一份", "孜然香的羊肉香菜，我们最有个性的一款。"],
-        ["开放式厨房", "来看热气吧。小小的店很快就坐满了。"],
-        ["素饺一盘", "白菜、蘑菇、豆腐——纯素，料足。"],
+        ["辣油季", "新炒的一批自制辣油，浇在热腾腾的饺子上。"],
+        ["刚出锅", "满满一盘手工包的饺子，周五就该是这样。"],
+        ["窗边一盘", "煎饺，酥脆锅底，沐在午后的光里。"],
+        ["鸡肉香菜套餐", "鸡肉香菜配上鸡蛋胡萝卜，一起装盘。"],
+        ["蘸一口就开吃", "蒸饺、辣油、一颗蛋，还有那双红筷子。"],
+        ["手工擀皮", "每一张皮都一张张擀出来，擀上一整天。"],
+        ["手工调馅", "双手忙在备料里——每个饺子都从这里开始。"],
+        ["新鲜一盘", "刚包好，刚煮好，上桌正当时。"],
+        ["冷饮甜品回归", "冰淇淋和各式冷甜品，为这个夏天回归。"],
       ] as [string, string][],
     },
     visit: {
