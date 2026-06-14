@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Shared table with dumplings">
+  <rect width="1200" height="900" fill="#7f1714"/>
+  <rect y="520" width="1200" height="380" fill="#3b0808" opacity=".35"/>
+  <circle cx="430" cy="410" r="270" fill="#fff8ea"/>
+  <circle cx="430" cy="410" r="225" fill="#fff2dc"/>
+  <circle cx="870" cy="520" r="185" fill="#f4bd45"/>
+  <circle cx="870" cy="520" r="145" fill="#fff8ea"/>
+  <g fill="#f8e9cf" stroke="#b56541" stroke-width="6">
+    <path d="M275 350c42-64 121-68 171-11 18 21 27 46 29 73-60 42-142 36-200-62z"/>
+    <path d="M420 300c58-58 141-43 180 28 15 27 18 57 12 84-70 23-150-9-192-112z"/>
+    <path d="M525 395c66-49 148-25 176 50 10 27 9 54 0 79-74 12-150-30-176-129z"/>
+  </g>
+  <rect x="120" y="660" width="260" height="80" rx="40" fill="#fff8ea" opacity=".9"/>
+  <rect x="700" y="190" width="320" height="74" rx="37" fill="#fff8ea" opacity=".88"/>
+  <circle cx="995" cy="670" r="55" fill="#a30f17"/>
+</svg>

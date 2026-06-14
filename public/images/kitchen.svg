@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1400" role="img" aria-label="Cozy open kitchen">
+  <rect width="1200" height="1400" fill="#4b0b0b"/>
+  <rect x="90" y="90" width="1020" height="1220" rx="44" fill="#fff8ea"/>
+  <rect x="160" y="165" width="880" height="520" rx="28" fill="#8f1d18"/>
+  <rect x="210" y="230" width="360" height="390" rx="16" fill="#f4bd45" opacity=".92"/>
+  <rect x="630" y="230" width="350" height="390" rx="16" fill="#fff2dc"/>
+  <rect x="185" y="760" width="830" height="270" rx="28" fill="#3b0808"/>
+  <g fill="#f8e9cf" stroke="#c98b62" stroke-width="7">
+    <path d="M315 870c45-72 134-76 190-11 21 25 31 54 33 85-68 47-160 40-223-74z"/>
+    <path d="M510 842c64-65 157-47 199 31 16 30 19 62 13 92-78 25-166-11-212-123z"/>
+    <path d="M678 886c76-56 168-29 199 57 11 30 10 60 0 87-84 13-169-35-199-144z"/>
+  </g>
+  <g stroke="#fff8ea" stroke-linecap="round" opacity=".55">
+    <path d="M760 355c-26-78 44-94 12-173" stroke-width="16"/>
+    <path d="M840 400c-22-65 38-80 9-143" stroke-width="12"/>
+  </g>
+  <rect x="230" y="1090" width="740" height="64" rx="32" fill="#f4bd45"/>
+  <rect x="330" y="1190" width="540" height="34" rx="17" fill="#8f1d18" opacity=".6"/>
+</svg>

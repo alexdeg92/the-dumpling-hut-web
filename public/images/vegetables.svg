@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Vegetarian dumpling ingredients">
+  <rect width="1200" height="900" fill="#fff2dc"/>
+  <circle cx="230" cy="245" r="140" fill="#5d8c38" opacity=".72"/>
+  <circle cx="335" cy="335" r="115" fill="#82a957" opacity=".8"/>
+  <circle cx="815" cy="275" r="135" fill="#f4bd45" opacity=".75"/>
+  <circle cx="930" cy="395" r="105" fill="#a30f17" opacity=".78"/>
+  <ellipse cx="600" cy="645" rx="390" ry="135" fill="#fff8ea"/>
+  <g fill="#f8e9cf" stroke="#b56541" stroke-width="7">
+    <path d="M395 565c56-82 156-88 220-13 22 26 33 56 35 90-76 52-180 43-255-77z"/>
+    <path d="M590 525c75-70 177-49 223 37 16 31 19 64 12 94-86 29-187-7-235-131z"/>
+    <path d="M745 580c80-58 180-29 213 62 11 31 9 61 0 88-89 14-183-36-213-150z"/>
+  </g>
+  <g fill="none" stroke="#5d8c38" stroke-width="22" stroke-linecap="round" opacity=".55">
+    <path d="M190 210c55 35 112 36 172 5"/>
+    <path d="M760 250c82 9 143 48 185 116"/>
+  </g>
+</svg>
