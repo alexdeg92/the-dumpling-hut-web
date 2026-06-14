@@ -5,6 +5,7 @@ import { I18nProvider } from "@/lib/i18n";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { LanguageDetector } from "@/components/language-detector";
+import { OrderModalProvider } from "@/components/order-modal";
 
 export function generateStaticParams() {
   return languages.map((lang) => ({ lang }));
@@ -48,12 +49,14 @@ export default async function LangLayout({
 
   return (
     <I18nProvider lang={lang as Lang}>
-      <LanguageDetector current={lang as Lang} />
-      <div className="relative flex min-h-screen flex-col">
-        <Nav />
-        <main className="relative z-10 flex-1">{children}</main>
-        <Footer />
-      </div>
+      <OrderModalProvider>
+        <LanguageDetector current={lang as Lang} />
+        <div className="relative flex min-h-screen flex-col">
+          <Nav />
+          <main className="relative z-10 flex-1">{children}</main>
+          <Footer />
+        </div>
+      </OrderModalProvider>
     </I18nProvider>
   );
 }

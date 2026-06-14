@@ -5,10 +5,12 @@ import { restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 import { PageHeader } from "@/components/page-header";
+import { useOrderModal } from "@/components/order-modal";
 
 export function VisitPageBody() {
   const { t } = useI18n();
   const v = t.visit;
+  const { open: openOrder } = useOrderModal();
   const ref = useReveal<HTMLDivElement>();
 
   // 0 = Sunday … 6 = Saturday; hours array is Mon..Sun.
@@ -62,7 +64,15 @@ export function VisitPageBody() {
             </div>
 
             <div className="reveal rounded-3xl border border-[var(--color-ink)]/10 bg-white/70 p-6">
-              <p className="eyebrow text-[var(--color-lacquer)]">{v.callTitle}</p>
+              <p className="eyebrow text-[var(--color-lacquer)]">{t.order.footerTitle}</p>
+              <button
+                type="button"
+                onClick={openOrder}
+                className="btn btn-gold mt-3 w-full"
+              >
+                {t.order.cta}
+              </button>
+              <p className="eyebrow mt-5 text-[var(--color-lacquer)]">{v.callTitle}</p>
               <a
                 href={restaurant.phoneHref}
                 className="font-display mt-1 block text-2xl text-[var(--color-ink)] hover:text-[var(--color-lacquer)]"

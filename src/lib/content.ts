@@ -49,6 +49,58 @@ export const feedImages: Array<{ src: string; shortcode: string }> = [
 export const instagramPostHref = (shortcode: string) =>
   `https://www.instagram.com/p/${shortcode}/`;
 
+/* ------------------------------------------------------------------ */
+/*  Delivery / online ordering platforms                               */
+/* ------------------------------------------------------------------ */
+
+export type DeliveryKey = "doordash" | "ubereats" | "skipthedishes";
+
+export type DeliveryPlatform = {
+  key: DeliveryKey;
+  name: string;
+  href: string;
+  /** short tagline shown under the platform name, per language */
+  tagline: Record<Lang, string>;
+  /** brand-ish accent colour used for the icon chip */
+  color: string;
+};
+
+export const deliveryPlatforms: DeliveryPlatform[] = [
+  {
+    key: "doordash",
+    name: "DoorDash",
+    href: "https://order.online/store/-714824/?pickup=true&hideModal=true&utm_source=gfo&rwg_token=AFd1xnGXMtU2BzhMBX-0bILRbjhYfcvefy-IeiEiNMJS4q7mbP-F95OQXqTvdb9s2q1e6brG7S5RDi0LYG-5PiARacJrXv-JpA%3D%3D",
+    tagline: {
+      en: "Pickup or delivery",
+      fr: "Cueillette ou livraison",
+      zh: "自取或外送",
+    },
+    color: "#ef322a",
+  },
+  {
+    key: "ubereats",
+    name: "Uber Eats",
+    href: "https://www.ubereats.com/ca/store/the-dumpling-hut/3zZmcz7aVzaRk8etoaTE5Q?diningMode=DELIVERY&pl=JTdCJTIyYWRkcmVzcyUyMiUzQSUyMjExJTIwUnVlJTIwZGVzJTIwUm9zZWF1eCUyMiUyQyUyMnJlZmVyZW5jZSUyMiUzQSUyMjkwMzIxNGFjLWI0YTQtOWI5Ni1hMzNlLWMzYWNjYTg4ZDE2YSUyMiUyQyUyMnJlZmVyZW5jZVR5cGUlMjIlM0ElMjJ1YmVyX3BsYWNlcyUyMiUyQyUyMmxhdGl0dWRlJTIyJTNBNDUuNjYzNDklMkMlMjJsb25naXR1ZGUlMjIlM0EtNzMuODQ3OTc3JTdE&rwg_token=AFd1xnHMFP1FWpI6K09Aqasye7m46NQMzpq6TQQ8klhgJZUeOPC5D0zWPRKhuqO88FW4Gr-9aJaR7dUmfF-xnKgLwlABHb7HRQ%3D%3D&utm_campaign=CM2508147-search-free-nonbrand-google-pas_e_all_acq_Global&utm_medium=search-free-nonbrand&utm_source=google-pas",
+    tagline: {
+      en: "Delivery to your door",
+      fr: "Livraison à votre porte",
+      zh: "送货上门",
+    },
+    color: "#06c167",
+  },
+  {
+    key: "skipthedishes",
+    name: "Skip the Dishes",
+    href: "https://www.skipthedishes.com/fr/the-dumpling-hut-3591-rue-clark?serviceType=delivery&utm_source=google&utm_medium=organic&utm_campaign=foodorder",
+    tagline: {
+      en: "Delivery across Montreal",
+      fr: "Livraison partout à Montréal",
+      zh: "蒙特利尔全城外送",
+    },
+    color: "#ff6900",
+  },
+];
+
 export type NavKey = "menu" | "story" | "visit" | "feed";
 
 export const navItems: Array<{ key: NavKey; href: string }> = [
@@ -665,6 +717,16 @@ export const copy = {
       built: "A cozy hidden gem on Rue Clark.",
       rights: "All rights reserved.",
     },
+    order: {
+      cta: "Order Now",
+      modalTitle: "Order online",
+      modalLead: "Pick your favourite delivery app and we'll start folding.",
+      orPhone: "Prefer to call?",
+      callLabel: "Call to order",
+      close: "Close",
+      footerTitle: "Order online",
+      footerLead: "Get our dumplings delivered.",
+    },
   },
 
   fr: {
@@ -836,6 +898,16 @@ export const copy = {
       built: "Un bijou caché chaleureux sur la rue Clark.",
       rights: "Tous droits réservés.",
     },
+    order: {
+      cta: "Commander",
+      modalTitle: "Commander en ligne",
+      modalLead: "Choisissez votre appli de livraison préférée et on commence à plier.",
+      orPhone: "Vous préférez appeler?",
+      callLabel: "Appeler pour commander",
+      close: "Fermer",
+      footerTitle: "Commander en ligne",
+      footerLead: "Faites livrer nos dumplings.",
+    },
   },
 
   zh: {
@@ -1001,6 +1073,16 @@ export const copy = {
       tag: "手工中式饺子 · 蒙特利尔",
       built: "Clark 街上一间温馨的隐藏小店。",
       rights: "版权所有。",
+    },
+    order: {
+      cta: "现在订购",
+      modalTitle: "在线订购",
+      modalLead: "选择你喜欢的外送平台，我们这就开始包饺子。",
+      orPhone: "想打电话？",
+      callLabel: "电话点餐",
+      close: "关闭",
+      footerTitle: "在线订购",
+      footerLead: "把我们的饺子送到家。",
     },
   },
 } as const;
