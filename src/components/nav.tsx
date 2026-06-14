@@ -44,10 +44,11 @@ export function Nav() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3 sm:px-8 sm:py-3.5">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8 sm:py-4">
+        {/* logo — left */}
         <Link
           href={`/${lang}`}
-          className="group flex min-w-0 shrink items-center gap-2 sm:gap-3"
+          className="group flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3"
           aria-label={restaurant.name}
         >
           <span className="shrink-0 transition-transform duration-500 group-hover:rotate-[14deg]">
@@ -71,7 +72,11 @@ export function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+        {/* primary nav — centered on desktop */}
+        <nav
+          className="hidden flex-1 items-center justify-center gap-1 md:flex"
+          aria-label="Primary"
+        >
           {navItems.map((item) => (
             <Link
               key={item.key}
@@ -86,11 +91,14 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
-          <LangSwitcher onDark={onDark} />
+        {/* right cluster — lang + call (desktop), burger (mobile) */}
+        <div className="flex shrink-0 items-center gap-3">
+          <div className="hidden md:block">
+            <LangSwitcher onDark={onDark} />
+          </div>
           <a
             href={restaurant.phoneHref}
-            className="btn btn-gold !hidden h-10 px-5 text-sm sm:!inline-flex"
+            className="btn btn-gold !hidden h-11 px-5 text-sm md:!inline-flex"
           >
             {t.nav.order}
           </a>
@@ -99,7 +107,7 @@ export function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-label={t.nav.menuOpen}
             aria-expanded={open}
-            className={`grid size-10 shrink-0 place-items-center rounded-full border md:hidden ${
+            className={`grid size-11 shrink-0 place-items-center rounded-full border md:hidden ${
               onDark
                 ? "border-[var(--color-cream)]/30 bg-[var(--color-cream)]/10"
                 : "border-[var(--color-ink)]/15 bg-[var(--color-cream)]/70"
@@ -140,13 +148,17 @@ export function Nav() {
               {t.nav[item.key]}
             </Link>
           ))}
-          <a
-            href={restaurant.phoneHref}
-            className="btn btn-gold mt-2"
-            onClick={() => setOpen(false)}
-          >
-            {t.nav.order}
-          </a>
+
+          <div className="mt-3 flex items-center justify-between border-t border-[var(--color-ink)]/10 pt-4">
+            <LangSwitcher onDark={false} />
+            <a
+              href={restaurant.phoneHref}
+              className="btn btn-gold h-11 px-5 text-sm"
+              onClick={() => setOpen(false)}
+            >
+              {t.nav.order}
+            </a>
+          </div>
         </div>
       </div>
     </header>

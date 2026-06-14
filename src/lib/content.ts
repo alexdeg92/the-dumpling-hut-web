@@ -618,6 +618,10 @@ export const copy = {
       lead: "We post what's coming out of the pan. Follow along on Instagram and TikTok.",
       follow: "Follow on Instagram",
       followTk: "We're on TikTok too",
+      viewOnIg: "View on Instagram",
+      prev: "Previous photo",
+      next: "Next photo",
+      close: "Close",
       posts: [
         ["Chili oil season", "A fresh batch of the house oil, spooned over hot dumplings."],
         ["Straight off the steam", "A full plate of hand-folded dumplings, the way Friday should look."],
@@ -785,6 +789,10 @@ export const copy = {
       lead: "On publie ce qui sort de la poêle. Suivez-nous sur Instagram et TikTok.",
       follow: "Suivre sur Instagram",
       followTk: "On est aussi sur TikTok",
+      viewOnIg: "Voir sur Instagram",
+      prev: "Photo précédente",
+      next: "Photo suivante",
+      close: "Fermer",
       posts: [
         ["Saison de l'huile pimentée", "Un nouveau lot d'huile maison, versé sur les dumplings chauds."],
         ["Tout droit de la vapeur", "Une pleine assiette de dumplings pliés à la main."],
@@ -947,6 +955,10 @@ export const copy = {
       lead: "我们会发出锅的每一份。来 Instagram 和 TikTok 关注我们。",
       follow: "在 Instagram 关注",
       followTk: "我们也在 TikTok",
+      viewOnIg: "在 Instagram 查看",
+      prev: "上一张",
+      next: "下一张",
+      close: "关闭",
       posts: [
         ["辣油季", "新炒的一批自制辣油，浇在热腾腾的饺子上。"],
         ["刚出锅", "满满一盘手工包的饺子，周五就该是这样。"],
