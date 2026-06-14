@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { restaurant } from "@/lib/content";
+import { deliveryPlatforms, restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 import { PageHeader } from "@/components/page-header";
+import { DeliveryPlatformLogo } from "@/components/delivery-platform-logo";
 
 export function VisitPageBody() {
   const { t } = useI18n();
@@ -75,38 +75,18 @@ export function VisitPageBody() {
             <div className="reveal rounded-3xl border border-[var(--color-ink)]/10 bg-white/70 p-6">
               <p className="eyebrow text-[var(--color-lacquer)]">{v.deliveryTitle}</p>
               <div className="mt-4 flex flex-col gap-3">
-                <a
-                  href={restaurant.uberEatsHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Order on Uber Eats"
-                  className="block transition-opacity hover:opacity-85"
-                >
-                  <Image
-                    src="/uber-eats.svg"
-                    alt="Uber Eats"
-                    width={200}
-                    height={56}
-                    className="h-12 w-auto"
-                    unoptimized
-                  />
-                </a>
-                <a
-                  href={restaurant.doorDashHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Order on DoorDash"
-                  className="block transition-opacity hover:opacity-85"
-                >
-                  <Image
-                    src="/doordash.svg"
-                    alt="DoorDash"
-                    width={200}
-                    height={56}
-                    className="h-12 w-auto"
-                    unoptimized
-                  />
-                </a>
+                {deliveryPlatforms.map((p) => (
+                  <a
+                    key={p.key}
+                    href={p.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Order on ${p.name}`}
+                    className="block w-fit transition-opacity hover:opacity-85"
+                  >
+                    <DeliveryPlatformLogo platform={p} className={p.logoClassName} />
+                  </a>
+                ))}
               </div>
             </div>
           </div>

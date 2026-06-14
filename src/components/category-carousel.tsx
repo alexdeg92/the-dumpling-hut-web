@@ -18,6 +18,7 @@ type Props<T extends string> = {
   value: T;
   onChange: (key: T) => void;
   ariaLabel?: string;
+  compact?: boolean;
 };
 
 /**
@@ -33,6 +34,7 @@ export function CategoryCarousel<T extends string>({
   value,
   onChange,
   ariaLabel,
+  compact = false,
 }: Props<T>) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [canLeft, setCanLeft] = useState(false);
@@ -117,9 +119,9 @@ export function CategoryCarousel<T extends string>({
         type="button"
         aria-label="Scroll categories left"
         onClick={() => scrollByAmount(-1)}
-        className={`absolute left-0 top-1/2 z-20 -translate-y-1/2 grid size-8 place-items-center rounded-full border border-[var(--color-ink)]/10 bg-[var(--color-cream)] text-[var(--color-lacquer)] shadow transition ${
-          canLeft ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        className={`absolute left-0 top-1/2 z-20 -translate-y-1/2 grid place-items-center rounded-full border border-[var(--color-ink)]/10 bg-[var(--color-cream)] text-[var(--color-lacquer)] shadow transition ${
+          compact ? "size-7 text-sm" : "size-8"
+        } ${canLeft ? "opacity-100" : "pointer-events-none opacity-0"}`}
       >
         ‹
       </button>
@@ -133,7 +135,7 @@ export function CategoryCarousel<T extends string>({
         onPointerUp={endDrag}
         onPointerLeave={endDrag}
         onPointerCancel={endDrag}
-        className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-px-4 px-1 py-1 select-none cursor-grab active:cursor-grabbing"
+        className="no-scrollbar flex snap-x snap-mandatory gap-1.5 overflow-x-auto scroll-px-3 px-0.5 py-0.5 select-none cursor-grab active:cursor-grabbing sm:gap-2 sm:scroll-px-4 sm:px-1 sm:py-1"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         {items.map((it) => {
@@ -149,7 +151,11 @@ export function CategoryCarousel<T extends string>({
                 if (drag.current.moved) return;
                 onChange(it.key);
               }}
-              className={`shrink-0 snap-start whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-extrabold transition ${
+              className={`shrink-0 snap-start whitespace-nowrap rounded-full font-extrabold transition ${
+                compact
+                  ? "px-3.5 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm"
+                  : "px-5 py-2.5 text-sm"
+              } ${
                 on
                   ? "bg-[var(--color-lacquer)] text-[var(--color-cream)] shadow"
                   : "bg-[var(--color-cream-2)]/60 text-[var(--color-ink)]/70 hover:bg-[var(--color-cream-2)]"
@@ -166,9 +172,9 @@ export function CategoryCarousel<T extends string>({
         type="button"
         aria-label="Scroll categories right"
         onClick={() => scrollByAmount(1)}
-        className={`absolute right-0 top-1/2 z-20 -translate-y-1/2 grid size-8 place-items-center rounded-full border border-[var(--color-ink)]/10 bg-[var(--color-cream)] text-[var(--color-lacquer)] shadow transition ${
-          canRight ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        className={`absolute right-0 top-1/2 z-20 -translate-y-1/2 grid place-items-center rounded-full border border-[var(--color-ink)]/10 bg-[var(--color-cream)] text-[var(--color-lacquer)] shadow transition ${
+          compact ? "size-7 text-sm" : "size-8"
+        } ${canRight ? "opacity-100" : "pointer-events-none opacity-0"}`}
       >
         ›
       </button>

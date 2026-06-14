@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { languageLabels, navItems, restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useLanguage } from "@/lib/use-language";
@@ -18,8 +19,13 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
   const { t } = useI18n();
   const { open: openOrder } = useOrderModal();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const close = () => setOpen(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll while the panel is open.
   useEffect(() => {
@@ -39,55 +45,22 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  return (
+  const drawer = (
     <>
-      {/* burger toggle — lives at the left edge of the header */}
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label={t.nav.menuOpen}
-        aria-expanded={open}
-        aria-controls="site-sidebar"
-        className={`grid size-11 shrink-0 place-items-center rounded-full border transition ${
-          onDark
-            ? "border-[var(--color-cream)]/30 bg-[var(--color-cream)]/10 hover:bg-[var(--color-cream)]/20"
-            : "border-[var(--color-ink)]/15 bg-[var(--color-cream)]/70 hover:bg-[var(--color-cream)]"
-        }`}
-      >
-        <span className="relative block h-3.5 w-5">
-          <span
-            className={`absolute left-0 top-0 h-0.5 w-5 rounded ${
-              onDark ? "bg-[var(--color-cream)]" : "bg-[var(--color-ink)]"
-            }`}
-          />
-          <span
-            className={`absolute left-0 top-1/2 h-0.5 w-5 -translate-y-1/2 rounded ${
-              onDark ? "bg-[var(--color-cream)]" : "bg-[var(--color-ink)]"
-            }`}
-          />
-          <span
-            className={`absolute bottom-0 left-0 h-0.5 w-5 rounded ${
-              onDark ? "bg-[var(--color-cream)]" : "bg-[var(--color-ink)]"
-            }`}
-          />
-        </span>
-      </button>
-
-      {/* backdrop */}
       <div
         onClick={close}
         aria-hidden="true"
-        className={`fixed inset-0 z-[60] bg-[var(--color-ink)]/55 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[110] bg-[var(--color-ink)]/55 backdrop-blur-sm transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
 
-      {/* panel — full width on mobile, fixed side panel on desktop */}
       <aside
         id="site-sidebar"
         aria-hidden={!open}
-        className={`fixed inset-y-0 left-0 z-[70] flex w-full max-w-[22rem] flex-col bg-[var(--color-cream)] shadow-[24px_0_60px_-30px_rgba(28,14,11,0.6)] transition-transform duration-400 ease-[var(--ease-soft)] sm:max-w-sm ${
-          open ? "translate-x-0" : "-translate-x-full"
+        inert={!open ? true : undefined}
+        className={`fixed inset-y-0 left-0 z-[111] flex w-full max-w-[22rem] flex-col bg-[var(--color-cream)] shadow-[24px_0_60px_-30px_rgba(28,14,11,0.6)] transition-transform duration-400 ease-[var(--ease-soft)] sm:max-w-sm ${
+          open ? "translate-x-0" : "pointer-events-none -translate-x-full"
         }`}
       >
         {/* panel header: brand + close */}
@@ -121,7 +94,6 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
           </button>
         </div>
 
-        {/* nav links */}
         <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="Site">
           <ul className="grid gap-1">
             {navItems.map((item) => (
@@ -134,7 +106,6 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
           </ul>
         </nav>
 
-        {/* footer: language selector + call */}
         <div className="border-t border-[var(--color-ink)]/10 px-6 py-6">
           <LanguageSelect />
           <button
@@ -150,6 +121,44 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
           </button>
         </div>
       </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* burger toggle — lives at the left edge of the header */}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label={t.nav.menuOpen}
+        aria-expanded={open}
+        aria-controls="site-sidebar"
+        className={`relative z-[112] grid size-11 shrink-0 place-items-center rounded-full border transition ${
+          onDark
+            ? "border-[var(--color-cream)]/30 bg-[var(--color-cream)]/10 hover:bg-[var(--color-cream)]/20"
+            : "border-[var(--color-ink)]/15 bg-[var(--color-cream)]/70 hover:bg-[var(--color-cream)]"
+        }`}
+      >
+        <span className="relative block h-3.5 w-5">
+          <span
+            className={`absolute left-0 top-0 h-0.5 w-5 rounded ${
+              onDark ? "bg-[var(--color-cream)]" : "bg-[var(--color-ink)]"
+            }`}
+          />
+          <span
+            className={`absolute left-0 top-1/2 h-0.5 w-5 -translate-y-1/2 rounded ${
+              onDark ? "bg-[var(--color-cream)]" : "bg-[var(--color-ink)]"
+            }`}
+          />
+          <span
+            className={`absolute bottom-0 left-0 h-0.5 w-5 rounded ${
+              onDark ? "bg-[var(--color-cream)]" : "bg-[var(--color-ink)]"
+            }`}
+          />
+        </span>
+      </button>
+
+      {mounted ? createPortal(drawer, document.body) : null}
     </>
   );
 }

@@ -57,6 +57,10 @@ export type DeliveryPlatform = {
   key: DeliveryKey;
   name: string;
   href: string;
+  logoSrc: string;
+  logoWidth: number;
+  logoHeight: number;
+  logoClassName: string;
   tagline: Record<Lang, string>;
   color: string;
 };
@@ -66,6 +70,10 @@ export const deliveryPlatforms: DeliveryPlatform[] = [
     key: "ubereats",
     name: "Uber Eats",
     href: restaurant.uberEatsHref,
+    logoSrc: "/uber-eats.png",
+    logoWidth: 146,
+    logoHeight: 24,
+    logoClassName: "h-6 w-auto max-w-[9.5rem] object-contain object-left sm:h-7",
     tagline: {
       en: "Delivery to your door",
       fr: "Livraison à votre porte",
@@ -77,6 +85,10 @@ export const deliveryPlatforms: DeliveryPlatform[] = [
     key: "doordash",
     name: "DoorDash",
     href: restaurant.doorDashHref,
+    logoSrc: "/doordash.png",
+    logoWidth: 1024,
+    logoHeight: 119,
+    logoClassName: "h-9 w-auto max-w-[10rem] object-contain object-left sm:h-10 sm:max-w-[11rem]",
     tagline: {
       en: "Pickup or delivery",
       fr: "Cueillette ou livraison",

@@ -7,11 +7,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  deliveryPlatforms,
-  restaurant,
-  type DeliveryKey,
-} from "@/lib/content";
+import { deliveryPlatforms, restaurant } from "@/lib/content";
+import { DeliveryPlatformLogo } from "@/components/delivery-platform-logo";
 import { useI18n } from "@/lib/i18n";
 
 type OrderModalValue = {
@@ -125,20 +122,9 @@ function OrderModal({ isOpen, close }: { isOpen: boolean; close: () => void }) {
                 onClick={close}
                 className="group flex items-center gap-4 rounded-2xl border border-[var(--color-ink)]/12 bg-white/70 p-4 transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-[0_18px_40px_-22px_rgba(28,14,11,0.5)]"
               >
-                <span
-                  className="grid size-12 shrink-0 place-items-center rounded-xl text-white"
-                  style={{ backgroundColor: p.color }}
-                  aria-hidden="true"
-                >
-                  <PlatformIcon platform={p.key} />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block font-display text-lg text-[var(--color-ink)]">
-                    {p.name}
-                  </span>
-                  <span className="block text-sm text-[var(--color-ink)]/60">
-                    {p.tagline[lang]}
-                  </span>
+                <DeliveryPlatformLogo platform={p} />
+                <span className="min-w-0 flex-1 text-sm text-[var(--color-ink)]/65">
+                  {p.tagline[lang]}
                 </span>
                 <ArrowIcon />
               </a>
@@ -158,21 +144,6 @@ function OrderModal({ isOpen, close }: { isOpen: boolean; close: () => void }) {
         </div>
       </div>
     </div>
-  );
-}
-
-function PlatformIcon({ platform }: { platform: DeliveryKey }) {
-  if (platform === "ubereats") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-6" fill="currentColor" aria-hidden="true">
-        <path d="M7 4h10l1 3H6l1-3Zm-1.5 5h13l-.9 9.2A2 2 0 0 1 15.6 20H8.4a2 2 0 0 1-2-1.8L5.5 9Zm4 3a2.5 2.5 0 0 0 5 0h-1.5a1 1 0 0 1-2 0H9.5Z" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 24 24" className="size-6" fill="currentColor" aria-hidden="true">
-      <path d="M3 9h12a4 4 0 0 1 0 8H6a1 1 0 1 1 0-2h9a2 2 0 0 0 0-4H3a1 1 0 0 1 0-2Zm0-4h9a1 1 0 1 1 0 2H3a1 1 0 0 1 0-2Z" />
-    </svg>
   );
 }
 

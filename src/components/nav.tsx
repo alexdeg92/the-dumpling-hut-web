@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useLanguage } from "@/lib/use-language";
@@ -20,7 +21,9 @@ export function Nav() {
   const { t } = useI18n();
   const { current } = useLanguage();
   const { open } = useOrderModal();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [wide, setWide] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -29,14 +32,24 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Light contents while sitting over the dark hero; dark once the cream bar shows.
-  const onDark = !scrolled;
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  // Menu hides its dark PageHeader on mobile, so the nav sits on cream paper.
+  const overDarkHero = !pathname.includes("/menu") || wide;
+  const onDark = !scrolled && overDarkHero;
+  const solidBar = scrolled || !overDarkHero;
 
   return (
     <header
       data-on-dark={onDark}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
+        solidBar
           ? "bg-[var(--color-cream)]/90 shadow-[0_10px_30px_-18px_rgba(28,14,11,0.5)] backdrop-blur-xl"
           : "bg-transparent"
       }`}
