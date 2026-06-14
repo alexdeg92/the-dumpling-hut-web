@@ -8,14 +8,20 @@ import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 
 /**
- * Instagram feed. Tiles are real photos pulled from the public
- * @thedumplinghut feed (downloaded, square-cropped and optimized into
- * /public/feed), zipped with the per-language captions in `feed.posts`.
- * Clicking a tile opens an in-page lightbox showing the large image, its
- * dish name and caption, plus prev/next navigation — no redirect off-site.
- * Instagram attribution is kept inside the lightbox (and as a link out).
- * A warm lacquer gradient sits behind every image as a lantern-lit fallback
- * and as the scrim the hover caption rides on.
+ * Instagram feed — compact editorial gallery with a responsive grid.
+ *
+ * Mobile/tablet (< lg):  tight 3-column uniform grid.
+ * Desktop      (≥ lg):   editorial asymmetric bento layout:
+ *   ┌─────────┬────┬────┐
+ *   │         │ 1  │ 2  │
+ *   │   0     ├────┼────┤
+ *   │ 2×2 hero│ 3  │ 4  │
+ *   ├────┬────┼────┼────┤
+ *   │  5 │  6 │  7 │  8 │  ← landscape strip
+ *   └────┴────┴────┴────┘
+ *
+ * CSS Grid auto-placement handles the layout; clicking any tile opens
+ * the in-page lightbox.
  */
 
 const GRADIENTS = [
@@ -26,6 +32,57 @@ const GRADIENTS = [
   "from-[#6f8f57] to-[#3f5a32]",
   "from-[#d4452b] to-[#7a0f12]",
 ];
+
+type TileProps = {
+  img: (typeof feedImages)[number];
+  index: number;
+  title: string;
+  caption: string;
+  onOpen: (i: number) => void;
+  /** Tailwind classes for aspect / col-span / row-span. Defaults to aspect-square. */
+  className?: string;
+  sizes?: string;
+};
+
+function Tile({ img, index, title, caption, onOpen, className, sizes }: TileProps) {
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(index)}
+      aria-label={`${title} — ${caption}`}
+      aria-haspopup="dialog"
+      className={`reveal group relative block w-full cursor-zoom-in overflow-hidden rounded-xl text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-gold)] ${className ?? "aspect-square"}`}
+    >
+      {/* warm lantern gradient fallback */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[index % GRADIENTS.length]}`} />
+      {/* real photo */}
+      <Image
+        src={img.src}
+        alt={`${title} — ${caption}`}
+        fill
+        sizes={sizes ?? "(min-width: 1024px) 25vw, 33vw"}
+        className="object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      {/* ambient scrim */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/40 via-transparent to-[var(--color-ink)]/15" />
+      {/* IG badge */}
+      <div className="absolute left-2 top-2 grid size-5 place-items-center rounded-full bg-[var(--color-cream)]/25 text-[0.55rem] font-bold text-[var(--color-cream)] backdrop-blur-sm">
+        IG
+      </div>
+      {/* hover caption overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-[var(--color-ink)]/88 via-[var(--color-ink)]/15 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <p className="font-display text-sm leading-tight text-[var(--color-cream)]">{title}</p>
+        <p className="mt-0.5 line-clamp-2 text-[0.65rem] leading-snug text-[var(--color-cream)]/80">
+          {caption}
+        </p>
+      </div>
+      {/* always-visible mini label */}
+      <p className="font-display absolute bottom-2 left-2 right-2 text-xs leading-tight text-[var(--color-cream)] drop-shadow-md transition-opacity duration-300 group-hover:opacity-0">
+        {title}
+      </p>
+    </button>
+  );
+}
 
 export function Feed() {
   const { t } = useI18n();
@@ -53,57 +110,45 @@ export function Feed() {
         </a>
       </div>
 
-      <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-        {feedImages.map((img, i) => {
-          const [title, caption] = f.posts[i] ?? ["", ""];
-          return (
-            <button
-              key={img.shortcode}
-              type="button"
-              onClick={() => setOpenIndex(i)}
-              aria-label={`${title} — ${caption}`}
-              aria-haspopup="dialog"
-              className="reveal group relative aspect-square cursor-zoom-in overflow-hidden rounded-2xl text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-gold)]"
-            >
-              {/* lantern-lit fallback behind the photo */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[i % GRADIENTS.length]}`}
-              />
-              {/* real photo from the feed */}
-              <Image
-                src={img.src}
-                alt={`${title} — ${caption}`}
-                fill
-                sizes="(min-width: 1024px) 33vw, 50vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              {/* warm scrim so the IG badge + title stay legible */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/45 via-transparent to-[var(--color-ink)]/20" />
-              {/* top label */}
-              <div className="absolute left-3 top-3 flex items-center gap-1.5 text-[var(--color-cream)]">
-                <span className="grid size-6 place-items-center rounded-full bg-[var(--color-cream)]/25 text-[0.6rem] backdrop-blur-sm">
-                  IG
-                </span>
-                <span className="text-[0.7rem] font-bold drop-shadow">
-                  {restaurant.instagram}
-                </span>
-              </div>
-              {/* hover caption overlay */}
-              <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-[var(--color-ink)]/90 via-[var(--color-ink)]/20 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <p className="font-display text-lg leading-tight text-[var(--color-cream)]">
-                  {title}
-                </p>
-                <p className="mt-1 text-xs leading-snug text-[var(--color-cream)]/85">
-                  {caption}
-                </p>
-              </div>
-              {/* always-visible mini title */}
-              <p className="font-display absolute bottom-3 left-3 right-3 text-base leading-tight text-[var(--color-cream)] drop-shadow-md transition group-hover:opacity-0">
-                {title}
-              </p>
-            </button>
-          );
-        })}
+      {/*
+       * Responsive gallery grid.
+       *
+       * < lg: 3-column uniform square grid (compact vs the old 2-col).
+       * ≥ lg: editorial bento — img[0] is a 2×2 hero, imgs[1-4] are
+       *       1×1 companions beside it, imgs[5-8] are a 4-wide landscape
+       *       strip on the third row. CSS auto-placement does the rest.
+       */}
+      <div className="mt-8 grid grid-cols-3 gap-2 lg:grid-cols-4">
+        <Tile
+          img={feedImages[0]}
+          index={0}
+          title={f.posts[0]?.[0] ?? ""}
+          caption={f.posts[0]?.[1] ?? ""}
+          onOpen={setOpenIndex}
+          className="aspect-square lg:col-span-2 lg:row-span-2"
+          sizes="(min-width: 1024px) 50vw, 33vw"
+        />
+        {([1, 2, 3, 4] as const).map((i) => (
+          <Tile
+            key={feedImages[i].shortcode}
+            img={feedImages[i]}
+            index={i}
+            title={f.posts[i]?.[0] ?? ""}
+            caption={f.posts[i]?.[1] ?? ""}
+            onOpen={setOpenIndex}
+          />
+        ))}
+        {([5, 6, 7, 8] as const).map((i) => (
+          <Tile
+            key={feedImages[i].shortcode}
+            img={feedImages[i]}
+            index={i}
+            title={f.posts[i]?.[0] ?? ""}
+            caption={f.posts[i]?.[1] ?? ""}
+            onOpen={setOpenIndex}
+            className="aspect-square lg:aspect-[4/3]"
+          />
+        ))}
       </div>
 
       <p className="mt-6 text-center text-xs text-[var(--color-ink)]/45">
@@ -120,7 +165,11 @@ export function Feed() {
       </p>
 
       {openIndex !== null && (
-        <Lightbox index={openIndex} onIndexChange={setOpenIndex} onClose={() => setOpenIndex(null)} />
+        <Lightbox
+          index={openIndex}
+          onIndexChange={setOpenIndex}
+          onClose={() => setOpenIndex(null)}
+        />
       )}
     </div>
   );
@@ -146,7 +195,6 @@ function Lightbox({
     [index, count, onIndexChange],
   );
 
-  // touch swipe to navigate
   const [touchX, setTouchX] = useState<number | null>(null);
 
   useEffect(() => {
@@ -178,7 +226,6 @@ function Lightbox({
         setTouchX(null);
       }}
     >
-      {/* close button — always reachable, top right */}
       <button
         type="button"
         onClick={onClose}
@@ -188,7 +235,6 @@ function Lightbox({
         ✕
       </button>
 
-      {/* prev / next — large tap targets, sit over the image edges */}
       <button
         type="button"
         onClick={(e) => {
@@ -216,7 +262,6 @@ function Lightbox({
         className="modal-card relative flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-[var(--color-night)] shadow-2xl sm:max-h-[90vh] sm:max-w-2xl sm:flex-none sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* large image — fills available height, caption panel stays visible */}
         <div className="relative min-h-0 flex-1 bg-[var(--color-ink)] sm:h-[62vh]">
           <Image
             key={img.src}
@@ -229,7 +274,6 @@ function Lightbox({
           />
         </div>
 
-        {/* caption panel — dish name prominent, IG attribution kept */}
         <div className="shrink-0 bg-[var(--color-cream)] px-5 py-5 sm:px-7 sm:py-6">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
