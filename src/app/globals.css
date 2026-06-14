@@ -198,6 +198,42 @@ summary::-webkit-details-marker { display: none; }
   to   { opacity: 1; transform: none; }
 }
 
+/* ---------- gallery lightbox ---------- */
+/* the photo cross-fades + lifts when the index changes */
+.gallery-photo {
+  animation: gallery-photo-in 0.45s var(--ease-soft) both;
+}
+@keyframes gallery-photo-in {
+  from { opacity: 0; transform: scale(1.03); }
+  to   { opacity: 1; transform: none; }
+}
+/* the caption slides up under the image */
+.gallery-caption {
+  animation: gallery-caption-in 0.5s var(--ease-soft) both;
+}
+@keyframes gallery-caption-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+/* nav buttons grow their ring on hover */
+.gallery-nav {
+  transition: background-color 0.25s var(--ease-soft),
+    transform 0.25s var(--ease-soft), box-shadow 0.25s var(--ease-soft);
+}
+.gallery-nav:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+.gallery-nav:active {
+  transform: translateY(-50%) scale(0.96);
+}
+.gallery-close {
+  transition: background-color 0.25s var(--ease-soft),
+    transform 0.25s var(--ease-soft), color 0.2s ease;
+}
+.gallery-close:hover {
+  transform: rotate(90deg) scale(1.06);
+}
+
 /* ---------- spin (gold seal) ---------- */
 .spin-slow { animation: spin 22s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
