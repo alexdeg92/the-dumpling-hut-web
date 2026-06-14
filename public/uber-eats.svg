@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" fill="none" role="img" aria-label="Uber Eats">
+  <title>Uber Eats</title>
+  <rect width="200" height="56" rx="12" fill="#06C167"/>
+  <!-- Fork icon -->
+  <g stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Three tines -->
+    <line x1="18" y1="12" x2="18" y2="24"/>
+    <line x1="24" y1="12" x2="24" y2="24"/>
+    <line x1="30" y1="12" x2="30" y2="24"/>
+    <!-- Curve joining tines -->
+    <path d="M18 24 Q18 30 24 30 Q30 30 30 24"/>
+    <!-- Handle -->
+    <line x1="24" y1="30" x2="24" y2="44"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="50" y="36"
+        font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-weight="800"
+        font-size="20"
+        fill="white"
+        letter-spacing="-0.5">Uber Eats</text>
+</svg>

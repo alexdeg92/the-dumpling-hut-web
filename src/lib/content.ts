@@ -23,6 +23,10 @@ export const restaurant = {
     "https://www.google.com/maps/search/?api=1&query=3591%20Rue%20Clark%2C%20Montr%C3%A9al%2C%20QC%20H2X%202R9",
   mapEmbed:
     "https://www.google.com/maps?q=3591+Rue+Clark,+Montr%C3%A9al,+QC+H2X+2R9&output=embed",
+  uberEatsHref:
+    "https://www.ubereats.com/ca/store/the-dumpling-hut/3zZmcz7aVzaRk8etoaTE5Q",
+  doorDashHref:
+    "https://www.doordash.com/en/store/the-dumpling-hut-montr%C3%A9al-714824/",
 } as const;
 
 /**
@@ -652,6 +656,7 @@ export const copy = {
       hoursTitle: "Hours",
       findTitle: "Find us",
       callTitle: "Call to order",
+      deliveryTitle: "Order delivery",
       todayOpen: "Open now",
       todayClosed: "Closed now",
       mapAlt: "Map to The Dumpling Hut on Rue Clark",
@@ -821,6 +826,7 @@ export const copy = {
       hoursTitle: "Heures",
       findTitle: "Nous trouver",
       callTitle: "Appeler pour commander",
+      deliveryTitle: "Commandez en livraison",
       todayOpen: "Ouvert maintenant",
       todayClosed: "Fermé maintenant",
       mapAlt: "Carte vers La Maison Dumplings sur la rue Clark",
@@ -985,6 +991,7 @@ export const copy = {
       hoursTitle: "营业时间",
       findTitle: "找到我们",
       callTitle: "电话点餐",
+      deliveryTitle: "外卖配送",
       todayOpen: "正在营业",
       todayClosed: "现已打烊",
       mapAlt: "前往饺子小屋（Clark 街）的地图",
