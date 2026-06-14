@@ -7,6 +7,7 @@ import { useI18n } from "@/lib/i18n";
 import { useLanguage } from "@/lib/use-language";
 import { DumplingMark } from "@/components/art";
 import { Sidebar } from "@/components/sidebar";
+import { useOrderModal } from "@/components/order-modal";
 
 /**
  * Clean, spacious header:
@@ -18,6 +19,7 @@ import { Sidebar } from "@/components/sidebar";
 export function Nav() {
   const { t } = useI18n();
   const { current } = useLanguage();
+  const { open } = useOrderModal();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -73,24 +75,25 @@ export function Nav() {
           </Link>
         </div>
 
-        {/* right: call to order — always visible */}
-        <a
-          href={restaurant.phoneHref}
-          aria-label={t.nav.order}
+        {/* right: order now — opens the delivery picker, always visible */}
+        <button
+          type="button"
+          onClick={open}
+          aria-label={t.order.cta}
           className="btn btn-gold h-11 shrink-0 gap-2 px-4 text-sm sm:px-5"
         >
-          <PhoneIcon />
-          <span className="hidden sm:inline">{t.nav.order}</span>
-        </a>
+          <BagIcon />
+          <span className="hidden sm:inline">{t.order.cta}</span>
+        </button>
       </div>
     </header>
   );
 }
 
-function PhoneIcon() {
+function BagIcon() {
   return (
     <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden="true">
-      <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.3 1l-2.1 2.2Z" />
+      <path d="M7 4h10l1 3H6l1-3Zm-1.5 5h13l-.9 9.2A2 2 0 0 1 15.6 20H8.4a2 2 0 0 1-2-1.8L5.5 9Zm4 3a2.5 2.5 0 0 0 5 0h-1.5a1 1 0 0 1-2 0H9.5Z" />
     </svg>
   );
 }

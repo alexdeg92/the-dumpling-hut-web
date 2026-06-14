@@ -6,6 +6,7 @@ import { languageLabels, navItems, restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useLanguage } from "@/lib/use-language";
 import { DumplingMark } from "@/components/art";
+import { useOrderModal } from "@/components/order-modal";
 
 /**
  * Sidebar navigation: a burger toggle (meant to sit at the left of the header),
@@ -15,6 +16,7 @@ import { DumplingMark } from "@/components/art";
  */
 export function Sidebar({ onDark = false }: { onDark?: boolean }) {
   const { t } = useI18n();
+  const { open: openOrder } = useOrderModal();
   const [open, setOpen] = useState(false);
 
   const close = () => setOpen(false);
@@ -135,14 +137,17 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
         {/* footer: language selector + call */}
         <div className="border-t border-[var(--color-ink)]/10 px-6 py-6">
           <LanguageSelect />
-          <a
-            href={restaurant.phoneHref}
-            onClick={close}
+          <button
+            type="button"
+            onClick={() => {
+              close();
+              openOrder();
+            }}
             className="btn btn-gold mt-5 h-12 w-full text-sm"
           >
-            <PhoneIcon />
-            {t.nav.order}
-          </a>
+            <BagIcon />
+            {t.order.cta}
+          </button>
         </div>
       </aside>
     </>
@@ -209,10 +214,10 @@ function LanguageSelect() {
   );
 }
 
-function PhoneIcon() {
+function BagIcon() {
   return (
     <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden="true">
-      <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.3 1l-2.1 2.2Z" />
+      <path d="M7 4h10l1 3H6l1-3Zm-1.5 5h13l-.9 9.2A2 2 0 0 1 15.6 20H8.4a2 2 0 0 1-2-1.8L5.5 9Zm4 3a2.5 2.5 0 0 0 5 0h-1.5a1 1 0 0 1-2 0H9.5Z" />
     </svg>
   );
 }

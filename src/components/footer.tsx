@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { languageLabels, languages, navItems, restaurant } from "@/lib/content";
+import {
+  deliveryPlatforms,
+  languageLabels,
+  languages,
+  navItems,
+  restaurant,
+} from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { storeLanguage } from "@/lib/use-language";
 import { DumplingMark, Seal } from "@/components/art";
@@ -37,6 +43,28 @@ export function Footer() {
             >
               <IgIcon />
             </a>
+          </div>
+
+          <p className="eyebrow mb-3 mt-8 text-[var(--color-gold)]">
+            {t.order.footerTitle}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {deliveryPlatforms.map((p) => (
+              <a
+                key={p.key}
+                href={p.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-cream)]/20 px-3.5 py-2 text-xs font-bold text-[var(--color-cream)]/85 transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
+              >
+                <span
+                  className="size-2.5 rounded-full"
+                  style={{ backgroundColor: p.color }}
+                  aria-hidden="true"
+                />
+                {p.name}
+              </a>
+            ))}
           </div>
         </div>
 

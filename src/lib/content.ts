@@ -51,6 +51,41 @@ export const feedImages: Array<{ src: string; shortcode: string }> = [
 export const instagramPostHref = (shortcode: string) =>
   `https://www.instagram.com/p/${shortcode}/`;
 
+export type DeliveryKey = "doordash" | "ubereats";
+
+export type DeliveryPlatform = {
+  key: DeliveryKey;
+  name: string;
+  href: string;
+  tagline: Record<Lang, string>;
+  color: string;
+};
+
+export const deliveryPlatforms: DeliveryPlatform[] = [
+  {
+    key: "ubereats",
+    name: "Uber Eats",
+    href: restaurant.uberEatsHref,
+    tagline: {
+      en: "Delivery to your door",
+      fr: "Livraison à votre porte",
+      zh: "送货上门",
+    },
+    color: "#06c167",
+  },
+  {
+    key: "doordash",
+    name: "DoorDash",
+    href: restaurant.doorDashHref,
+    tagline: {
+      en: "Pickup or delivery",
+      fr: "Cueillette ou livraison",
+      zh: "自取或外送",
+    },
+    color: "#ef322a",
+  },
+];
+
 export type NavKey = "menu" | "story" | "visit" | "feed";
 
 export const navItems: Array<{ key: NavKey; href: string }> = [
@@ -666,6 +701,16 @@ export const copy = {
       built: "A cozy hidden gem on Rue Clark.",
       rights: "All rights reserved.",
     },
+    order: {
+      cta: "Order Now",
+      modalTitle: "Order online",
+      modalLead: "Pick your favourite delivery app and we'll start folding.",
+      orPhone: "Prefer to call?",
+      callLabel: "Call to order",
+      close: "Close",
+      footerTitle: "Order online",
+      footerLead: "Get our dumplings delivered.",
+    },
   },
 
   fr: {
@@ -836,6 +881,16 @@ export const copy = {
       built: "Un bijou caché chaleureux sur la rue Clark.",
       rights: "Tous droits réservés.",
     },
+    order: {
+      cta: "Commander",
+      modalTitle: "Commander en ligne",
+      modalLead: "Choisissez votre appli de livraison préférée et on commence à plier.",
+      orPhone: "Vous préférez appeler?",
+      callLabel: "Appeler pour commander",
+      close: "Fermer",
+      footerTitle: "Commander en ligne",
+      footerLead: "Faites livrer nos dumplings.",
+    },
   },
 
   zh: {
@@ -1000,6 +1055,16 @@ export const copy = {
       tag: "手工中式饺子 · 蒙特利尔",
       built: "Clark 街上一间温馨的隐藏小店。",
       rights: "版权所有。",
+    },
+    order: {
+      cta: "现在订购",
+      modalTitle: "在线订购",
+      modalLead: "选择你喜欢的外送平台，我们这就开始包饺子。",
+      orPhone: "想打电话？",
+      callLabel: "电话点餐",
+      close: "关闭",
+      footerTitle: "在线订购",
+      footerLead: "把我们的饺子送到家。",
     },
   },
 } as const;
