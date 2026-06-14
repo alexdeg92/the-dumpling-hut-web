@@ -106,17 +106,6 @@ export function Feed() {
         })}
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm">
-        <a
-          href={restaurant.tiktokHref}
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-ghost border-[var(--color-ink)]/25 text-[var(--color-ink)]"
-        >
-          {f.followTk} · {restaurant.tiktok}
-        </a>
-      </div>
-
       <p className="mt-6 text-center text-xs text-[var(--color-ink)]/45">
         Photos via{" "}
         <a

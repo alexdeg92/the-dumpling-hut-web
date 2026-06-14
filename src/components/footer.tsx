@@ -37,15 +37,6 @@ export function Footer() {
             >
               <IgIcon />
             </a>
-            <a
-              href={restaurant.tiktokHref}
-              target="_blank"
-              rel="noreferrer"
-              className="grid size-10 place-items-center rounded-full border border-[var(--color-cream)]/20 transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
-              aria-label="TikTok"
-            >
-              <TkIcon />
-            </a>
           </div>
         </div>
 
@@ -105,14 +96,6 @@ function IgIcon() {
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function TkIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="size-5" fill="currentColor">
-      <path d="M16.5 3c.3 2 1.6 3.6 3.5 4v2.4c-1.3 0-2.5-.4-3.5-1v5.6a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.6a3 3 0 1 0 2.1 2.8V3h2.5Z" />
     </svg>
   );
 }
