@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { languageLabels, languages, navItems, restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
+import { storeLanguage } from "@/lib/use-language";
 import { DumplingMark, Seal } from "@/components/art";
 
 export function Footer() {
@@ -75,6 +76,7 @@ export function Footer() {
               <Link
                 key={l}
                 href={`/${l}`}
+                onClick={() => storeLanguage(l)}
                 className={l === lang ? "font-extrabold text-[var(--color-gold)]" : "hover:text-[var(--color-gold)]"}
               >
                 {languageLabels[l]}
