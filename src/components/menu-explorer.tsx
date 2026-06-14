@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import {
   menuItems,
@@ -9,6 +10,7 @@ import {
   type MenuItem,
 } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
+import { CategoryCarousel } from "@/components/category-carousel";
 
 type CookTab = "all" | CookKey;
 type SortKey = "featured" | "priceLow" | "priceHigh" | "spicy";
@@ -83,27 +85,15 @@ export function MenuExplorer() {
     <div>
       {/* control bar */}
       <div className="sticky top-[68px] z-30 -mx-2 rounded-3xl border border-[var(--color-ink)]/10 bg-[var(--color-cream)]/85 p-3 backdrop-blur-xl sm:p-4">
-        {/* cook-style tabs */}
-        <div className="flex flex-wrap gap-2">
-          {COOK_TABS.map((c) => {
-            const on = cook === c;
-            return (
-              <button
-                key={c}
-                onClick={() => setCook(c)}
-                className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
-                  on
-                    ? "bg-[var(--color-lacquer)] text-[var(--color-cream)] shadow"
-                    : "bg-[var(--color-cream-2)]/60 text-[var(--color-ink)]/70 hover:bg-[var(--color-cream-2)]"
-                }`}
-              >
-                {m.cooks[c]}
-              </button>
-            );
-          })}
-        </div>
+        {/* cook-style category carousel — swipeable header */}
+        <CategoryCarousel
+          ariaLabel={m.filtersTitle}
+          value={cook}
+          onChange={setCook}
+          items={COOK_TABS.map((c) => ({ key: c, label: m.cooks[c] }))}
+        />
 
-        <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mt-3 flex flex-col gap-3 border-t border-[var(--color-ink)]/10 pt-3 lg:flex-row lg:items-center lg:justify-between">
           {/* diet chips */}
           <div className="flex flex-wrap items-center gap-2">
             <span className="eyebrow text-[var(--color-lacquer)]">{m.filtersTitle}</span>
@@ -192,19 +182,29 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
   return (
     <button
       onClick={onOpen}
-      className="dish-card group relative overflow-hidden rounded-3xl border border-[var(--color-ink)]/10 bg-white/75 p-6 text-left shadow-[0_18px_40px_-28px_rgba(28,14,11,0.6)] hover:shadow-[0_28px_60px_-30px_rgba(122,15,18,0.55)]"
+      className="dish-card group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-ink)]/10 bg-white/75 text-left shadow-[0_18px_40px_-28px_rgba(28,14,11,0.6)] hover:shadow-[0_28px_60px_-30px_rgba(122,15,18,0.55)]"
     >
-      <div className="pointer-events-none absolute -right-6 -top-6 size-24 rounded-full bg-[var(--color-gold)]/15 transition-transform duration-500 group-hover:scale-150" />
-      <div className="flex items-start justify-between gap-3">
-        <span className="text-4xl transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110">
+      {/* dish photo */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--color-cream-2)]">
+        <Image
+          src={item.image}
+          alt={item.name[lang]}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        {/* emoji badge accent */}
+        <span className="absolute left-3 top-3 grid size-10 place-items-center rounded-full bg-[var(--color-cream)]/90 text-2xl shadow backdrop-blur-sm transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110">
           {item.emoji}
         </span>
-        <span className="rounded-full bg-[var(--color-lacquer)] px-3 py-1 text-sm font-extrabold text-[var(--color-cream)]">
+        <span className="absolute right-3 top-3 rounded-full bg-[var(--color-lacquer)] px-3 py-1 text-sm font-extrabold text-[var(--color-cream)] shadow">
           ${item.price.toFixed(2)}
         </span>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/25 to-transparent" />
       </div>
 
-      <h3 className="font-display mt-4 text-xl text-[var(--color-ink)]">
+      <div className="flex flex-1 flex-col p-6">
+      <h3 className="font-display text-xl text-[var(--color-ink)]">
         {item.name[lang]}
       </h3>
       <p className="mt-2 text-sm leading-6 text-[var(--color-ink)]/65">
@@ -234,6 +234,7 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
         {t.menu.details}
         <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
       </span>
+      </div>
     </button>
   );
 }
@@ -263,17 +264,29 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
         className="modal-card relative w-full max-w-lg overflow-hidden rounded-t-3xl bg-[var(--color-cream)] shadow-2xl sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative bg-[var(--color-lacquer)] px-7 py-8 text-[var(--color-cream)]">
-          <div className="pointer-events-none absolute -bottom-8 -right-4 text-9xl opacity-20">
-            {item.emoji}
-          </div>
+        {/* dish photo header */}
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--color-lacquer)]">
+          <Image
+            src={item.image}
+            alt={item.name[lang]}
+            fill
+            sizes="(max-width: 640px) 100vw, 32rem"
+            className="object-cover"
+            priority
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/85 via-[var(--color-ink)]/20 to-transparent" />
           <button
             onClick={onClose}
             aria-label={t.nav.close}
-            className="absolute right-4 top-4 grid size-9 place-items-center rounded-full bg-[var(--color-cream)]/15 text-lg transition hover:bg-[var(--color-cream)]/30"
+            className="absolute right-4 top-4 grid size-9 place-items-center rounded-full bg-[var(--color-ink)]/40 text-lg text-[var(--color-cream)] backdrop-blur-sm transition hover:bg-[var(--color-ink)]/60"
           >
             ✕
           </button>
+        </div>
+        <div className="relative bg-[var(--color-lacquer)] px-7 py-7 text-[var(--color-cream)]">
+          <div className="pointer-events-none absolute -bottom-8 -right-4 text-9xl opacity-20">
+            {item.emoji}
+          </div>
           <span className="text-5xl">{item.emoji}</span>
           <h3 className="font-display mt-3 text-3xl">{item.name[lang]}</h3>
           <div className="mt-3 flex flex-wrap items-center gap-3">

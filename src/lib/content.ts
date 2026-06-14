@@ -81,6 +81,8 @@ export type MenuItem = {
   detail: Record<Lang, string>;
   pairs: Record<Lang, string>;
   emoji: string;
+  /** dish photo in /public/dishes, shared across all languages */
+  image: string;
 };
 
 export const menuItems: MenuItem[] = [
@@ -93,6 +95,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     count: 15,
     emoji: "🥟",
+    image: "/dishes/lamb-coriander-steamed.jpg",
     name: {
       en: "Lamb & Coriander",
       fr: "Agneau et coriandre",
@@ -123,6 +126,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     count: 15,
     emoji: "🥟",
+    image: "/dishes/pork-chive-steamed.jpg",
     name: {
       en: "Pork & Chive",
       fr: "Porc et ciboulette",
@@ -153,6 +157,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     count: 15,
     emoji: "🥟",
+    image: "/dishes/pork-dill-steamed.jpg",
     name: {
       en: "Pork & Dill",
       fr: "Porc et aneth",
@@ -183,6 +188,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     count: 15,
     emoji: "🥟",
+    image: "/dishes/chicken-mushroom-steamed.jpg",
     name: {
       en: "Chicken & Mushroom",
       fr: "Poulet et champignons",
@@ -213,6 +219,7 @@ export const menuItems: MenuItem[] = [
     price: 13.99,
     count: 15,
     emoji: "🍳",
+    image: "/dishes/lamb-coriander-panfried.jpg",
     name: {
       en: "Lamb & Coriander",
       fr: "Agneau et coriandre",
@@ -243,6 +250,7 @@ export const menuItems: MenuItem[] = [
     price: 13.99,
     count: 15,
     emoji: "🍳",
+    image: "/dishes/pork-chive-panfried.jpg",
     name: {
       en: "Pork & Chive",
       fr: "Porc et ciboulette",
@@ -273,6 +281,7 @@ export const menuItems: MenuItem[] = [
     price: 13.99,
     count: 15,
     emoji: "🍳",
+    image: "/dishes/pork-dill-panfried.jpg",
     name: {
       en: "Pork & Dill",
       fr: "Porc et aneth",
@@ -303,6 +312,7 @@ export const menuItems: MenuItem[] = [
     price: 13.99,
     count: 15,
     emoji: "🍳",
+    image: "/dishes/chicken-mushroom-panfried.jpg",
     name: {
       en: "Chicken & Mushroom",
       fr: "Poulet et champignons",
@@ -333,6 +343,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     count: 15,
     emoji: "🥬",
+    image: "/dishes/vegetable-mushroom.jpg",
     name: {
       en: "Vegetable & Mushroom",
       fr: "Légumes et champignons",
@@ -363,6 +374,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     count: 15,
     emoji: "🥬",
+    image: "/dishes/seasonal-greens.jpg",
     name: {
       en: "Seasonal Greens",
       fr: "Verdure de saison",
@@ -393,6 +405,7 @@ export const menuItems: MenuItem[] = [
     price: 5.99,
     count: null,
     emoji: "🥒",
+    image: "/dishes/cucumber-salad.jpg",
     name: {
       en: "Smashed Cucumber Salad",
       fr: "Salade de concombre",
@@ -423,6 +436,7 @@ export const menuItems: MenuItem[] = [
     price: 6.99,
     count: null,
     emoji: "🌶️",
+    image: "/dishes/chili-oil.jpg",
     name: {
       en: "House Chili Oil",
       fr: "Huile pimentée maison",
@@ -453,6 +467,7 @@ export const menuItems: MenuItem[] = [
     price: 5.99,
     count: null,
     emoji: "🍵",
+    image: "/dishes/hot-tea.jpg",
     name: {
       en: "Hot Tea Service",
       fr: "Service de thé chaud",

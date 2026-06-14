@@ -202,6 +202,15 @@ summary::-webkit-details-marker { display: none; }
 .spin-slow { animation: spin 22s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ---------- horizontal scroll carousel ---------- */
+.no-scrollbar {
+  -ms-overflow-style: none;     /* IE / Edge */
+  scrollbar-width: none;        /* Firefox   */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+
 /* ---------- card shine on hover ---------- */
 .dish-card {
   transition: transform 0.4s var(--ease-soft), box-shadow 0.4s var(--ease-soft);
