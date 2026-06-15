@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
-import { Lantern, SteamerBasket, SteamColumn } from "@/components/art";
+import { Lantern } from "@/components/art";
+import { SteamerBasket } from "@/components/steamer-basket";
 
 export function Hero() {
   const { lang, t } = useI18n();
@@ -66,12 +67,9 @@ export function Hero() {
           </a>
         </div>
 
-        {/* steamer + steam */}
+        {/* steamer */}
         <div className="relative mx-auto w-full max-w-md">
-          <SteamColumn className="absolute inset-x-0 top-4 mx-auto h-32 w-40 left-0 right-0" />
-          <div className="float-mid">
-            <SteamerBasket className="w-full drop-shadow-2xl" />
-          </div>
+          <SteamerBasket className="w-full drop-shadow-2xl" />
         </div>
       </div>
 

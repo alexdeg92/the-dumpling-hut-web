@@ -123,6 +123,47 @@ summary::-webkit-details-marker { display: none; }
 }
 .btn-ghost:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); }
 
+.steamer-mist {
+  opacity: 0;
+}
+
+.steamer-mist.is-active .steamer-puff {
+  animation: steamer-puff-rise 4.5s ease-out infinite;
+}
+
+.steamer-puff {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 253, 248, 0.82) 0%,
+    rgba(255, 253, 248, 0.35) 42%,
+    transparent 72%
+  );
+  filter: blur(11px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@keyframes steamer-puff-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0) scale(0.5);
+  }
+  12% {
+    opacity: 0.75;
+  }
+  45% {
+    opacity: 0.5;
+    transform: translate3d(4px, -32px, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-3px, -68px, 0) scale(1.25);
+  }
+}
+
 /* ---------- steam animation ---------- */
 .steam {
   position: absolute;
@@ -239,4 +280,6 @@ summary::-webkit-details-marker { display: none; }
     scroll-behavior: auto !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .steamer-mist { opacity: 0.7; }
+  .steamer-mist .steamer-puff { animation: none; opacity: 0.45; }
 }

@@ -3,7 +3,8 @@
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 import { PageHeader } from "@/components/page-header";
-import { ChiliSprig, SteamerBasket } from "@/components/art";
+import { ChiliSprig } from "@/components/art";
+import { SteamerBasket } from "@/components/steamer-basket";
 import { StatsBand } from "@/components/home-sections";
 
 export function StoryPageBody() {

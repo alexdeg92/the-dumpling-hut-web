@@ -26,63 +26,6 @@ export function SteamColumn({ className = "" }: { className?: string }) {
   );
 }
 
-/** A decorative bamboo steamer basket full of dumplings. */
-export function SteamerBasket({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 420 360" className={className} role="img" aria-label="A bamboo steamer of dumplings">
-      <defs>
-        <radialGradient id="glow" cx="50%" cy="35%" r="65%">
-          <stop offset="0%" stopColor="var(--color-gold-soft)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="var(--color-gold-soft)" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="bamboo" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#e8c98c" />
-          <stop offset="100%" stopColor="#cda35e" />
-        </linearGradient>
-      </defs>
-
-      <ellipse cx="210" cy="150" rx="200" ry="150" fill="url(#glow)" />
-
-      {/* steam wisps */}
-      <g stroke="var(--color-cream)" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.55">
-        <path className="float-slow" style={{ ["--rot" as string]: "0deg" }} d="M150 120c-12-14 12-22 0-38" />
-        <path className="float-mid" d="M210 105c-14-16 14-24 0-44" />
-        <path className="float-slow" d="M270 122c-12-14 12-22 0-38" />
-      </g>
-
-      {/* basket body */}
-      <ellipse cx="210" cy="250" rx="180" ry="60" fill="#b98a4a" />
-      <rect x="30" y="190" width="360" height="62" rx="14" fill="url(#bamboo)" />
-      <g stroke="#a9803f" strokeWidth="2" opacity="0.6">
-        <line x1="30" y1="206" x2="390" y2="206" />
-        <line x1="30" y1="222" x2="390" y2="222" />
-        <line x1="30" y1="238" x2="390" y2="238" />
-      </g>
-      <ellipse cx="210" cy="190" rx="180" ry="56" fill="#d8b271" />
-      <ellipse cx="210" cy="186" rx="168" ry="50" fill="#e7caa0" />
-
-      {/* dumplings */}
-      {[
-        [140, 176, 1],
-        [210, 168, 1.1],
-        [282, 176, 1],
-        [175, 196, 0.95],
-        [248, 196, 0.95],
-      ].map(([x, y, s], i) => (
-        <g key={i} transform={`translate(${x} ${y}) scale(${s})`}>
-          <path
-            d="M-44 8c0-22 20-32 44-32s44 10 44 32c0 5-5 7-9 4-3-7-7-7-10 0-2 4-6 4-8 0-3-7-7-7-10 0-2 4-6 4-8 0-3-7-7-7-10 0-4 3-9 1-15-4Z"
-            fill="var(--color-cream)"
-            stroke="#e3c79c"
-            strokeWidth="2"
-          />
-          <path d="M-40 8c5 9 20 13 40 13s35-4 40-13" fill="none" stroke="#d8b98a" strokeWidth="2.4" strokeLinecap="round" />
-        </g>
-      ))}
-    </svg>
-  );
-}
-
 export function ChiliSprig({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 80 80" className={className} aria-hidden="true">
