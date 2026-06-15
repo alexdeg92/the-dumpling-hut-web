@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import { useCallback, useEffect, useState } from "react";
 
 import { feedImages, instagramPostHref, restaurant } from "@/lib/content";
@@ -65,10 +66,12 @@ function Tile({ img, index, title, caption, onOpen, className, sizes }: TileProp
       />
       {/* ambient scrim */}
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/40 via-transparent to-[var(--color-ink)]/15" />
-      {/* IG badge */}
-      <div className="absolute left-2 top-2 grid size-5 place-items-center rounded-full bg-[var(--color-cream)]/25 text-[0.55rem] font-bold text-[var(--color-cream)] backdrop-blur-sm">
-        IG
-      </div>
+      {/* IG badge — only on real Instagram posts */}
+      {img.shortcode && (
+        <div className="absolute left-2 top-2 grid size-5 place-items-center rounded-full bg-[var(--color-cream)]/25 text-[0.55rem] font-bold text-[var(--color-cream)] backdrop-blur-sm">
+          IG
+        </div>
+      )}
       {/* hover caption overlay */}
       <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-[var(--color-ink)]/88 via-[var(--color-ink)]/15 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <p className="font-display text-sm leading-tight text-[var(--color-cream)]">{title}</p>
@@ -113,40 +116,31 @@ export function Feed() {
       {/*
        * Responsive gallery grid.
        *
-       * < lg: 3-column uniform square grid (compact vs the old 2-col).
-       * ≥ lg: editorial bento — img[0] is a 2×2 hero, imgs[1-4] are
-       *       1×1 companions beside it, imgs[5-8] are a 4-wide landscape
-       *       strip on the third row. CSS auto-placement does the rest.
+       * < lg: 3-column uniform square grid.
+       * ≥ lg: 4-column grid where img[0] is a 2×2 hero. Auto-placement fills
+       *       the rest of the hero's two rows with the next companions, then
+       *       continues as uniform squares — so any number of photos tiles
+       *       cleanly with no gaps.
        */}
       <div className="mt-8 grid grid-cols-3 gap-2 lg:grid-cols-4">
-        <Tile
-          img={feedImages[0]}
-          index={0}
-          title={f.posts[0]?.[0] ?? ""}
-          caption={f.posts[0]?.[1] ?? ""}
-          onOpen={setOpenIndex}
-          className="aspect-square lg:col-span-2 lg:row-span-2"
-          sizes="(min-width: 1024px) 50vw, 33vw"
-        />
-        {([1, 2, 3, 4] as const).map((i) => (
+        {feedImages.map((img, i) => (
           <Tile
-            key={feedImages[i].shortcode}
-            img={feedImages[i]}
+            key={img.src}
+            img={img}
             index={i}
             title={f.posts[i]?.[0] ?? ""}
             caption={f.posts[i]?.[1] ?? ""}
             onOpen={setOpenIndex}
-          />
-        ))}
-        {([5, 6, 7, 8] as const).map((i) => (
-          <Tile
-            key={feedImages[i].shortcode}
-            img={feedImages[i]}
-            index={i}
-            title={f.posts[i]?.[0] ?? ""}
-            caption={f.posts[i]?.[1] ?? ""}
-            onOpen={setOpenIndex}
-            className="aspect-square lg:aspect-[4/3]"
+            className={
+              i === 0
+                ? "aspect-square lg:col-span-2 lg:row-span-2"
+                : "aspect-square"
+            }
+            sizes={
+              i === 0
+                ? "(min-width: 1024px) 50vw, 33vw"
+                : "(min-width: 1024px) 25vw, 33vw"
+            }
           />
         ))}
       </div>
@@ -211,7 +205,9 @@ function Lightbox({
     };
   }, [go, onClose]);
 
-  return (
+  // Portal to <body> so the fixed overlay escapes <main>'s stacking context
+  // (main is `relative z-10`) and reliably covers the nav and footer.
+  return createPortal(
     <div
       className="modal-backdrop fixed inset-0 z-[100] flex flex-col bg-[var(--color-ink)]/85 backdrop-blur-md sm:items-center sm:justify-center sm:p-6"
       onClick={onClose}
@@ -259,17 +255,17 @@ function Lightbox({
       </button>
 
       <div
-        className="modal-card relative flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-[var(--color-night)] shadow-2xl sm:max-h-[90vh] sm:max-w-2xl sm:flex-none sm:rounded-3xl"
+        className="modal-card relative flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-[var(--color-night)] shadow-2xl sm:h-[88vh] sm:max-w-2xl sm:flex-none sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative min-h-0 flex-1 bg-[var(--color-ink)] sm:h-[62vh]">
+        <div className="relative min-h-0 flex-1 overflow-hidden bg-[var(--color-ink)]">
           <Image
             key={img.src}
             src={img.src}
             alt={`${title}, ${caption}`}
             fill
             sizes="(min-width: 640px) 672px, 100vw"
-            className="object-contain"
+            className="object-cover object-center"
             priority
           />
         </div>
@@ -290,23 +286,26 @@ function Lightbox({
           </div>
 
           <div className="mt-5 flex flex-wrap items-center gap-3">
-            <a
-              href={instagramPostHref(img.shortcode)}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--color-lacquer)] px-4 py-2 text-sm font-bold text-[var(--color-cream)] transition hover:bg-[var(--color-lacquer-soft)]"
-            >
-              <span className="grid size-5 place-items-center rounded-md bg-[var(--color-cream)]/20 text-[0.6rem]">
-                IG
-              </span>
-              {f.viewOnIg}
-            </a>
+            {img.shortcode && (
+              <a
+                href={instagramPostHref(img.shortcode)}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--color-lacquer)] px-4 py-2 text-sm font-bold text-[var(--color-cream)] transition hover:bg-[var(--color-lacquer-soft)]"
+              >
+                <span className="grid size-5 place-items-center rounded-md bg-[var(--color-cream)]/20 text-[0.6rem]">
+                  IG
+                </span>
+                {f.viewOnIg}
+              </a>
+            )}
             <span className="text-xs font-bold text-[var(--color-ink)]/45">
               {restaurant.instagram}
             </span>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

@@ -30,13 +30,16 @@ export const restaurant = {
 } as const;
 
 /**
- * Real posts pulled from the public @thedumplinghut Instagram feed.
- * Images are downloaded, square-cropped and web-optimized into /public/feed.
- * `shortcode` links each tile back to the original post on Instagram so the
- * account keeps full attribution. Captions live per-language in `feed.posts`,
- * zipped against this list by index. Keep both arrays the same length.
+ * The gallery. The first nine are real posts pulled from the public
+ * @thedumplinghut Instagram feed; `shortcode` links each of those tiles back
+ * to the original post so the account keeps full attribution. The rest are
+ * house photos of the room, the storefront and the famous wall of notes —
+ * they have no `shortcode` and simply show in the lightbox without an
+ * Instagram link. Images live in /public/feed. Captions live per-language in
+ * `feed.posts`, zipped against this list by index. Keep both arrays the same
+ * length.
  */
-export const feedImages: Array<{ src: string; shortcode: string }> = [
+export const feedImages: Array<{ src: string; shortcode?: string }> = [
   { src: "/feed/01-chili-oil-dumplings.jpg", shortcode: "CO6Mxk9DRqR" },
   { src: "/feed/02-steamed-plate.jpg", shortcode: "CMaZ33DjG18" },
   { src: "/feed/03-pan-fried-window.jpg", shortcode: "CQjaYzlDwxW" },
@@ -46,6 +49,17 @@ export const feedImages: Array<{ src: string; shortcode: string }> = [
   { src: "/feed/07-folding-the-filling.jpg", shortcode: "CNBMjLrhTpt" },
   { src: "/feed/08-fresh-dumpling-plate.jpg", shortcode: "CMcswb5DWTI" },
   { src: "/feed/09-cold-dessert.jpg", shortcode: "DZa3HrTlb5J" },
+  { src: "/feed/10-wall-of-notes.jpg" },
+  { src: "/feed/11-notes-from-everywhere.jpg" },
+  { src: "/feed/12-plateau-mural.jpg" },
+  { src: "/feed/13-the-front-door.jpg" },
+  { src: "/feed/14-a-note-from-afar.jpg" },
+  { src: "/feed/15-mixed-plate.jpg" },
+  { src: "/feed/16-the-storefront.jpg" },
+  { src: "/feed/17-steamed-open.jpg" },
+  { src: "/feed/18-golden-panfried.jpg" },
+  { src: "/feed/19-takeout-tray.jpg" },
+  { src: "/feed/20-pan-fried-closeup.jpg" },
 ];
 
 export const instagramPostHref = (shortcode: string) =>
@@ -694,6 +708,17 @@ export const copy = {
         ["Folding the filling", "Hands-deep in the prep. This is where each dumpling starts."],
         ["A fresh plate", "Just folded, just cooked, ready for the table."],
         ["Cold desserts now", "Ice cream and cold sweets are back for the hot season."],
+        ["The wall of notes", "Years of guests have pinned up love letters to the dumplings."],
+        ["Notes from everywhere", "Montreal, Vancouver, LA — messages from every table, wall to wall."],
+        ["Around the corner", "Plateau street art, a short walk from the hut."],
+        ["The front door", "Look closely: every inch around the glass is covered in notes."],
+        ["A note from afar", "Gabriel and Osvaldo, all the way from the USA and Mexico."],
+        ["Best of both", "Half steamed, half pan-fried: when you can't choose, get both."],
+        ["The little brick hut", "Arched windows, an OPEN sign, and bikes parked out front."],
+        ["Look inside", "A steamed dumpling split open on its golden egg-and-veg filling."],
+        ["Crisp and golden", "A plate of pan-fried dumplings with lacquered, golden bottoms."],
+        ["Packed to go", "A tray of dumplings boxed up and ready to travel home."],
+        ["Right off the pan", "Plump dumplings, glistening, with crackling golden edges."],
       ] as [string, string][],
     },
     visit: {
@@ -875,6 +900,17 @@ export const copy = {
         ["On garnit le pli", "Les mains dans la prépa : c'est là que chaque dumpling commence."],
         ["Une assiette fraîche", "Tout juste plié, tout juste cuit, prêt pour la table."],
         ["Desserts froids de retour", "La crème glacée et les douceurs froides reviennent pour l'été."],
+        ["Le mur de petits mots", "Des années de clients y ont épinglé leurs déclarations d'amour aux dumplings."],
+        ["Des mots de partout", "Montréal, Vancouver, LA : des messages de chaque table, d'un mur à l'autre."],
+        ["Au coin de la rue", "L'art urbain du Plateau, à deux pas de la maison."],
+        ["La porte d'entrée", "Regardez bien : chaque centimètre autour de la vitre est couvert de petits mots."],
+        ["Un mot venu de loin", "Gabriel et Osvaldo, venus des États-Unis et du Mexique."],
+        ["Le meilleur des deux", "Moitié vapeur, moitié poêlé : quand on n'arrive pas à choisir."],
+        ["La petite maison de brique", "Fenêtres en arc, une enseigne OUVERT et des vélos devant."],
+        ["Vue de l'intérieur", "Un dumpling vapeur ouvert sur sa farce dorée d'œuf et de légumes."],
+        ["Doré et croustillant", "Une assiette de dumplings poêlés aux fonds dorés et laqués."],
+        ["Emporté", "Un plateau de dumplings emballé, prêt à rentrer à la maison."],
+        ["Tout juste poêlés", "Des dumplings dodus et luisants, aux bords dorés et croustillants."],
       ] as [string, string][],
     },
     visit: {
@@ -1051,6 +1087,17 @@ export const copy = {
         ["手工调馅", "双手忙在备料里，每个饺子都从这里开始。"],
         ["新鲜一盘", "刚包好，刚煮好，上桌正当时。"],
         ["冷饮甜品回归", "冰淇淋和各式冷甜品，为这个夏天回归。"],
+        ["留言墙", "多年来，客人把对饺子的情话一张张钉在墙上。"],
+        ["来自世界各地的留言", "蒙特利尔、温哥华、洛杉矶——来自每一桌的留言，铺满整面墙。"],
+        ["街角风景", "Plateau 的街头壁画，离小屋只有几步路。"],
+        ["那扇前门", "仔细看——玻璃四周的每一寸都贴满了留言。"],
+        ["远道而来的一张留言", "Gabriel 与 Osvaldo，从美国和墨西哥远道而来。"],
+        ["两种都要", "一半水煮，一半煎香——选择困难时，就都来一点。"],
+        ["红砖小屋", "拱形窗、亮着的 OPEN 招牌，门口停着几辆单车。"],
+        ["咬开看看", "一只蒸饺掰开，露出金黄的蛋与蔬菜馅。"],
+        ["金黄酥脆", "一盘煎饺，底部煎得金黄发亮。"],
+        ["打包带走", "一盒装好的饺子，随时带回家。"],
+        ["刚出锅", "饱满油亮的饺子，带着酥脆的金边。"],
       ] as [string, string][],
     },
     visit: {
