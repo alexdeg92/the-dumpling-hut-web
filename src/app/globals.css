@@ -6,17 +6,17 @@
    ============================================================ */
 
 @theme inline {
-  /* core palette */
-  --color-ink: #1c0e0b;          /* near-black warm brown    */
-  --color-lacquer: #7a0f12;      /* deep lacquer red         */
-  --color-lacquer-soft: #a8181c; /* lit lacquer red          */
-  --color-ember: #d4452b;        /* hot ember / chili        */
-  --color-cream: #fcefd8;        /* warm paper / steamed bun */
-  --color-cream-2: #f6e3c4;      /* deeper paper             */
-  --color-gold: #e9b949;         /* gold leaf                */
-  --color-gold-soft: #f3d488;    /* lit gold                 */
-  --color-jade: #6f8f57;         /* chive / scallion green   */
-  --color-night: #2a1410;        /* night panel              */
+  /* core palette — navy & white theme */
+  --color-ink: #041e8d;          /* deep navy primary        */
+  --color-lacquer: #0a3db5;      /* brighter navy accent     */
+  --color-lacquer-soft: #1958d8; /* navy with lift           */
+  --color-ember: #3a7ef6;        /* light navy highlight     */
+  --color-cream: #ffffff;        /* pure white background    */
+  --color-cream-2: #f5f5f5;      /* off-white accent         */
+  --color-gold: #041e8d;         /* navy as primary accent   */
+  --color-gold-soft: #1958d8;    /* lighter navy accent      */
+  --color-jade: #0a3db5;         /* secondary navy            */
+  --color-night: #041e8d;        /* navy dark mode           */
 
   --font-sans: var(--font-noto-sans);
   --font-display: var(--font-display);
@@ -28,8 +28,8 @@
 }
 
 :root {
-  --paper: #fcefd8;
-  --ink: #1c0e0b;
+  --paper: #ffffff;
+  --ink: #041e8d;
   color-scheme: light;
 }
 
@@ -50,8 +50,8 @@ body {
   font-family: var(--font-noto-sans), ui-sans-serif, system-ui, sans-serif;
   background-color: var(--paper);
   background-image:
-    radial-gradient(120% 80% at 100% 0%, rgba(233, 185, 73, 0.18), transparent 60%),
-    radial-gradient(110% 70% at 0% 100%, rgba(122, 15, 18, 0.1), transparent 55%);
+    radial-gradient(120% 80% at 100% 0%, rgba(4, 30, 141, 0.08), transparent 60%),
+    radial-gradient(110% 70% at 0% 100%, rgba(4, 30, 141, 0.05), transparent 55%);
   background-attachment: fixed;
   overflow-x: clip;
 }
@@ -70,7 +70,7 @@ body::before {
 
 a, button { -webkit-tap-highlight-color: transparent; }
 summary::-webkit-details-marker { display: none; }
-::selection { background: var(--color-gold); color: var(--color-ink); }
+::selection { background: var(--color-gold); color: white; }
 
 /* lang-specific display tweaks */
 :lang(zh) { letter-spacing: 0.01em; }
@@ -112,11 +112,11 @@ summary::-webkit-details-marker { display: none; }
   will-change: transform;
 }
 .btn-gold {
-  background: linear-gradient(135deg, var(--color-gold-soft), var(--color-gold));
-  color: var(--color-ink);
-  box-shadow: 0 14px 30px -10px rgba(233, 185, 73, 0.7);
+  background: linear-gradient(135deg, var(--color-lacquer-soft), var(--color-lacquer));
+  color: white;
+  box-shadow: 0 14px 30px -10px rgba(4, 30, 141, 0.4);
 }
-.btn-gold:hover { transform: translateY(-3px) rotate(-0.5deg); box-shadow: 0 22px 40px -12px rgba(233, 185, 73, 0.85); }
+.btn-gold:hover { transform: translateY(-3px) rotate(-0.5deg); box-shadow: 0 22px 40px -12px rgba(4, 30, 141, 0.6); }
 .btn-ghost {
   background: transparent;
   color: currentColor;
