@@ -112,8 +112,8 @@ summary::-webkit-details-marker { display: none; }
   will-change: transform;
 }
 .btn-gold {
-  background: linear-gradient(135deg, var(--color-gold-soft), var(--color-gold));
-  color: white;
+  background: linear-gradient(135deg, #FDB913 0%, #FFD700 100%);
+  color: #ffffff;
   box-shadow: 0 14px 30px -10px rgba(253, 185, 19, 0.4);
 }
 .btn-gold:hover { transform: translateY(-3px) rotate(-0.5deg); box-shadow: 0 22px 40px -12px rgba(253, 185, 19, 0.6); }

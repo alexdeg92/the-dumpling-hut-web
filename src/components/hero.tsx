@@ -39,12 +39,23 @@ export function Hero() {
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link href={`/${lang}/menu`} className="btn btn-gold shadow-lg">
+            <Link
+              href={`/${lang}/menu`}
+              className="btn shadow-lg"
+              style={{
+                background: 'linear-gradient(135deg, #FDB913 0%, #FFD700 100%)',
+                color: '#ffffff',
+                boxShadow: '0 14px 30px -10px rgba(253, 185, 19, 0.4)'
+              }}
+            >
               {h.ctaMenu}
             </Link>
             <Link
               href={`/${lang}/location`}
               className="btn btn-ghost border-[var(--color-cream)]/50 text-[var(--color-cream)] hover:bg-white/10 shadow-md"
+              style={{
+                borderColor: '#ffffff'
+              }}
             >
               {h.ctaVisit}
             </Link>
