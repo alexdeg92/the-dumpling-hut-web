@@ -56,12 +56,12 @@ export function Nav() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8 sm:py-5">
         {/* left cluster: sidebar toggle + logo */}
-        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+        <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
           <Sidebar onDark={onDark} />
 
           <Link
             href={`/${current}`}
-            className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
+            className="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3"
             aria-label={restaurant.name}
           >
             <span className="hidden shrink-0 transition-transform duration-500 group-hover:rotate-[14deg] sm:inline">
@@ -69,14 +69,14 @@ export function Nav() {
             </span>
             <span className="min-w-0 leading-tight">
               <span
-                className={`font-display block truncate text-base leading-tight sm:text-lg ${
+                className={`font-display block text-pretty text-base leading-tight sm:text-lg ${
                   onDark ? "text-[var(--color-cream)]" : "text-[var(--color-ink)]"
                 }`}
               >
                 {restaurant.name}
               </span>
               <span
-                className={`han block truncate text-[0.7rem] tracking-[0.3em] ${
+                className={`han block text-[0.7rem] tracking-[0.3em] ${
                   onDark
                     ? "text-[var(--color-gold-soft)]"
                     : "text-[var(--color-lacquer)]"
