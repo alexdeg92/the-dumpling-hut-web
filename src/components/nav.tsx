@@ -69,17 +69,17 @@ export function Nav() {
             </span>
             <span className="min-w-0 leading-tight">
               <span
-                className={`font-display block text-pretty text-base leading-tight sm:text-lg ${
+                className={`font-display block text-nowrap text-sm font-bold sm:text-base sm:text-lg ${
                   onDark ? "text-[var(--color-cream)]" : "text-[var(--color-ink)]"
                 }`}
               >
                 {restaurant.name}
               </span>
               <span
-                className={`han block text-[0.7rem] tracking-[0.3em] ${
+                className={`han block text-[0.75rem] font-bold tracking-[0.3em] ${
                   onDark
-                    ? "text-[var(--color-gold-soft)]"
-                    : "text-[var(--color-lacquer)]"
+                    ? "text-[var(--color-cream)]"
+                    : "text-[var(--color-ink)]"
                 }`}
               >
                 {restaurant.hanzi}
@@ -93,7 +93,7 @@ export function Nav() {
           type="button"
           onClick={open}
           aria-label={t.order.cta}
-          className="btn btn-gold h-11 shrink-0 gap-2 px-4 text-sm sm:px-5"
+          className="btn btn-gold h-11 shrink-0 gap-2 px-4 text-sm font-bold sm:px-5 shadow-lg hover:shadow-xl"
         >
           <span className="sm:hidden">{t.order.ctaShort}</span>
           <span className="hidden sm:inline">{t.order.cta}</span>

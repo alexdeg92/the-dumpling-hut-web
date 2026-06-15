@@ -133,10 +133,10 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
         aria-label={t.nav.menuOpen}
         aria-expanded={open}
         aria-controls="site-sidebar"
-        className={`relative z-[112] grid size-11 shrink-0 place-items-center rounded-full border transition ${
+        className={`relative z-[112] grid size-11 shrink-0 place-items-center rounded-full border transition font-bold ${
           onDark
-            ? "border-[var(--color-cream)]/30 bg-[var(--color-cream)]/10 hover:bg-[var(--color-cream)]/20"
-            : "border-[var(--color-ink)]/15 bg-[var(--color-cream)]/70 hover:bg-[var(--color-cream)]"
+            ? "border-[var(--color-cream)]/40 bg-[var(--color-cream)]/15 hover:bg-[var(--color-cream)]/25"
+            : "border-[var(--color-ink)]/25 bg-[var(--color-cream)]/80 hover:bg-[var(--color-cream)]"
         }`}
       >
         <span className="relative block h-3.5 w-5">
@@ -190,14 +190,14 @@ function LanguageSelect() {
   const { current, setLanguage, languages } = useLanguage();
   return (
     <label className="block">
-      <span className="eyebrow mb-2 block text-[var(--color-lacquer)]">
+      <span className="eyebrow mb-2 block text-[var(--color-ink)] font-bold">
         Language
       </span>
       <div className="relative">
         <select
           value={current}
           onChange={(e) => setLanguage(e.target.value as typeof current)}
-          className="w-full appearance-none rounded-2xl border border-[var(--color-ink)]/15 bg-[var(--color-cream)] px-4 py-3 pr-10 text-base font-bold text-[var(--color-ink)] outline-none transition focus:border-[var(--color-gold)] focus:ring-2 focus:ring-[var(--color-gold)]/40"
+          className="w-full appearance-none rounded-2xl border-2 border-[var(--color-ink)]/25 bg-[var(--color-cream-2)] px-4 py-3 pr-10 text-base font-bold text-[var(--color-ink)] outline-none transition hover:border-[var(--color-lacquer)]/50 focus:border-[var(--color-lacquer)] focus:ring-2 focus:ring-[var(--color-lacquer)]/30"
           aria-label="Language"
         >
           {languages.map((l) => (
@@ -209,10 +209,10 @@ function LanguageSelect() {
         <svg
           viewBox="0 0 24 24"
           aria-hidden="true"
-          className="pointer-events-none absolute right-3.5 top-1/2 size-5 -translate-y-1/2 text-[var(--color-ink)]/55"
+          className="pointer-events-none absolute right-3.5 top-1/2 size-5 -translate-y-1/2 text-[var(--color-ink)]/70 font-bold"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.2"
+          strokeWidth="2.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
