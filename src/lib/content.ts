@@ -67,6 +67,14 @@ export const feedImages: Array<{ src: string; shortcode?: string }> = [
 export const instagramPostHref = (shortcode: string) =>
   `https://www.instagram.com/p/${shortcode}/`;
 
+/**
+ * Small pre-generated thumbnail for a feed image. The grid loads these (fast),
+ * and the lightbox shows the cached thumbnail first while the full-res file
+ * loads in the background. Thumbnails live in /public/feed/thumb with the same
+ * filename, e.g. /feed/01-x.jpg -> /feed/thumb/01-x.jpg.
+ */
+export const feedThumb = (src: string) => src.replace("/feed/", "/feed/thumb/");
+
 export type DeliveryKey = "doordash" | "ubereats";
 
 export type DeliveryPlatform = {
@@ -601,7 +609,7 @@ export const copy = {
     ] as [string, string][],
     hero: {
       tag: "Hidden on Rue Clark · since the first fold",
-      lead: "Fifteen folds",
+      lead: "Hand-folded",
       title: "to a perfect dumpling.",
       sub: "A tiny Montreal house where special homemade recipes become honest, steam-kissed dumplings, hand-folded in an open kitchen. No fuss. No pretension. Just the dumpling you'll think about tomorrow.",
       ctaMenu: "Explore the menu",
@@ -795,7 +803,7 @@ export const copy = {
     ] as [string, string][],
     hero: {
       tag: "Caché sur la rue Clark · depuis le premier pli",
-      lead: "Quinze plis",
+      lead: "Pliés à la main",
       title: "pour un dumpling parfait.",
       sub: "Une petite maison montréalaise où des recettes maison bien gardées deviennent des dumplings honnêtes et fumants, pliés à la main dans une cuisine ouverte. Sans chichi. Sans prétention. Juste le dumpling auquel vous penserez demain.",
       ctaMenu: "Explorer le menu",
@@ -989,7 +997,7 @@ export const copy = {
     ] as [string, string][],
     hero: {
       tag: "藏在 Clark 街 · 从第一个褶开始",
-      lead: "十五个褶",
+      lead: "手工现包",
       title: "成就一只完美的饺子。",
       sub: "一间小小的蒙特利尔老房子，开放式厨房里用独家家常配方手工包制朴实、冒着热气的饺子。不张扬，不做作，只有让你明天还会想起的那只饺子。",
       ctaMenu: "查看菜单",

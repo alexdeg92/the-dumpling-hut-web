@@ -1,10 +1,15 @@
 "use client";
 
-import Image from "next/image";
-import { createPortal } from "react-dom";
-import { useCallback, useEffect, useState } from "react";
+/* The gallery serves pre-generated thumbnails in the grid and swaps to the
+   full-res file manually in the lightbox (thumbnail first, then a seamless
+   cross-fade once the full image is ready). That hand-off is easier with a
+   plain <img> than with next/image, so we opt out of the lint rule here. */
+/* eslint-disable @next/next/no-img-element */
 
-import { feedImages, instagramPostHref, restaurant } from "@/lib/content";
+import { createPortal } from "react-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { feedImages, feedThumb, instagramPostHref, restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 
@@ -42,10 +47,9 @@ type TileProps = {
   onOpen: (i: number) => void;
   /** Tailwind classes for aspect / col-span / row-span. Defaults to aspect-square. */
   className?: string;
-  sizes?: string;
 };
 
-function Tile({ img, index, title, caption, onOpen, className, sizes }: TileProps) {
+function Tile({ img, index, title, caption, onOpen, className }: TileProps) {
   return (
     <button
       type="button"
@@ -56,13 +60,14 @@ function Tile({ img, index, title, caption, onOpen, className, sizes }: TileProp
     >
       {/* warm lantern gradient fallback */}
       <div className={`absolute inset-0 bg-gradient-to-br ${GRADIENTS[index % GRADIENTS.length]}`} />
-      {/* real photo */}
-      <Image
-        src={img.src}
+      {/* lightweight thumbnail — the full-res file only loads in the lightbox */}
+      <img
+        src={feedThumb(img.src)}
         alt={`${title}, ${caption}`}
-        fill
-        sizes={sizes ?? "(min-width: 1024px) 25vw, 33vw"}
-        className="object-cover transition-transform duration-700 group-hover:scale-110"
+        loading={index === 0 ? "eager" : "lazy"}
+        fetchPriority={index === 0 ? "high" : "auto"}
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
       {/* ambient scrim */}
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/40 via-transparent to-[var(--color-ink)]/15" />
@@ -136,11 +141,6 @@ export function Feed() {
                 ? "aspect-square lg:col-span-2 lg:row-span-2"
                 : "aspect-square"
             }
-            sizes={
-              i === 0
-                ? "(min-width: 1024px) 50vw, 33vw"
-                : "(min-width: 1024px) 25vw, 33vw"
-            }
           />
         ))}
       </div>
@@ -166,6 +166,52 @@ export function Feed() {
         />
       )}
     </div>
+  );
+}
+
+/**
+ * Lightbox image with a seamless thumbnail → full-res hand-off.
+ *
+ * The thumbnail (already cached from the grid) paints instantly, while the
+ * full-res file loads underneath. Once it's ready we cross-fade the full-res
+ * layer in over the thumbnail. Mounted with a `key` per photo so navigating
+ * resets the fade. Falls back to the imperative `complete` check for full-res
+ * files already in the browser cache, where `onLoad` may not fire after mount.
+ */
+function FullResImage({
+  thumb,
+  full,
+  alt,
+}: {
+  thumb: string;
+  full: string;
+  alt: string;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (ref.current?.complete) setLoaded(true);
+  }, []);
+
+  return (
+    <>
+      <img
+        src={thumb}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      />
+      <img
+        ref={ref}
+        src={full}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </>
   );
 }
 
@@ -259,14 +305,11 @@ function Lightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative min-h-0 flex-1 overflow-hidden bg-[var(--color-ink)]">
-          <Image
+          <FullResImage
             key={img.src}
-            src={img.src}
+            thumb={feedThumb(img.src)}
+            full={img.src}
             alt={`${title}, ${caption}`}
-            fill
-            sizes="(min-width: 640px) 672px, 100vw"
-            className="object-cover object-center"
-            priority
           />
         </div>
 
