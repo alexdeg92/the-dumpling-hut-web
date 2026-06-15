@@ -6,17 +6,17 @@
    ============================================================ */
 
 @theme inline {
-  /* core palette */
-  --color-ink: #1c0e0b;          /* near-black warm brown    */
-  --color-lacquer: #7a0f12;      /* deep lacquer red         */
-  --color-lacquer-soft: #a8181c; /* lit lacquer red          */
-  --color-ember: #d4452b;        /* hot ember / chili        */
-  --color-cream: #fcefd8;        /* warm paper / steamed bun */
-  --color-cream-2: #f6e3c4;      /* deeper paper             */
-  --color-gold: #e9b949;         /* gold leaf                */
-  --color-gold-soft: #f3d488;    /* lit gold                 */
-  --color-jade: #6f8f57;         /* chive / scallion green   */
-  --color-night: #2a1410;        /* night panel              */
+  /* core palette — navy/white theme variant */
+  --color-ink: #041e8d;          /* navy blue primary        */
+  --color-lacquer: #041e8d;      /* navy blue accent         */
+  --color-lacquer-soft: #0a2fb5; /* lighter navy             */
+  --color-ember: #0a2fb5;        /* bright navy              */
+  --color-cream: #ffffff;        /* white base               */
+  --color-cream-2: #f5f5f5;      /* light gray               */
+  --color-gold: #041e8d;         /* navy accent              */
+  --color-gold-soft: #0a2fb5;    /* lighter navy             */
+  --color-jade: #041e8d;         /* navy green accent        */
+  --color-night: #0a1a5c;        /* deep navy                */
 
   --font-sans: var(--font-noto-sans);
   --font-display: var(--font-display);
@@ -28,8 +28,8 @@
 }
 
 :root {
-  --paper: #fcefd8;
-  --ink: #1c0e0b;
+  --paper: #ffffff;
+  --ink: #041e8d;
   color-scheme: light;
 }
 
