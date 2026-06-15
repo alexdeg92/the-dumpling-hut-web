@@ -1,30 +1,16 @@
 "use client";
 
-import Image from "next/image";
+import { FeaturedDishOrbit } from "@/components/featured-dish-orbit";
 import Link from "next/link";
-import { menuItems, restaurant, type MenuItem } from "@/lib/content";
+import { restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 import { ChiliSprig, Seal } from "@/components/art";
 
-const FEATURED_DISH_IDS = [
-  "lamb-coriander-steamed",
-  "pork-chive-steamed",
-  "chicken-mushroom-steamed",
-] as const;
-
-/** Three homepage picks — explicit IDs so names and photos stay distinct. */
-function getFeaturedDishes(): MenuItem[] {
-  return FEATURED_DISH_IDS.map((id) => menuItems.find((m) => m.id === id)).filter(
-    (item): item is MenuItem => item != null,
-  );
-}
-
-/** Three signature dishes pulled live from the menu data. */
+/** Circular orbit of signature dishes with auto-rotating spotlight. */
 export function FeaturedDishes() {
   const { lang, t } = useI18n();
   const ref = useReveal<HTMLDivElement>();
-  const picks = getFeaturedDishes();
 
   return (
     <section ref={ref} className="relative mx-auto max-w-6xl px-5 py-24 sm:px-8">
@@ -43,37 +29,8 @@ export function FeaturedDishes() {
         </Link>
       </div>
 
-      <div className="mt-10 grid gap-5 md:grid-cols-3">
-        {picks.map((item, i) => (
-          <Link
-            key={item.id}
-            href={`/${lang}/menu`}
-            className="dish-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-ink)]/10 bg-white/70"
-          >
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--color-cream-2)]">
-              <Image
-                src={item.image}
-                alt={item.name[lang]}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <span className="absolute right-3 top-3 text-xs font-extrabold text-[var(--color-gold)] drop-shadow">
-                0{i + 1}
-              </span>
-            </div>
-            <div className="p-6">
-              <h3 className="font-display text-2xl text-[var(--color-ink)]">
-                {item.name[lang]}
-              </h3>
-              <p className="mt-2 leading-7 text-[var(--color-ink)]/65">{item.blurb[lang]}</p>
-              <p className="mt-4 font-bold text-[var(--color-lacquer)]">
-                ${item.price.toFixed(2)}
-                {item.count ? ` · ×${item.count}` : ""}
-              </p>
-            </div>
-          </Link>
-        ))}
+      <div className="reveal">
+        <FeaturedDishOrbit />
       </div>
     </section>
   );

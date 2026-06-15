@@ -219,6 +219,18 @@ summary::-webkit-details-marker { display: none; }
   transform: translateY(-6px);
 }
 
+.featured-fan-ring,
+.featured-fan-card {
+  transition:
+    transform 1.05s var(--ease-soft),
+    opacity 0.7s var(--ease-soft),
+    box-shadow 0.7s var(--ease-soft);
+}
+
+.featured-fan-ring {
+  transition-duration: 900ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
