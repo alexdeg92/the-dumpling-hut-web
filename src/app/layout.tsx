@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s",
   },
   description:
-    "A cozy, family-run Chinese dumpling house in Montreal serving hand-folded dumplings on Rue Clark.",
+    "A cozy Chinese dumpling house in Montreal serving hand-folded dumplings from special homemade recipes on Rue Clark.",
   applicationName: restaurant.name,
   robots: {
     index: true,

@@ -249,8 +249,8 @@ export const menuItems: MenuItem[] = [
       zh: "鸡肉、蘑菇与芝麻，鲜味十足。",
     },
     detail: {
-      en: "The lighter pick. Tender ground chicken with earthy mushrooms and a drop of sesame oil — gentle, savoury and very easy to keep eating.",
-      fr: "Le choix plus léger. Poulet haché tendre, champignons terreux et une goutte d'huile de sésame — doux, savoureux et facile à enchaîner.",
+      en: "The lighter pick. Tender ground chicken with earthy mushrooms and a drop of sesame oil: gentle, savoury, and very easy to keep eating.",
+      fr: "Le choix plus léger. Poulet haché tendre, champignons terreux et une goutte d'huile de sésame : doux, savoureux et facile à enchaîner.",
       zh: "更清爽的选择。嫩鸡肉配上带泥土香的蘑菇和一点芝麻油，温和鲜香，一口接一口。",
     },
     pairs: {
@@ -342,8 +342,8 @@ export const menuItems: MenuItem[] = [
       zh: "温暖家常，带一点清新草本香。",
     },
     detail: {
-      en: "Pork and dill with a crackling fried base. Comforting and bright at once — the kind of plate that disappears before you mean it to.",
-      fr: "Porc et aneth avec une base poêlée croustillante. Réconfortant et lumineux à la fois — le genre d'assiette qui disparaît avant qu'on s'en rende compte.",
+      en: "Pork and dill with a crackling fried base. Comforting and bright at once, the kind of plate that disappears before you mean it to.",
+      fr: "Porc et aneth avec une base poêlée croustillante. Réconfortant et lumineux à la fois, le genre d'assiette qui disparaît avant qu'on s'en rende compte.",
       zh: "猪肉茴香配酥脆煎底。既温暖又清新，是那种还没回过神就已经吃光的一盘。",
     },
     pairs: {
@@ -497,8 +497,8 @@ export const menuItems: MenuItem[] = [
       zh: "一小罐辣味，蘸食最佳。",
     },
     detail: {
-      en: "Our slow-toasted chili oil in a jar to take home. Deep, fragrant, more savoury than scorching — drizzle it on everything.",
-      fr: "Notre huile pimentée lentement grillée, en pot à emporter. Profonde, parfumée, plus savoureuse que brûlante — à verser sur tout.",
+      en: "Our slow-toasted chili oil in a jar to take home. Deep, fragrant, more savoury than scorching. Drizzle it on everything.",
+      fr: "Notre huile pimentée lentement grillée, en pot à emporter. Profonde, parfumée, plus savoureuse que brûlante. À verser sur tout.",
       zh: "慢火炒香的自制辣油，装罐带回家。香气浓郁、咸鲜大于灼辣，淋什么都好吃。",
     },
     pairs: {
@@ -549,7 +549,7 @@ export const copy = {
     metadata: {
       title: "The Dumpling Hut | Hand-folded Chinese dumplings in Montreal",
       description:
-        "A cozy, family-run Chinese dumpling house on Rue Clark, Montreal. Hand-folded steamed and pan-fried dumplings, made fresh daily.",
+        "A cozy Chinese dumpling house on Rue Clark, Montreal. Hand-folded steamed and pan-fried dumplings from special homemade recipes, made fresh daily.",
     },
     locale: "en_CA",
     nav: {
@@ -570,17 +570,17 @@ export const copy = {
       hours: "Hours",
       instagram: "Instagram",
       closed: "Closed",
-      owners: "Haiqin & family",
+      owners: "Haiqin",
       perOrder: "per order",
       from: "from",
     },
     hours: [
-      ["Mon", "11:00 — 21:00"],
-      ["Tue", "11:00 — 21:00"],
-      ["Wed", "11:00 — 21:00"],
-      ["Thu", "11:00 — 21:00"],
-      ["Fri", "11:00 — 21:30"],
-      ["Sat", "11:00 — 21:30"],
+      ["Mon", "11:00 – 21:00"],
+      ["Tue", "11:00 – 21:00"],
+      ["Wed", "11:00 – 21:00"],
+      ["Thu", "11:00 – 21:00"],
+      ["Fri", "11:00 – 21:30"],
+      ["Sat", "11:00 – 21:30"],
       ["Sun", "Closed"],
     ] as [string, string][],
     hero: {
@@ -595,20 +595,20 @@ export const copy = {
     marquee: [
       "hand-folded daily",
       "open kitchen",
-      "family-run",
+      "homemade recipes",
       "steamed or pan-fried",
       "a hidden gem on Clark",
       "15 to an order",
     ],
     story: {
       eyebrow: "Our story",
-      title: "A family-run dumpling house with an open-kitchen heart.",
+      title: "A hand-folded dumpling house with an open-kitchen heart.",
       lead: "Tucked inside a converted house on Rue Clark, The Dumpling Hut feels more like a neighbourhood secret than a restaurant built for show.",
       blocks: [
         {
           k: "01",
           h: "Haiqin's table",
-          p: "Haiqin and family built the restaurant around the food they know best — Chinese dumplings made by hand, served without ceremony, meant to be shared.",
+          p: "Haiqin built the hut around special homemade recipes: hand-folded Chinese dumplings, served without ceremony, meant to be shared.",
         },
         {
           k: "02",
@@ -623,7 +623,7 @@ export const copy = {
       ],
       values: [
         "Hand-folded dumplings",
-        "Family ownership",
+        "Special homemade recipes",
         "Cozy converted house",
         "No-pretension hospitality",
       ],
@@ -636,14 +636,14 @@ export const copy = {
     menu: {
       eyebrow: "The menu",
       title: "Folded to order. Filtered to taste.",
-      lead: "Steamed for soft and juicy, pan-fried for crisp golden bottoms. Filter by what you're craving — we'll show you the way.",
+      lead: "Steamed for soft and juicy, pan-fried for crisp golden bottoms. Filter by what you're craving and we'll show you the way.",
       searchPlaceholder: "Search dumplings…",
       filtersTitle: "Filter",
       sortTitle: "Sort",
       clear: "Clear all",
       resultsOne: "plate matches",
       resultsMany: "plates match",
-      none: "No plates match those filters — loosen them up.",
+      none: "No plates match those filters. Loosen them up.",
       perOrder: "per order",
       cooks: {
         all: "Everything",
@@ -677,7 +677,7 @@ export const copy = {
     },
     feed: {
       eyebrow: "From the kitchen",
-      title: "Steam, folds, and crisp bottoms — straight from our feed.",
+      title: "Steam, folds, and crisp bottoms, straight from our feed.",
       lead: "We post what's coming out of the pan. Follow along on Instagram.",
       follow: "Follow on Instagram",
       viewOnIg: "View on Instagram",
@@ -691,7 +691,7 @@ export const copy = {
         ["Chicken & coriander combo", "Chicken-coriander and the egg-carrot fold, plated together."],
         ["Dip and go", "Steamed dumplings, chili oil, an egg, and the red chopsticks."],
         ["Rolled by hand", "Every wrapper rolled out one at a time, all day long."],
-        ["Folding the filling", "Hands-deep in the prep — this is where each dumpling starts."],
+        ["Folding the filling", "Hands-deep in the prep. This is where each dumpling starts."],
         ["A fresh plate", "Just folded, just cooked, ready for the table."],
         ["Cold desserts now", "Ice cream and cold sweets are back for the hot season."],
       ] as [string, string][],
@@ -730,7 +730,7 @@ export const copy = {
     metadata: {
       title: "La Maison Dumplings | Dumplings chinois faits main à Montréal",
       description:
-        "Un restaurant familial et chaleureux de dumplings chinois sur la rue Clark à Montréal. Dumplings vapeur et poêlés faits main, frais chaque jour.",
+        "Un restaurant chaleureux de dumplings chinois sur la rue Clark à Montréal. Dumplings vapeur et poêlés faits main à partir de recettes maison, frais chaque jour.",
     },
     locale: "fr_CA",
     nav: {
@@ -751,17 +751,17 @@ export const copy = {
       hours: "Heures",
       instagram: "Instagram",
       closed: "Fermé",
-      owners: "Haiqin et sa famille",
+      owners: "Haiqin",
       perOrder: "par commande",
       from: "dès",
     },
     hours: [
-      ["Lun", "11:00 — 21:00"],
-      ["Mar", "11:00 — 21:00"],
-      ["Mer", "11:00 — 21:00"],
-      ["Jeu", "11:00 — 21:00"],
-      ["Ven", "11:00 — 21:30"],
-      ["Sam", "11:00 — 21:30"],
+      ["Lun", "11:00 à 21:00"],
+      ["Mar", "11:00 à 21:00"],
+      ["Mer", "11:00 à 21:00"],
+      ["Jeu", "11:00 à 21:00"],
+      ["Ven", "11:00 à 21:30"],
+      ["Sam", "11:00 à 21:30"],
       ["Dim", "Fermé"],
     ] as [string, string][],
     hero: {
@@ -776,20 +776,20 @@ export const copy = {
     marquee: [
       "fait main chaque jour",
       "cuisine ouverte",
-      "entreprise familiale",
+      "recettes maison",
       "vapeur ou poêlé",
       "un bijou caché sur Clark",
       "15 par commande",
     ],
     story: {
       eyebrow: "Notre histoire",
-      title: "Une maison de dumplings familiale au cœur de cuisine ouverte.",
+      title: "Une maison de dumplings faits main au cœur de cuisine ouverte.",
       lead: "Installée dans une maison convertie sur la rue Clark, La Maison Dumplings ressemble plus à un secret de quartier qu'à un restaurant de spectacle.",
       blocks: [
         {
           k: "01",
           h: "La table de Haiqin",
-          p: "Haiqin et sa famille ont bâti le restaurant autour de ce qu'ils connaissent le mieux — des dumplings chinois faits main, servis sans cérémonie, pensés pour être partagés.",
+          p: "Haiqin a bâti la maison autour de recettes maison bien gardées : des dumplings chinois pliés à la main, servis sans cérémonie, pensés pour être partagés.",
         },
         {
           k: "02",
@@ -804,7 +804,7 @@ export const copy = {
       ],
       values: [
         "Dumplings pliés à la main",
-        "Entreprise familiale",
+        "Recettes maison spéciales",
         "Maison convertie intime",
         "Accueil sans prétention",
       ],
@@ -817,14 +817,14 @@ export const copy = {
     menu: {
       eyebrow: "Le menu",
       title: "Pliés à la commande. Filtrés selon l'envie.",
-      lead: "Vapeur pour tendre et juteux, poêlé pour des fonds dorés et croustillants. Filtrez selon votre envie — on vous guide.",
+      lead: "Vapeur pour tendre et juteux, poêlé pour des fonds dorés et croustillants. Filtrez selon votre envie et on vous guide.",
       searchPlaceholder: "Chercher un dumpling…",
       filtersTitle: "Filtrer",
       sortTitle: "Trier",
       clear: "Tout effacer",
       resultsOne: "assiette trouvée",
       resultsMany: "assiettes trouvées",
-      none: "Aucune assiette ne correspond — assouplissez les filtres.",
+      none: "Aucune assiette ne correspond. Assouplissez les filtres.",
       perOrder: "par commande",
       cooks: {
         all: "Tout",
@@ -858,7 +858,7 @@ export const copy = {
     },
     feed: {
       eyebrow: "De la cuisine",
-      title: "Vapeur, plis et fonds croustillants — directement de notre fil.",
+      title: "Vapeur, plis et fonds croustillants, directement de notre fil.",
       lead: "On publie ce qui sort de la poêle. Suivez-nous sur Instagram.",
       follow: "Suivre sur Instagram",
       viewOnIg: "Voir sur Instagram",
@@ -872,7 +872,7 @@ export const copy = {
         ["Combo poulet-coriandre", "Poulet-coriandre et le pli œuf-carotte, servis ensemble."],
         ["On trempe et c'est parti", "Dumplings vapeur, huile pimentée, un œuf et les baguettes rouges."],
         ["Roulé à la main", "Chaque pâte étalée une à une, toute la journée."],
-        ["On garnit le pli", "Les mains dans la prépa — c'est là que chaque dumpling commence."],
+        ["On garnit le pli", "Les mains dans la prépa : c'est là que chaque dumpling commence."],
         ["Une assiette fraîche", "Tout juste plié, tout juste cuit, prêt pour la table."],
         ["Desserts froids de retour", "La crème glacée et les douceurs froides reviennent pour l'été."],
       ] as [string, string][],
@@ -911,7 +911,7 @@ export const copy = {
     metadata: {
       title: "饺子小屋 The Dumpling Hut | 蒙特利尔手工中式饺子",
       description:
-        "位于蒙特利尔Clark街的温馨家庭式中式饺子小馆。每日手工现包水饺与煎饺。",
+        "位于蒙特利尔Clark街的温馨中式饺子小馆。每日以独家家常配方手工现包水饺与煎饺。",
     },
     locale: "zh_CN",
     nav: {
@@ -932,17 +932,17 @@ export const copy = {
       hours: "营业时间",
       instagram: "Instagram",
       closed: "休息",
-      owners: "Haiqin 和家人",
+      owners: "Haiqin",
       perOrder: "每份",
       from: "起",
     },
     hours: [
-      ["周一", "11:00 — 21:00"],
-      ["周二", "11:00 — 21:00"],
-      ["周三", "11:00 — 21:00"],
-      ["周四", "11:00 — 21:00"],
-      ["周五", "11:00 — 21:30"],
-      ["周六", "11:00 — 21:30"],
+      ["周一", "11:00-21:00"],
+      ["周二", "11:00-21:00"],
+      ["周三", "11:00-21:00"],
+      ["周四", "11:00-21:00"],
+      ["周五", "11:00-21:30"],
+      ["周六", "11:00-21:30"],
       ["周日", "休息"],
     ] as [string, string][],
     hero: {
@@ -957,20 +957,20 @@ export const copy = {
     marquee: [
       "每日手工现包",
       "开放式厨房",
-      "家庭经营",
+      "独家家常配方",
       "水饺或煎饺",
       "Clark 街上的隐藏小店",
       "每份 15 只",
     ],
     story: {
       eyebrow: "我们的故事",
-      title: "一家以开放式厨房为心脏的家庭饺子小馆。",
+      title: "一家以开放式厨房为心脏的手工饺子小馆。",
       lead: "藏身于 Clark 街一栋改建的小房子里，饺子小屋更像一个街坊口口相传的隐藏小店，而非用来展示的餐厅。",
       blocks: [
         {
           k: "01",
-          h: "Haiqin 家的餐桌",
-          p: "Haiqin 和家人把最熟悉的味道带到店里——手工包制的中式饺子，简单上桌，适合分享。",
+          h: "Haiqin 的手艺",
+          p: "Haiqin 把独家家常配方带到店里：手工包制的中式饺子，简单上桌，适合分享。",
         },
         {
           k: "02",
@@ -983,7 +983,7 @@ export const copy = {
           p: "热气、几张靠得很近的桌子、饺子下锅的声音，以及端上来就能直接蘸食的盘子。是适合随意晚餐、和朋友故意点太多的隐藏小店。",
         },
       ],
-      values: ["手工包制饺子", "家庭经营", "温馨改建老房", "朴实亲切服务"],
+      values: ["手工包制饺子", "独家家常配方", "温馨改建老房", "朴实亲切服务"],
       stats: [
         ["15", "经典一份饺子数量"],
         ["100%", "每日手工包制"],
@@ -993,14 +993,14 @@ export const copy = {
     menu: {
       eyebrow: "菜单",
       title: "现点现包，按口味筛选。",
-      lead: "水饺柔软多汁，煎饺底部金黄酥脆。按你想吃的来筛选——我们带你找到它。",
+      lead: "水饺柔软多汁，煎饺底部金黄酥脆。按你想吃的来筛选，我们带你找到它。",
       searchPlaceholder: "搜索饺子…",
       filtersTitle: "筛选",
       sortTitle: "排序",
       clear: "全部清除",
       resultsOne: "款符合",
       resultsMany: "款符合",
-      none: "没有符合条件的饺子——放宽一下筛选吧。",
+      none: "没有符合条件的饺子。放宽一下筛选吧。",
       perOrder: "每份",
       cooks: {
         all: "全部",
@@ -1034,7 +1034,7 @@ export const copy = {
     },
     feed: {
       eyebrow: "来自厨房",
-      title: "热气、褶子与酥脆锅底——直接来自我们的动态。",
+      title: "热气、褶子与酥脆锅底，直接来自我们的动态。",
       lead: "我们会发出锅的每一份。来 Instagram 关注我们。",
       follow: "在 Instagram 关注",
       viewOnIg: "在 Instagram 查看",
@@ -1048,7 +1048,7 @@ export const copy = {
         ["鸡肉香菜套餐", "鸡肉香菜配上鸡蛋胡萝卜，一起装盘。"],
         ["蘸一口就开吃", "蒸饺、辣油、一颗蛋，还有那双红筷子。"],
         ["手工擀皮", "每一张皮都一张张擀出来，擀上一整天。"],
-        ["手工调馅", "双手忙在备料里——每个饺子都从这里开始。"],
+        ["手工调馅", "双手忙在备料里，每个饺子都从这里开始。"],
         ["新鲜一盘", "刚包好，刚煮好，上桌正当时。"],
         ["冷饮甜品回归", "冰淇淋和各式冷甜品，为这个夏天回归。"],
       ] as [string, string][],

@@ -1,17 +1,37 @@
-/* Custom hand-built SVG art — no stock imagery. */
+import Image from "next/image";
 
+const DUMPLING_MARK_SRC = "/dumpling-mark.png";
+const DUMPLING_MARK_MASK_SRC = "/dumpling-mark-mask.png";
+
+/** Authoritative dumpling logo PNG — tinted via inherited `color` / `currentColor`. */
 export function DumplingMark({ className = "" }: { className?: string }) {
-  // The brand glyph: a pleated dumpling inside a ring.
   return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      <circle cx="32" cy="32" r="30" fill="var(--color-lacquer)" />
-      <circle cx="32" cy="32" r="30" fill="none" stroke="var(--color-gold)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.7" />
-      <path
-        d="M14 38c0-9 8-15 18-15s18 6 18 15c0 2-2 3-4 2-1.5-3-3-3-4.5 0-1 2-3 2-4 0-1.4-3-3-3-4.4 0-1 2-3 2-4 0-1.4-3-3-3-4.4 0-1 2-3 2-4 0C16 41 14 40 14 38Z"
-        fill="var(--color-cream)"
+    <span
+      aria-hidden="true"
+      className={`relative inline-block shrink-0 ${className}`}
+    >
+      <Image
+        src={DUMPLING_MARK_SRC}
+        alt=""
+        width={1024}
+        height={1024}
+        unoptimized
+        className="size-full object-contain opacity-0"
       />
-      <path d="M16 38c2 4 8 6 16 6s14-2 16-6" fill="none" stroke="var(--color-lacquer)" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
-    </svg>
+      <span
+        className="absolute inset-0 bg-current"
+        style={{
+          WebkitMaskImage: `url(${DUMPLING_MARK_MASK_SRC})`,
+          maskImage: `url(${DUMPLING_MARK_MASK_SRC})`,
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+        }}
+      />
+    </span>
   );
 }
 

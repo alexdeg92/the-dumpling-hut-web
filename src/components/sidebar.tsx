@@ -71,7 +71,7 @@ export function Sidebar({ onDark = false }: { onDark?: boolean }) {
             className="flex min-w-0 items-center gap-2.5"
             aria-label={restaurant.name}
           >
-            <DumplingMark className="size-9 shrink-0" />
+            <DumplingMark className="size-9 shrink-0 text-[var(--color-lacquer)]" />
             <span className="min-w-0 leading-tight">
               <span className="font-display block truncate text-base text-[var(--color-ink)]">
                 {restaurant.name}

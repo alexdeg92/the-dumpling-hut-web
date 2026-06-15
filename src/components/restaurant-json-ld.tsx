@@ -25,11 +25,21 @@ const dayNames: Record<string, string> = {
   周日: "Sunday",
 };
 
+function parseHoursRange(hoursLabel: string): [string, string] | null {
+  const match = hoursLabel.match(
+    /^(\d{1,2}:\d{2})\s*(?:–|—|-|à|to)\s*(\d{1,2}:\d{2})$/i,
+  );
+  if (!match) return null;
+  return [match[1], match[2]];
+}
+
 function buildOpeningHours() {
   return getCopy("en").hours.flatMap(([dayLabel, hoursLabel]) => {
     if (/closed|fermé|休息/i.test(hoursLabel)) return [];
 
-    const [opens, closes] = hoursLabel.split("—").map((part) => part.trim());
+    const range = parseHoursRange(hoursLabel);
+    if (!range) return [];
+    const [opens, closes] = range;
     const dayOfWeek = dayNames[dayLabel];
     if (!dayOfWeek || !opens || !closes) return [];
 

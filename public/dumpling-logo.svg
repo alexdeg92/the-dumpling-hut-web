@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" aria-hidden="true">
+  <defs>
+    <mask id="dumpling-mark" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <image href="/dumpling-mark.png" width="1024" height="1024" />
+    </mask>
+  </defs>
+  <rect width="1024" height="1024" fill="currentColor" mask="url(#dumpling-mark)" />
+</svg>

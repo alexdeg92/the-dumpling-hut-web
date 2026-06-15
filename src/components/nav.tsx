@@ -64,7 +64,11 @@ export function Nav() {
             className="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3"
             aria-label={restaurant.name}
           >
-            <span className="hidden shrink-0 transition-transform duration-500 group-hover:rotate-[14deg] sm:inline">
+            <span
+              className={`hidden shrink-0 transition-transform duration-500 group-hover:rotate-[14deg] sm:inline ${
+                onDark ? "text-[var(--color-cream)]" : "text-[var(--color-ink)]"
+              }`}
+            >
               <DumplingMark className="size-10" />
             </span>
             <span className="min-w-0 leading-tight">
