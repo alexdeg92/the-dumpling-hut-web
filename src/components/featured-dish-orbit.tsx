@@ -87,7 +87,7 @@ export function FeaturedDishOrbit() {
                   disabled={!fanned}
                   className={`featured-fan-card absolute bottom-0 left-0 origin-bottom-left overflow-hidden rounded-[1.45rem] border-[6px] border-white bg-white shadow-[0_26px_60px_-28px_rgba(28,14,11,0.72)] disabled:cursor-default ${
                     isActive && fanned
-                      ? "z-30 opacity-100 shadow-[0_34px_75px_-22px_rgba(122,15,18,0.58)]"
+                      ? "z-30 opacity-100 shadow-[0_34px_75px_-22px_rgba(4,30,141,0.58)]"
                       : fanned
                         ? "z-10 opacity-90 hover:opacity-100"
                         : "z-10 opacity-95"

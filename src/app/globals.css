@@ -7,16 +7,16 @@
 
 @theme inline {
   /* core palette */
-  --color-ink: #1c0e0b;          /* near-black warm brown    */
-  --color-lacquer: #7a0f12;      /* deep lacquer red         */
-  --color-lacquer-soft: #a8181c; /* lit lacquer red          */
-  --color-ember: #d4452b;        /* hot ember / chili        */
+  --color-ink: #0d1228;          /* near-black cool navy     */
+  --color-lacquer: #041e8d;      /* deep cobalt blue         */
+  --color-lacquer-soft: #2138a8; /* lit cobalt blue          */
+  --color-ember: #3f6fd6;        /* bright azure accent      */
   --color-cream: #fcefd8;        /* warm paper / steamed bun */
   --color-cream-2: #f6e3c4;      /* deeper paper             */
   --color-gold: #e9b949;         /* gold leaf                */
   --color-gold-soft: #f3d488;    /* lit gold                 */
   --color-jade: #6f8f57;         /* chive / scallion green   */
-  --color-night: #2a1410;        /* night panel              */
+  --color-night: #0a1030;        /* night panel              */
 
   --font-sans: var(--font-noto-sans);
   --font-display: var(--font-display);
@@ -29,7 +29,7 @@
 
 :root {
   --paper: #fcefd8;
-  --ink: #1c0e0b;
+  --ink: #0d1228;
   color-scheme: light;
 }
 
@@ -51,7 +51,7 @@ body {
   background-color: var(--paper);
   background-image:
     radial-gradient(120% 80% at 100% 0%, rgba(233, 185, 73, 0.18), transparent 60%),
-    radial-gradient(110% 70% at 0% 100%, rgba(122, 15, 18, 0.1), transparent 55%);
+    radial-gradient(110% 70% at 0% 100%, rgba(4, 30, 141, 0.1), transparent 55%);
   background-attachment: fixed;
   overflow-x: clip;
 }
