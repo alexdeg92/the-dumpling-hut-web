@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import {
+  getItemMinPrice,
+  getItemSizes,
   menuItems,
   restaurant,
   type CookKey,
@@ -13,7 +15,7 @@ import { CategoryCarousel } from "@/components/category-carousel";
 
 type CookTab = "all" | CookKey;
 
-const COOK_TABS: CookTab[] = ["all", "steamed", "panfried", "veg", "side"];
+const COOK_TABS: CookTab[] = ["all", "dumpling", "veg", "side"];
 
 // stable "featured" order = source order, signatures gently floated up
 const featuredRank = new Map(menuItems.map((m, i) => [m.id, i]));
@@ -87,6 +89,10 @@ export function MenuExplorer() {
 
 function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
   const { lang, t } = useI18n();
+  const sizes = getItemSizes(item);
+  const cardPrice =
+    sizes.length > 0 ? `$${getItemMinPrice(item).toFixed(2)}+` : `$${item.price.toFixed(2)}`;
+
   return (
     <button
       onClick={onOpen}
@@ -104,7 +110,7 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
           {item.emoji}
         </span>
         <span className="absolute right-1.5 top-1.5 rounded-full bg-[var(--color-lacquer)] px-2 py-0.5 text-[0.65rem] font-extrabold text-[var(--color-cream)] shadow sm:right-3 sm:top-3 sm:px-3 sm:py-1 sm:text-sm">
-          ${item.price.toFixed(2)}
+          {cardPrice}
         </span>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-12 bg-gradient-to-t from-black/25 to-transparent sm:block" />
       </div>
@@ -134,10 +140,16 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
             </Tag>
           )}
           <SpiceMeter level={item.spice} />
-          {item.count != null && (
+          {sizes.length > 0 ? (
             <span className="ml-auto text-[0.65rem] font-bold text-[var(--color-ink)]/45 sm:text-xs">
-              ×{item.count}
+              {sizes.map((size) => size.count).join(" · ")}
             </span>
+          ) : (
+            item.count != null && (
+              <span className="ml-auto text-[0.65rem] font-bold text-[var(--color-ink)]/45 sm:text-xs">
+                ×{item.count}
+              </span>
+            )
           )}
         </div>
 
@@ -152,6 +164,7 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
 
 function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   const { lang, t } = useI18n();
+  const sizes = getItemSizes(item);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -202,13 +215,31 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
             <span className="relative text-3xl sm:text-5xl">{item.emoji}</span>
             <h3 className="font-display mt-2 text-2xl sm:mt-3 sm:text-3xl">{item.name[lang]}</h3>
             <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-3 sm:gap-3">
-              <span className="rounded-full bg-[var(--color-gold)] px-3 py-1 text-sm font-extrabold text-[var(--color-ink)]">
-                ${item.price.toFixed(2)}
-              </span>
-              {item.count != null && (
-                <span className="text-sm font-semibold text-[var(--color-cream)]/80">
-                  {item.count} {t.menu.countLabel}
-                </span>
+              {sizes.length > 0 ? (
+                sizes.map((size) => (
+                  <span
+                    key={size.count}
+                    className="inline-flex flex-wrap items-center gap-2 rounded-full bg-[var(--color-lacquer)]/35 px-2 py-1 sm:px-2.5"
+                  >
+                    <span className="rounded-full bg-[var(--color-gold)] px-3 py-1 text-sm font-extrabold text-[var(--color-ink)]">
+                      ${size.price.toFixed(2)}
+                    </span>
+                    <span className="text-sm font-semibold text-[var(--color-cream)]/80">
+                      {size.count} {t.menu.countLabel}
+                    </span>
+                  </span>
+                ))
+              ) : (
+                <>
+                  <span className="rounded-full bg-[var(--color-gold)] px-3 py-1 text-sm font-extrabold text-[var(--color-ink)]">
+                    ${item.price.toFixed(2)}
+                  </span>
+                  {item.count != null && (
+                    <span className="text-sm font-semibold text-[var(--color-cream)]/80">
+                      {item.count} {t.menu.countLabel}
+                    </span>
+                  )}
+                </>
               )}
               <span className="text-sm font-semibold text-[var(--color-cream)]/80">
                 {t.menu.proteins[item.protein]}
@@ -221,6 +252,12 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           <p className="text-sm leading-7 text-[var(--color-ink)]/80 sm:text-base">
             {item.detail[lang]}
           </p>
+
+          {sizes.length > 0 && (
+            <p className="mt-4 text-sm font-semibold text-[var(--color-ink)]/65">
+              {t.menu.friedNote}
+            </p>
+          )}
 
           <div className="mt-4 flex items-center gap-3 sm:mt-5">
             <span className="eyebrow text-[var(--color-lacquer)]">{t.menu.spiceLabel}</span>

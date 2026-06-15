@@ -135,9 +135,37 @@ export const navItems: Array<{ key: NavKey; href: string }> = [
 /*  Interactive menu data — richly tagged for filtering & sorting      */
 /* ------------------------------------------------------------------ */
 
-export type CookKey = "steamed" | "panfried" | "veg" | "side";
-export type ProteinKey = "pork" | "lamb" | "chicken" | "veggie";
+export type CookKey = "dumpling" | "veg" | "side";
+export type ProteinKey = "pork" | "lamb" | "chicken" | "beef" | "veggie";
 export type DietKey = "vegetarian" | "vegan" | "spicy" | "signature";
+
+export type MenuSize = {
+  count: number;
+  price: number;
+};
+
+/** Tablet menu tiers: Small (10) and Regular (16). */
+export const menuSizeTiers = {
+  tier1317: [
+    { count: 10, price: 13.99 },
+    { count: 16, price: 17.99 },
+  ],
+  tier1418: [
+    { count: 10, price: 14.99 },
+    { count: 16, price: 18.99 },
+  ],
+  tier1519: [
+    { count: 10, price: 15.99 },
+    { count: 16, price: 19.99 },
+  ],
+} as const satisfies Record<string, MenuSize[]>;
+
+/** Pan-fried add-on from the in-store menu. */
+export const friedUpcharge = 2;
+
+export function withFriedUpcharge(sizes: MenuSize[]): MenuSize[] {
+  return sizes.map((size) => ({ ...size, price: size.price + friedUpcharge }));
+}
 
 export type MenuItem = {
   id: string;
@@ -145,9 +173,12 @@ export type MenuItem = {
   protein: ProteinKey;
   diet: DietKey[];
   spice: 0 | 1 | 2 | 3;
+  /** Single price for sides; lowest tier for dumplings (use sizes for full pricing). */
   price: number;
-  /** dumplings per order, null for sides */
+  /** Per-order count for sides only; dumplings use sizes. */
   count: number | null;
+  /** Two order sizes for dumplings. */
+  sizes?: MenuSize[];
   name: Record<Lang, string>;
   blurb: Record<Lang, string>;
   /** longer description for the detail modal */
@@ -158,62 +189,38 @@ export type MenuItem = {
   image: string;
 };
 
+export function getItemSizes(item: MenuItem): MenuSize[] {
+  return item.sizes ?? [];
+}
+
+export function getItemMinPrice(item: MenuItem): number {
+  const sizes = getItemSizes(item);
+  if (sizes.length > 0) return Math.min(...sizes.map((s) => s.price));
+  return item.price;
+}
+
 export const menuItems: MenuItem[] = [
   {
-    id: "lamb-coriander-steamed",
-    cook: "steamed",
-    protein: "lamb",
-    diet: ["signature", "spicy"],
-    spice: 2,
-    price: 12.99,
-    count: 15,
-    emoji: "🥟",
-    image: "/dishes/lamb-coriander-steamed.jpg",
-    name: {
-      en: "Lamb & Coriander",
-      fr: "Agneau et coriandre",
-      zh: "羊肉香菜水饺",
-    },
-    blurb: {
-      en: "Aromatic lamb, bright coriander, scallion.",
-      fr: "Agneau parfumé, coriandre vive, échalote.",
-      zh: "羊肉鲜香，香菜与葱清爽提味。",
-    },
-    detail: {
-      en: "The bold one. Cumin-warmed lamb folded with a fistful of fresh coriander and scallion, juicy enough to drink. Our most requested filling for guests who like flavour with a little adventure.",
-      fr: "L'audacieux. Agneau parfumé au cumin, plié avec une poignée de coriandre fraîche et d'échalote, si juteux qu'on le boirait. Notre farce la plus demandée pour les curieux.",
-      zh: "最有个性的一款。带孜然香气的羊肉，包入大把新鲜香菜和葱，多汁到几乎可以喝。喜欢重口味又爱尝鲜的客人最爱。",
-    },
-    pairs: {
-      en: "Pairs with house chili oil + hot tea.",
-      fr: "Avec l'huile pimentée maison et un thé chaud.",
-      zh: "搭配自制辣油和热茶。",
-    },
-  },
-  {
-    id: "pork-chive-steamed",
-    cook: "steamed",
+    id: "pork-cabbage",
+    cook: "dumpling",
     protein: "pork",
-    diet: ["signature"],
+    diet: [],
     spice: 0,
-    price: 12.99,
-    count: 15,
+    sizes: menuSizeTiers.tier1317,
+    price: 13.99,
+    count: null,
     emoji: "🥟",
-    image: "/dishes/pork-chive-steamed.jpg",
-    name: {
-      en: "Pork & Chive",
-      fr: "Porc et ciboulette",
-      zh: "猪肉韭菜水饺",
-    },
+    image: "/dishes/pork-dill-steamed.jpg",
+    name: { en: "Pork & Cabbage", fr: "Porc et chou", zh: "猪肉白菜水饺" },
     blurb: {
-      en: "The house classic: pork, garlic chive, ginger.",
-      fr: "Le classique: porc, ciboulette ail, gingembre.",
-      zh: "店内经典：猪肉、韭菜、姜香平衡。",
+      en: "Classic pork and tender cabbage.",
+      fr: "Porc classique et chou tendre.",
+      zh: "经典猪肉配嫩白菜。",
     },
     detail: {
-      en: "The one everyone orders first. Juicy ground pork, fragrant garlic chive and a whisper of ginger in a tender hand-rolled wrapper. If you only try one thing, make it this.",
-      fr: "Celui que tout le monde commande en premier. Porc haché juteux, ciboulette à l'ail parfumée et un soupçon de gingembre dans une pâte tendre roulée à la main.",
-      zh: "几乎人人第一份都点它。多汁猪肉、香气十足的韭菜，加一丝姜香，包进手擀的柔软面皮。只尝一样的话，就选它。",
+      en: "A everyday favourite: juicy pork with soft cabbage in a hand-rolled wrapper. Steamed by default; ask to pan-fry for crisp bottoms.",
+      fr: "Un classique du quotidien : porc juteux et chou tendre dans une pâte roulée à la main. Vapeur par défaut; demandez la poêle pour un fond croustillant.",
+      zh: "日常经典：多汁猪肉与软白菜，手擀皮包制。默认蒸制，可要求煎出酥脆底。",
     },
     pairs: {
       en: "Pairs with cucumber salad.",
@@ -222,29 +229,26 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: "pork-dill-steamed",
-    cook: "steamed",
+    id: "pork-dill",
+    cook: "dumpling",
     protein: "pork",
     diet: [],
     spice: 0,
-    price: 12.99,
-    count: 15,
+    sizes: menuSizeTiers.tier1317,
+    price: 13.99,
+    count: null,
     emoji: "🥟",
     image: "/dishes/pork-dill-steamed.jpg",
-    name: {
-      en: "Pork & Dill",
-      fr: "Porc et aneth",
-      zh: "猪肉茴香水饺",
-    },
+    name: { en: "Pork & Dill", fr: "Porc et aneth", zh: "猪肉茴香水饺" },
     blurb: {
       en: "Fragrant dill, clean and bright finish.",
       fr: "Aneth parfumé, finale fraîche et nette.",
       zh: "茴香清新，收口干净明亮。",
     },
     detail: {
-      en: "A northern-China favourite. Fresh dill cuts through rich pork for something clean, herbal and quietly addictive. The regulars' secret order.",
+      en: "A northern-China favourite. Fresh dill cuts through rich pork for something clean, herbal and quietly addictive.",
       fr: "Un favori du nord de la Chine. L'aneth frais tranche le porc riche pour un résultat propre, herbacé et discrètement addictif.",
-      zh: "中国北方的心头好。新鲜茴香化解猪肉的厚重，清爽、带草本香，让人悄悄上瘾。是熟客的隐藏点单。",
+      zh: "中国北方的心头好。新鲜茴香化解猪肉的厚重，清爽、带草本香，让人悄悄上瘾。",
     },
     pairs: {
       en: "Pairs with hot tea.",
@@ -253,20 +257,133 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: "chicken-mushroom-steamed",
-    cook: "steamed",
+    id: "pork-chive",
+    cook: "dumpling",
+    protein: "pork",
+    diet: ["signature"],
+    spice: 0,
+    sizes: menuSizeTiers.tier1418,
+    price: 14.99,
+    count: null,
+    emoji: "🥟",
+    image: "/dishes/pork-chive-steamed.jpg",
+    name: { en: "Pork & Chive", fr: "Porc et ciboulette", zh: "猪肉韭菜水饺" },
+    blurb: {
+      en: "The house classic: pork, garlic chive, ginger.",
+      fr: "Le classique: porc, ciboulette ail, gingembre.",
+      zh: "店内经典：猪肉、韭菜、姜香平衡。",
+    },
+    detail: {
+      en: "The one everyone orders first. Juicy ground pork, fragrant garlic chive and a whisper of ginger in a tender hand-rolled wrapper.",
+      fr: "Celui que tout le monde commande en premier. Porc haché juteux, ciboulette à l'ail parfumée et un soupçon de gingembre dans une pâte tendre roulée à la main.",
+      zh: "几乎人人第一份都点它。多汁猪肉、香气十足的韭菜，加一丝姜香，包进手擀的柔软面皮。",
+    },
+    pairs: {
+      en: "Pairs with cucumber salad.",
+      fr: "Avec la salade de concombre.",
+      zh: "搭配拍黄瓜。",
+    },
+  },
+  {
+    id: "beef-coriander",
+    cook: "dumpling",
+    protein: "beef",
+    diet: [],
+    spice: 1,
+    sizes: menuSizeTiers.tier1418,
+    price: 14.99,
+    count: null,
+    emoji: "🥟",
+    image: "/dishes/lamb-coriander-steamed.jpg",
+    name: { en: "Beef & Coriander", fr: "Bœuf et coriandre", zh: "牛肉香菜水饺" },
+    blurb: {
+      en: "Savory beef with fresh coriander.",
+      fr: "Bœuf savoureux et coriandre fraîche.",
+      zh: "咸香牛肉配新鲜香菜。",
+    },
+    detail: {
+      en: "Ground beef folded with a generous handful of coriander and scallion. Herb-forward and satisfying.",
+      fr: "Bœuf haché plié avec une belle poignée de coriandre et d'échalote. Herbacé et réconfortant.",
+      zh: "牛肉末包入大把香菜与葱，草本香气足，吃起来很满足。",
+    },
+    pairs: {
+      en: "Pairs with chili oil.",
+      fr: "Avec l'huile pimentée.",
+      zh: "搭配辣油。",
+    },
+  },
+  {
+    id: "chicken-coriander",
+    cook: "dumpling",
     protein: "chicken",
     diet: [],
     spice: 0,
-    price: 12.99,
-    count: 15,
+    sizes: menuSizeTiers.tier1519,
+    price: 15.99,
+    count: null,
     emoji: "🥟",
     image: "/dishes/chicken-mushroom-steamed.jpg",
-    name: {
-      en: "Chicken & Mushroom",
-      fr: "Poulet et champignons",
-      zh: "鸡肉蘑菇水饺",
+    name: { en: "Chicken & Coriander", fr: "Poulet et coriandre", zh: "鸡肉香菜水饺" },
+    blurb: {
+      en: "Light chicken, bright coriander.",
+      fr: "Poulet léger, coriandre vive.",
+      zh: "清爽鸡肉，香菜提鲜。",
     },
+    detail: {
+      en: "Tender chicken with fresh coriander in a delicate wrapper. A lighter dumpling with plenty of flavour.",
+      fr: "Poulet tendre et coriandre fraîche dans une pâte délicate. Un dumpling plus léger, plein de goût.",
+      zh: "嫩鸡肉与新鲜香菜，面皮柔软。更清爽，但味道一点也不寡。",
+    },
+    pairs: {
+      en: "Pairs with cucumber salad.",
+      fr: "Avec la salade de concombre.",
+      zh: "搭配拍黄瓜。",
+    },
+  },
+  {
+    id: "pork-zucchini-shrimp",
+    cook: "dumpling",
+    protein: "pork",
+    diet: [],
+    spice: 0,
+    sizes: menuSizeTiers.tier1519,
+    price: 15.99,
+    count: null,
+    emoji: "🥟",
+    image: "/dishes/pork-chive-steamed.jpg",
+    name: {
+      en: "Pork, Zucchini & Shrimp",
+      fr: "Porc, courgette et crevettes",
+      zh: "猪肉西葫芦鲜虾饺",
+    },
+    blurb: {
+      en: "Pork, zucchini and shrimp together.",
+      fr: "Porc, courgette et crevettes.",
+      zh: "猪肉、西葫芦与鲜虾组合。",
+    },
+    detail: {
+      en: "A mixed filling of pork, zucchini and shrimp for sweet, savory bites with a little bounce from the seafood.",
+      fr: "Une farce mixte de porc, courgette et crevettes pour des bouchées sucrées-salées avec une touche de fruits de mer.",
+      zh: "猪肉、西葫芦与鲜虾混合成馅，咸鲜中带一点海鲜的弹嫩。",
+    },
+    pairs: {
+      en: "Pairs with hot tea.",
+      fr: "Avec un thé chaud.",
+      zh: "搭配热茶。",
+    },
+  },
+  {
+    id: "chicken-mushroom",
+    cook: "dumpling",
+    protein: "chicken",
+    diet: [],
+    spice: 0,
+    sizes: menuSizeTiers.tier1519,
+    price: 15.99,
+    count: null,
+    emoji: "🥟",
+    image: "/dishes/chicken-mushroom-steamed.jpg",
+    name: { en: "Chicken & Mushroom", fr: "Poulet et champignons", zh: "鸡肉蘑菇水饺" },
     blurb: {
       en: "Ground chicken, earthy mushroom, sesame.",
       fr: "Poulet haché, champignons terreux, sésame.",
@@ -284,91 +401,54 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: "lamb-coriander-panfried",
-    cook: "panfried",
+    id: "lamb-coriander",
+    cook: "dumpling",
     protein: "lamb",
     diet: ["signature", "spicy"],
     spice: 2,
-    price: 13.99,
-    count: 15,
-    emoji: "🍳",
-    image: "/dishes/lamb-coriander-panfried.jpg",
-    name: {
-      en: "Lamb & Coriander",
-      fr: "Agneau et coriandre",
-      zh: "羊肉香菜煎饺",
-    },
+    sizes: menuSizeTiers.tier1519,
+    price: 15.99,
+    count: null,
+    emoji: "🥟",
+    image: "/dishes/lamb-coriander-steamed.jpg",
+    name: { en: "Lamb & Coriander", fr: "Agneau et coriandre", zh: "羊肉香菜水饺" },
     blurb: {
-      en: "Crisp bottoms, rich and herb-forward.",
-      fr: "Fond croustillant, riche et herbacé.",
-      zh: "底部酥脆，浓郁带香草气息。",
+      en: "Aromatic lamb, bright coriander, scallion.",
+      fr: "Agneau parfumé, coriandre vive, échalote.",
+      zh: "羊肉鲜香，香菜与葱清爽提味。",
     },
     detail: {
-      en: "Everything you love about the lamb dumpling, with lacquered golden bottoms from the pan. Crackle, then juice. Best with chili oil.",
-      fr: "Tout ce que vous aimez du dumpling à l'agneau, avec un fond doré et laqué à la poêle. Le croustillant, puis le jus. Idéal avec l'huile pimentée.",
-      zh: "你爱的羊肉饺子，加上煎到金黄发亮的酥脆底。先是脆响，再是爆汁。配辣油最棒。",
+      en: "The bold one. Cumin-warmed lamb folded with a fistful of fresh coriander and scallion, juicy enough to drink.",
+      fr: "L'audacieux. Agneau parfumé au cumin, plié avec une poignée de coriandre fraîche et d'échalote, si juteux qu'on le boirait.",
+      zh: "最有个性的一款。带孜然香气的羊肉，包入大把新鲜香菜和葱，多汁到几乎可以喝。",
     },
     pairs: {
-      en: "Pairs with house chili oil.",
-      fr: "Avec l'huile pimentée maison.",
-      zh: "搭配自制辣油。",
+      en: "Pairs with chili oil and hot tea.",
+      fr: "Avec l'huile pimentée et un thé chaud.",
+      zh: "搭配辣油和热茶。",
     },
   },
   {
-    id: "pork-chive-panfried",
-    cook: "panfried",
-    protein: "pork",
-    diet: ["signature"],
-    spice: 0,
-    price: 13.99,
-    count: 15,
-    emoji: "🍳",
-    image: "/dishes/pork-chive-panfried.jpg",
-    name: {
-      en: "Pork & Chive",
-      fr: "Porc et ciboulette",
-      zh: "猪肉韭菜煎饺",
-    },
-    blurb: {
-      en: "Golden edges around the house favourite.",
-      fr: "Bords dorés autour du favori maison.",
-      zh: "金黄焦边，包裹店内最爱。",
-    },
-    detail: {
-      en: "Our most-loved filling, pan-fried to crisp golden edges with a soft steamed top. The texture upgrade for the dumpling everyone already orders.",
-      fr: "Notre farce la plus aimée, poêlée jusqu'à obtenir des bords dorés et croustillants avec un dessus tendre. La version texturée du dumpling que tout le monde commande déjà.",
-      zh: "最受欢迎的馅料，煎出酥脆金边、上层依旧柔软。给大家本就常点的饺子来一次口感升级。",
-    },
-    pairs: {
-      en: "Pairs with cucumber salad.",
-      fr: "Avec la salade de concombre.",
-      zh: "搭配拍黄瓜。",
-    },
-  },
-  {
-    id: "pork-dill-panfried",
-    cook: "panfried",
-    protein: "pork",
+    id: "beef-onion",
+    cook: "dumpling",
+    protein: "beef",
     diet: [],
     spice: 0,
-    price: 13.99,
-    count: 15,
-    emoji: "🍳",
-    image: "/dishes/pork-dill-panfried.jpg",
-    name: {
-      en: "Pork & Dill",
-      fr: "Porc et aneth",
-      zh: "猪肉茴香煎饺",
-    },
+    sizes: menuSizeTiers.tier1418,
+    price: 14.99,
+    count: null,
+    emoji: "🥟",
+    image: "/dishes/pork-dill-steamed.jpg",
+    name: { en: "Beef & Onion", fr: "Bœuf et oignon", zh: "牛肉洋葱水饺" },
     blurb: {
-      en: "Comforting, bright, a delicate herbal lift.",
-      fr: "Réconfortant, lumineux, légèrement herbacé.",
-      zh: "温暖家常，带一点清新草本香。",
+      en: "Savory beef and sweet onion.",
+      fr: "Bœuf savoureux et oignon doux.",
+      zh: "咸香牛肉配甜洋葱。",
     },
     detail: {
-      en: "Pork and dill with a crackling fried base. Comforting and bright at once, the kind of plate that disappears before you mean it to.",
-      fr: "Porc et aneth avec une base poêlée croustillante. Réconfortant et lumineux à la fois, le genre d'assiette qui disparaît avant qu'on s'en rende compte.",
-      zh: "猪肉茴香配酥脆煎底。既温暖又清新，是那种还没回过神就已经吃光的一盘。",
+      en: "Simple and satisfying: ground beef with slow-cooked onion sweetness in every bite.",
+      fr: "Simple et réconfortant : bœuf haché et douceur d'oignon dans chaque bouchée.",
+      zh: "简单却满足：牛肉末与洋葱的甜香，每一口都很实在。",
     },
     pairs: {
       en: "Pairs with hot tea.",
@@ -377,96 +457,122 @@ export const menuItems: MenuItem[] = [
     },
   },
   {
-    id: "chicken-mushroom-panfried",
-    cook: "panfried",
-    protein: "chicken",
-    diet: [],
-    spice: 0,
-    price: 13.99,
-    count: 15,
-    emoji: "🍳",
-    image: "/dishes/chicken-mushroom-panfried.jpg",
-    name: {
-      en: "Chicken & Mushroom",
-      fr: "Poulet et champignons",
-      zh: "鸡肉蘑菇煎饺",
-    },
-    blurb: {
-      en: "A lighter favourite with satisfying umami.",
-      fr: "Un favori plus léger, plein d'umami.",
-      zh: "更清爽的人气款，鲜味满满。",
-    },
-    detail: {
-      en: "Light chicken and mushroom given a deep golden, crisp finish. All the umami, none of the heaviness.",
-      fr: "Poulet et champignons légers avec une finition dorée et croustillante. Tout l'umami, sans la lourdeur.",
-      zh: "清爽的鸡肉蘑菇，煎出深金酥脆的底。鲜味十足，却毫不油腻。",
-    },
-    pairs: {
-      en: "Pairs with cucumber salad.",
-      fr: "Avec la salade de concombre.",
-      zh: "搭配拍黄瓜。",
-    },
-  },
-  {
-    id: "vegetable-mushroom",
+    id: "cabbage-mushroom",
     cook: "veg",
     protein: "veggie",
     diet: ["vegetarian", "vegan"],
     spice: 0,
-    price: 12.99,
-    count: 15,
+    sizes: menuSizeTiers.tier1418,
+    price: 14.99,
+    count: null,
     emoji: "🥬",
     image: "/dishes/vegetable-mushroom.jpg",
-    name: {
-      en: "Vegetable & Mushroom",
-      fr: "Légumes et champignons",
-      zh: "蔬菜蘑菇饺",
-    },
+    name: { en: "Cabbage & Mushroom", fr: "Chou et champignons", zh: "白菜蘑菇饺" },
     blurb: {
       en: "Cabbage, mushroom, tofu and sesame.",
       fr: "Chou, champignon, tofu et sésame.",
       zh: "白菜、蘑菇、豆腐与芝麻。",
     },
     detail: {
-      en: "Proof that plant-based can be the main event. Cabbage, mushroom and tofu seasoned with sesame and ginger, folded with the same care as everything else. Fully vegan.",
-      fr: "La preuve que le végétal peut être la vedette. Chou, champignon et tofu assaisonnés de sésame et de gingembre, pliés avec le même soin que tout le reste. Entièrement végétalien.",
-      zh: "植物馅也能当主角。白菜、蘑菇、豆腐，用芝麻和姜调味，和其他饺子一样用心包制。纯素。",
+      en: "Cabbage, mushroom and tofu seasoned with sesame and ginger. Fully vegan.",
+      fr: "Chou, champignon et tofu assaisonnés de sésame et de gingembre. Entièrement végétalien.",
+      zh: "白菜、蘑菇、豆腐，用芝麻和姜调味。纯素。",
     },
     pairs: {
-      en: "Pairs with house chili oil.",
-      fr: "Avec l'huile pimentée maison.",
-      zh: "搭配自制辣油。",
+      en: "Pairs with chili oil.",
+      fr: "Avec l'huile pimentée.",
+      zh: "搭配辣油。",
     },
   },
   {
-    id: "seasonal-greens",
+    id: "egg-zucchini-tofu",
     cook: "veg",
     protein: "veggie",
-    diet: ["vegetarian", "vegan"],
+    diet: ["vegetarian"],
     spice: 0,
-    price: 12.99,
-    count: 15,
+    sizes: menuSizeTiers.tier1418,
+    price: 14.99,
+    count: null,
     emoji: "🥬",
     image: "/dishes/seasonal-greens.jpg",
     name: {
-      en: "Seasonal Greens",
-      fr: "Verdure de saison",
-      zh: "时令青菜饺",
+      en: "Egg, Zucchini & Tofu",
+      fr: "Œuf, courgette et tofu",
+      zh: "鸡蛋西葫芦豆腐饺",
     },
     blurb: {
-      en: "Market greens, garlic and ginger.",
-      fr: "Légumes du marché, ail et gingembre.",
-      zh: "市场青菜，蒜香与姜香。",
+      en: "Soft egg, zucchini and tofu.",
+      fr: "Œuf tendre, courgette et tofu.",
+      zh: "软嫩鸡蛋、西葫芦与豆腐。",
     },
     detail: {
-      en: "Whatever's freshest from the market, folded with garlic and ginger. It changes with the seasons, so ask what's in today. Vegan.",
-      fr: "Ce qu'il y a de plus frais au marché, plié avec ail et gingembre. Ça change au fil des saisons, alors demandez ce qu'il y a aujourd'hui. Végétalien.",
-      zh: "市场上最新鲜的青菜，配蒜与姜包制。随季节变化，欢迎问问今天用的是什么。纯素。",
+      en: "A gentle vegan filling of egg, zucchini and tofu. Light, savory and easy to love.",
+      fr: "Une farce végétalienne douce d'œuf, courgette et tofu. Légère, savoureuse et facile à aimer.",
+      zh: "鸡蛋、西葫芦与豆腐的温和素馅。清淡鲜香，很容易喜欢上。",
     },
     pairs: {
       en: "Pairs with hot tea.",
       fr: "Avec un thé chaud.",
       zh: "搭配热茶。",
+    },
+  },
+  {
+    id: "carrot-tofu-celery",
+    cook: "veg",
+    protein: "veggie",
+    diet: ["vegetarian", "vegan"],
+    spice: 0,
+    sizes: menuSizeTiers.tier1418,
+    price: 14.99,
+    count: null,
+    emoji: "🥬",
+    image: "/dishes/seasonal-greens.jpg",
+    name: {
+      en: "Carrot, Tofu & Celery",
+      fr: "Carotte, tofu et céleri",
+      zh: "胡萝卜豆腐芹菜饺",
+    },
+    blurb: {
+      en: "Carrot, tofu and celery crunch.",
+      fr: "Carotte, tofu et croquant de céleri.",
+      zh: "胡萝卜、豆腐与芹菜脆感。",
+    },
+    detail: {
+      en: "Carrot sweetness, tofu softness and celery crunch folded together. Vegan and bright.",
+      fr: "Douceur de carotte, tendresse du tofu et croquant de céleri. Végétalien et lumineux.",
+      zh: "胡萝卜的甜、豆腐的嫩、芹菜的脆，包在一起。纯素而清爽。",
+    },
+    pairs: {
+      en: "Pairs with hot tea.",
+      fr: "Avec un thé chaud.",
+      zh: "搭配热茶。",
+    },
+  },
+  {
+    id: "seaweed-salad",
+    cook: "side",
+    protein: "veggie",
+    diet: ["vegetarian", "vegan"],
+    spice: 0,
+    price: 5.99,
+    count: null,
+    emoji: "🥗",
+    image: "/dishes/seaweed-salad.jpg",
+    name: { en: "Seaweed Salad", fr: "Salade d'algues", zh: "海藻沙拉" },
+    blurb: {
+      en: "Light, sesame-dressed seaweed.",
+      fr: "Algues légères, sauce sésame.",
+      zh: "轻盈海藻，芝麻调味。",
+    },
+    detail: {
+      en: "A refreshing seaweed salad with sesame and a touch of vinegar. A cool start or side.",
+      fr: "Une salade d'algues rafraîchissante au sésame et un peu de vinaigre. Entrée ou accompagnement frais.",
+      zh: "清爽海藻沙拉，芝麻与一点醋香。适合开胃或配菜。",
+    },
+    pairs: {
+      en: "Great before dumplings.",
+      fr: "Parfait avant les dumplings.",
+      zh: "饺子之前来一份很好。",
     },
   },
   {
@@ -479,11 +585,7 @@ export const menuItems: MenuItem[] = [
     count: null,
     emoji: "🥒",
     image: "/dishes/cucumber-salad.jpg",
-    name: {
-      en: "Smashed Cucumber Salad",
-      fr: "Salade de concombre",
-      zh: "拍黄瓜",
-    },
+    name: { en: "Cucumber Salad", fr: "Salade de concombre", zh: "拍黄瓜" },
     blurb: {
       en: "Cool, crisp, garlic vinegar dressing.",
       fr: "Frais, croquant, vinaigrette à l'ail.",
@@ -495,74 +597,98 @@ export const menuItems: MenuItem[] = [
       zh: "拍碎的黄瓜配上够味的蒜香醋汁。每一份饺子都需要这一抹清凉的平衡。",
     },
     pairs: {
-      en: "Great with anything pan-fried.",
-      fr: "Parfait avec tout ce qui est poêlé.",
-      zh: "配任何煎饺都好。",
+      en: "Great with pan-fried dumplings.",
+      fr: "Parfait avec les dumplings poêlés.",
+      zh: "配煎饺特别好。",
     },
   },
   {
-    id: "chili-oil",
-    cook: "side",
-    protein: "veggie",
-    diet: ["vegetarian", "vegan", "spicy"],
-    spice: 3,
-    price: 6.99,
-    count: null,
-    emoji: "🌶️",
-    image: "/dishes/chili-oil.jpg",
-    name: {
-      en: "House Chili Oil",
-      fr: "Huile pimentée maison",
-      zh: "自制辣油",
-    },
-    blurb: {
-      en: "A small jar of heat for dipping.",
-      fr: "Un petit pot de chaleur pour tremper.",
-      zh: "一小罐辣味，蘸食最佳。",
-    },
-    detail: {
-      en: "Our slow-toasted chili oil in a jar to take home. Deep, fragrant, more savoury than scorching. Drizzle it on everything.",
-      fr: "Notre huile pimentée lentement grillée, en pot à emporter. Profonde, parfumée, plus savoureuse que brûlante. À verser sur tout.",
-      zh: "慢火炒香的自制辣油，装罐带回家。香气浓郁、咸鲜大于灼辣，淋什么都好吃。",
-    },
-    pairs: {
-      en: "Goes on absolutely everything.",
-      fr: "Se met sur absolument tout.",
-      zh: "万物皆可淋。",
-    },
-  },
-  {
-    id: "hot-tea",
+    id: "miso-soup",
     cook: "side",
     protein: "veggie",
     diet: ["vegetarian", "vegan"],
     spice: 0,
     price: 5.99,
     count: null,
-    emoji: "🍵",
-    image: "/dishes/hot-tea.jpg",
-    name: {
-      en: "Hot Tea Service",
-      fr: "Service de thé chaud",
-      zh: "热茶",
-    },
+    emoji: "🍲",
+    image: "/dishes/miso-soup.jpg",
+    name: { en: "Miso Soup", fr: "Soupe miso", zh: "味噌汤" },
     blurb: {
-      en: "Simple tea for a slower meal.",
-      fr: "Thé simple pour un repas tranquille.",
-      zh: "简单茶饮，慢慢吃一餐。",
+      en: "Warm, savory miso broth.",
+      fr: "Bouillon miso chaud et savoureux.",
+      zh: "温热咸鲜的味噌汤。",
     },
     detail: {
-      en: "A pot of simple, comforting tea to slow the table down. Refills are part of the deal.",
-      fr: "Une théière de thé simple et réconfortant pour ralentir la table. Les recharges font partie du deal.",
-      zh: "一壶简单暖心的茶，让一桌人慢下来。续杯当然包含在内。",
+      en: "A simple bowl of miso soup to warm up before the dumplings arrive.",
+      fr: "Un bol simple de soupe miso pour se réchauffer avant l'arrivée des dumplings.",
+      zh: "简单的一碗味噌汤，饺子上桌前先暖暖胃。",
     },
     pairs: {
-      en: "Pairs with everything.",
-      fr: "Avec tout.",
-      zh: "配什么都合适。",
+      en: "Pairs with any dumpling order.",
+      fr: "Avec n'importe quelle commande de dumplings.",
+      zh: "配任何饺子都好。",
+    },
+  },
+  {
+    id: "wonton-soup",
+    cook: "side",
+    protein: "pork",
+    diet: [],
+    spice: 0,
+    price: 5.99,
+    count: null,
+    emoji: "🍲",
+    image: "/dishes/wonton-soup.jpg",
+    name: { en: "Wonton Soup", fr: "Soupe wonton", zh: "馄饨汤" },
+    blurb: {
+      en: "Pork wontons in clear broth.",
+      fr: "Wontons au porc dans un bouillon clair.",
+      zh: "猪肉馄饨，清汤呈现。",
+    },
+    detail: {
+      en: "Tender pork wontons floating in a light, savory broth. Comfort in a bowl.",
+      fr: "Wontons au porc tendres dans un bouillon léger et savoureux. Réconfort en bol.",
+      zh: "嫩猪肉馄饨浮在清淡鲜汤里。一碗里的 comfort food。",
+    },
+    pairs: {
+      en: "A meal on its own or with dumplings.",
+      fr: "Un repas seul ou avec des dumplings.",
+      zh: "单独吃或搭配饺子都行。",
+    },
+  },
+  {
+    id: "chocolate-mousse-cake",
+    cook: "side",
+    protein: "veggie",
+    diet: ["vegetarian"],
+    spice: 0,
+    price: 3.99,
+    count: null,
+    emoji: "🍰",
+    image: "/dishes/chocolate-mousse-cake.jpg",
+    name: {
+      en: "Chocolate Mousse Cake",
+      fr: "Gâteau mousse au chocolat",
+      zh: "巧克力慕斯蛋糕",
+    },
+    blurb: {
+      en: "Rich, cool chocolate mousse to finish the meal.",
+      fr: "Mousse au chocolat riche et fraîche pour finir le repas.",
+      zh: "浓郁冰凉的巧克力慕斯，完美收尾。",
+    },
+    detail: {
+      en: "A small slice of silky chocolate mousse cake, served cold. Light enough after dumplings, chocolatey enough to feel like a treat.",
+      fr: "Une petite part de gâteau mousse au chocolat soyeux, servie froide. Assez léger après les dumplings, assez chocolaté pour faire plaisir.",
+      zh: "一小份丝滑巧克力慕斯蛋糕，冰凉上桌。饺子之后吃起来不腻，巧克力味又足够满足。",
+    },
+    pairs: {
+      en: "Perfect after pan-fried dumplings.",
+      fr: "Parfait après des dumplings poêlés.",
+      zh: "煎饺之后来一份最合适。",
     },
   },
 ];
+
 
 /* ------------------------------------------------------------------ */
 /*  Trilingual UI copy                                                 */
@@ -622,7 +748,7 @@ export const copy = {
       "homemade recipes",
       "steamed or pan-fried",
       "a hidden gem on Clark",
-      "15 to an order",
+      "16 to an order",
     ],
     story: {
       eyebrow: "Our story",
@@ -652,7 +778,7 @@ export const copy = {
         "No-pretension hospitality",
       ],
       stats: [
-        ["15", "dumplings to a classic order"],
+        ["16", "dumplings to a classic order"],
         ["100%", "hand-folded, every day"],
         ["1", "tiny house, big heart"],
       ] as [string, string][],
@@ -660,7 +786,7 @@ export const copy = {
     menu: {
       eyebrow: "The menu",
       title: "Folded to order. Filtered to taste.",
-      lead: "Steamed for soft and juicy, pan-fried for crisp golden bottoms. Filter by what you're craving and we'll show you the way.",
+      lead: "Every filling from our in-store menu, in small (10) or regular (16) orders. Steamed by default; pan-fried adds $2.",
       searchPlaceholder: "Search dumplings…",
       filtersTitle: "Filter",
       sortTitle: "Sort",
@@ -669,12 +795,12 @@ export const copy = {
       resultsMany: "plates match",
       none: "No plates match those filters. Loosen them up.",
       perOrder: "per order",
+      friedNote: "Pan-fried add-on: +$2.00 per order (before tax).",
       cooks: {
         all: "Everything",
-        steamed: "Steamed",
-        panfried: "Pan-fried",
+        dumpling: "Dumplings",
         veg: "Veg & Vegan",
-        side: "Sides",
+        side: "Entrées & more",
       } as Record<"all" | CookKey, string>,
       diets: {
         signature: "Signature",
@@ -686,6 +812,7 @@ export const copy = {
         pork: "Pork",
         lamb: "Lamb",
         chicken: "Chicken",
+        beef: "Beef",
         veggie: "Veggie",
       } as Record<ProteinKey, string>,
       sorts: {
@@ -816,7 +943,7 @@ export const copy = {
       "recettes maison",
       "vapeur ou poêlé",
       "un bijou caché sur Clark",
-      "15 par commande",
+      "16 par commande",
     ],
     story: {
       eyebrow: "Notre histoire",
@@ -846,7 +973,7 @@ export const copy = {
         "Accueil sans prétention",
       ],
       stats: [
-        ["15", "dumplings par commande classique"],
+        ["16", "dumplings par commande classique"],
         ["100%", "pliés à la main, chaque jour"],
         ["1", "petite maison, grand cœur"],
       ] as [string, string][],
@@ -854,7 +981,7 @@ export const copy = {
     menu: {
       eyebrow: "Le menu",
       title: "Pliés à la commande. Filtrés selon l'envie.",
-      lead: "Vapeur pour tendre et juteux, poêlé pour des fonds dorés et croustillants. Filtrez selon votre envie et on vous guide.",
+      lead: "Toutes les farces de notre menu en salle, en petit (10) ou régulier (16). Vapeur par défaut; poêlé +2 $.",
       searchPlaceholder: "Chercher un dumpling…",
       filtersTitle: "Filtrer",
       sortTitle: "Trier",
@@ -863,12 +990,12 @@ export const copy = {
       resultsMany: "assiettes trouvées",
       none: "Aucune assiette ne correspond. Assouplissez les filtres.",
       perOrder: "par commande",
+      friedNote: "Supplément poêlé : +2,00 $ par commande (avant taxes).",
       cooks: {
         all: "Tout",
-        steamed: "Vapeur",
-        panfried: "Poêlés",
+        dumpling: "Dumplings",
         veg: "Végé & Végane",
-        side: "Accompagnements",
+        side: "Entrées et plus",
       } as Record<"all" | CookKey, string>,
       diets: {
         signature: "Signature",
@@ -880,6 +1007,7 @@ export const copy = {
         pork: "Porc",
         lamb: "Agneau",
         chicken: "Poulet",
+        beef: "Bœuf",
         veggie: "Légumes",
       } as Record<ProteinKey, string>,
       sorts: {
@@ -1010,7 +1138,7 @@ export const copy = {
       "独家家常配方",
       "水饺或煎饺",
       "Clark 街上的隐藏小店",
-      "每份 15 只",
+      "每份 16 只",
     ],
     story: {
       eyebrow: "我们的故事",
@@ -1035,7 +1163,7 @@ export const copy = {
       ],
       values: ["手工包制饺子", "独家家常配方", "温馨改建老房", "朴实亲切服务"],
       stats: [
-        ["15", "经典一份饺子数量"],
+        ["16", "经典一份饺子数量"],
         ["100%", "每日手工包制"],
         ["1", "一间小屋，满满心意"],
       ] as [string, string][],
@@ -1043,7 +1171,7 @@ export const copy = {
     menu: {
       eyebrow: "菜单",
       title: "现点现包，按口味筛选。",
-      lead: "水饺柔软多汁，煎饺底部金黄酥脆。按你想吃的来筛选，我们带你找到它。",
+      lead: "店内菜单上的每一种馅料，小份 10 只或标准 16 只。默认蒸制，煎制每份加 $2。",
       searchPlaceholder: "搜索饺子…",
       filtersTitle: "筛选",
       sortTitle: "排序",
@@ -1052,12 +1180,12 @@ export const copy = {
       resultsMany: "款符合",
       none: "没有符合条件的饺子。放宽一下筛选吧。",
       perOrder: "每份",
+      friedNote: "煎制加价：每份 +$2.00（税前）。",
       cooks: {
         all: "全部",
-        steamed: "水饺",
-        panfried: "煎饺",
+        dumpling: "饺子",
         veg: "素食",
-        side: "小菜",
+        side: "前菜及其他",
       } as Record<"all" | CookKey, string>,
       diets: {
         signature: "招牌",
@@ -1069,6 +1197,7 @@ export const copy = {
         pork: "猪肉",
         lamb: "羊肉",
         chicken: "鸡肉",
+        beef: "牛肉",
         veggie: "素馅",
       } as Record<ProteinKey, string>,
       sorts: {

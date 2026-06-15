@@ -3,15 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { menuItems, type MenuItem } from "@/lib/content";
+import { getItemSizes, menuItems, type MenuItem } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 
 const ORBIT_DISH_IDS = [
-  "lamb-coriander-steamed",
-  "pork-chive-steamed",
-  "chicken-mushroom-steamed",
-  "pork-dill-panfried",
-  "lamb-coriander-panfried",
+  "pork-chive",
+  "lamb-coriander",
+  "chicken-mushroom",
+  "pork-dill",
+  "cabbage-mushroom",
 ] as const;
 
 const CARD_SIZE = "clamp(6.25rem, 30vw, 10.5rem)";
@@ -136,8 +136,15 @@ export function FeaturedDishOrbit() {
                 {item.blurb[lang]}
               </p>
               <p className="mt-5 font-bold text-[var(--color-lacquer)]">
-                ${item.price.toFixed(2)}
-                {item.count ? ` · ×${item.count}` : ""}
+                {(() => {
+                  const sizes = getItemSizes(item);
+                  if (sizes.length > 0) {
+                    return sizes
+                      .map((size) => `$${size.price.toFixed(2)} · ×${size.count}`)
+                      .join("  ");
+                  }
+                  return `$${item.price.toFixed(2)}${item.count ? ` · ×${item.count}` : ""}`;
+                })()}
               </p>
             </div>
           );
