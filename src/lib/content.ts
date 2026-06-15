@@ -82,6 +82,8 @@ export type DeliveryPlatform = {
   name: string;
   href: string;
   logoSrc: string;
+  /** Same dimensions as logoSrc; only recolors dark text for dark backgrounds. */
+  footerLogoSrc?: string;
   logoWidth: number;
   logoHeight: number;
   logoClassName: string;
@@ -95,6 +97,7 @@ export const deliveryPlatforms: DeliveryPlatform[] = [
     name: "Uber Eats",
     href: restaurant.uberEatsHref,
     logoSrc: "/uber-eats.png",
+    footerLogoSrc: "/uber-eats-footer.png",
     logoWidth: 146,
     logoHeight: 24,
     logoClassName: "h-6 w-auto max-w-[9.5rem] object-contain object-left sm:h-7",

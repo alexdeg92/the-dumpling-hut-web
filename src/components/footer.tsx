@@ -63,7 +63,7 @@ export function Footer() {
           <p className="eyebrow mb-2 mt-4 text-[var(--color-gold)] sm:mb-3 sm:mt-8">
             {t.order.footerTitle}
           </p>
-          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
             {deliveryPlatforms.map((p) => (
               <a
                 key={p.key}
@@ -71,9 +71,13 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Order on ${p.name}`}
-                className="block w-fit transition-opacity hover:opacity-85"
+                className="flex h-9 w-fit items-center transition-opacity hover:opacity-85 sm:h-10"
               >
-                <DeliveryPlatformLogo platform={p} className={`shrink-0 ${p.logoClassName}`} />
+                <DeliveryPlatformLogo
+                  platform={p}
+                  className={`shrink-0 ${p.logoClassName}${p.key === "ubereats" ? " -translate-y-px" : ""}`}
+                  forFooter
+                />
               </a>
             ))}
           </div>
