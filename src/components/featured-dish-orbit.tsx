@@ -14,7 +14,7 @@ const ORBIT_DISH_IDS = [
   "lamb-coriander-panfried",
 ] as const;
 
-const CARD_SIZE = "clamp(8rem, 46vw, 10.5rem)";
+const CARD_SIZE = "clamp(6.25rem, 30vw, 10.5rem)";
 
 function getOrbitDishes(): MenuItem[] {
   return ORBIT_DISH_IDS.map((id) => menuItems.find((m) => m.id === id)).filter(
@@ -60,7 +60,7 @@ export function FeaturedDishOrbit() {
   return (
     <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
       <div
-        className="relative mx-auto flex aspect-square w-full max-w-[22rem] items-center justify-center overflow-visible sm:max-w-[26rem] lg:max-w-[28rem]"
+        className="relative mx-auto flex aspect-square w-full max-w-[22rem] items-center justify-center overflow-hidden sm:max-w-[26rem] lg:max-w-[28rem]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}

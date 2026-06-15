@@ -13,7 +13,7 @@ export function FeaturedDishes() {
   const ref = useReveal<HTMLDivElement>();
 
   return (
-    <section ref={ref} className="relative mx-auto max-w-6xl px-5 py-24 sm:px-8">
+    <section ref={ref} className="relative mx-auto max-w-6xl overflow-x-clip px-5 py-24 sm:px-8">
       <div className="flex items-end justify-between gap-6">
         <div className="reveal max-w-xl">
           <p className="eyebrow text-[var(--color-lacquer)]">{t.menu.eyebrow}</p>

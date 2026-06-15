@@ -51,9 +51,9 @@ export default async function LangLayout({
     <I18nProvider lang={lang as Lang}>
       <OrderModalProvider>
         <LanguageDetector current={lang as Lang} />
-        <div className="relative flex min-h-screen flex-col">
+        <div className="relative flex min-h-screen w-full max-w-full flex-col overflow-x-clip">
           <Nav />
-          <main className="relative z-10 flex-1">{children}</main>
+          <main className="relative z-10 flex-1 overflow-x-clip">{children}</main>
           <Footer />
         </div>
       </OrderModalProvider>

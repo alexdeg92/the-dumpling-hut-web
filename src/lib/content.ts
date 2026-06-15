@@ -715,6 +715,7 @@ export const copy = {
     },
     order: {
       cta: "Order Now",
+      ctaShort: "Order",
       modalTitle: "Order online",
       modalLead: "Pick your favourite delivery app and we'll start folding.",
       orPhone: "Prefer to call?",
@@ -895,6 +896,7 @@ export const copy = {
     },
     order: {
       cta: "Commander",
+      ctaShort: "Commander",
       modalTitle: "Commander en ligne",
       modalLead: "Choisissez votre appli de livraison préférée et on commence à plier.",
       orPhone: "Vous préférez appeler?",
@@ -1070,6 +1072,7 @@ export const copy = {
     },
     order: {
       cta: "现在订购",
+      ctaShort: "订购",
       modalTitle: "在线订购",
       modalLead: "选择你喜欢的外送平台，我们这就开始包饺子。",
       orPhone: "想打电话？",

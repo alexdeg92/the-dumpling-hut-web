@@ -125,7 +125,7 @@ export function SteamerBasket({
   }, [animate]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-hidden">
       <svg viewBox="0 0 420 360" className={className} role="img" aria-label="A bamboo steamer of dumplings">
         <defs>
           <radialGradient id={glowId} cx="50%" cy="35%" r="65%">

@@ -41,6 +41,7 @@ html {
   scroll-behavior: smooth;
   background: var(--paper);
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -52,7 +53,7 @@ body {
     radial-gradient(120% 80% at 100% 0%, rgba(233, 185, 73, 0.18), transparent 60%),
     radial-gradient(110% 70% at 0% 100%, rgba(122, 15, 18, 0.1), transparent 55%);
   background-attachment: fixed;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* subtle paper grain overlay over the whole page */

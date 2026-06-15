@@ -48,7 +48,7 @@ export function Nav() {
   return (
     <header
       data-on-dark={onDark}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 w-full overflow-x-clip transition-all duration-500 ${
         solidBar
           ? "bg-[var(--color-cream)]/90 shadow-[0_10px_30px_-18px_rgba(28,14,11,0.5)] backdrop-blur-xl"
           : "bg-transparent"
@@ -95,18 +95,10 @@ export function Nav() {
           aria-label={t.order.cta}
           className="btn btn-gold h-11 shrink-0 gap-2 px-4 text-sm sm:px-5"
         >
-          <BagIcon />
+          <span className="sm:hidden">{t.order.ctaShort}</span>
           <span className="hidden sm:inline">{t.order.cta}</span>
         </button>
       </div>
     </header>
-  );
-}
-
-function BagIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden="true">
-      <path d="M7 4h10l1 3H6l1-3Zm-1.5 5h13l-.9 9.2A2 2 0 0 1 15.6 20H8.4a2 2 0 0 1-2-1.8L5.5 9Zm4 3a2.5 2.5 0 0 0 5 0h-1.5a1 1 0 0 1-2 0H9.5Z" />
-    </svg>
   );
 }
