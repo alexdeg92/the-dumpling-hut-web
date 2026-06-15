@@ -25,12 +25,12 @@ import { useReveal } from "@/lib/use-reveal";
  */
 
 const GRADIENTS = [
-  "from-[#a8181c] to-[#7a0f12]",
-  "from-[#d4452b] to-[#a8181c]",
-  "from-[#e9b949] to-[#d4452b]",
-  "from-[#7a0f12] to-[#2a1410]",
+  "from-[#2138a8] to-[#041e8d]",
+  "from-[#3f6fd6] to-[#2138a8]",
+  "from-[#e9b949] to-[#3f6fd6]",
+  "from-[#041e8d] to-[#0a1030]",
   "from-[#6f8f57] to-[#3f5a32]",
-  "from-[#d4452b] to-[#7a0f12]",
+  "from-[#3f6fd6] to-[#041e8d]",
 ];
 
 type TileProps = {

@@ -90,7 +90,7 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
   return (
     <button
       onClick={onOpen}
-      className="dish-card group relative flex flex-row overflow-hidden rounded-2xl border border-[var(--color-ink)]/10 bg-white/75 text-left shadow-[0_12px_28px_-22px_rgba(28,14,11,0.55)] transition hover:shadow-[0_20px_44px_-24px_rgba(122,15,18,0.5)] sm:flex-col sm:rounded-3xl sm:shadow-[0_18px_40px_-28px_rgba(28,14,11,0.6)] sm:hover:shadow-[0_28px_60px_-30px_rgba(122,15,18,0.55)]"
+      className="dish-card group relative flex flex-row overflow-hidden rounded-2xl border border-[var(--color-ink)]/10 bg-white/75 text-left shadow-[0_12px_28px_-22px_rgba(28,14,11,0.55)] transition hover:shadow-[0_20px_44px_-24px_rgba(4,30,141,0.5)] sm:flex-col sm:rounded-3xl sm:shadow-[0_18px_40px_-28px_rgba(28,14,11,0.6)] sm:hover:shadow-[0_28px_60px_-30px_rgba(4,30,141,0.55)]"
     >
       <div className="relative h-[5.5rem] w-[5.5rem] shrink-0 overflow-hidden bg-[var(--color-cream-2)] sm:aspect-[4/3] sm:h-auto sm:w-full">
         <Image

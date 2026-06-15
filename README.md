@@ -4,7 +4,7 @@ A custom, fully trilingual (EN / FR / ZH) website for The Dumpling Hut — a
 cozy, family-run hand-folded Chinese dumpling house on Rue Clark, Montréal.
 
 Built from the ground up — no restaurant template. Warm "lantern-lit
-dumpling house at night" identity: lacquer red, paper cream, gold leaf,
+dumpling house at night" identity: cobalt blue, paper cream, gold leaf,
 hand-built SVG art, animated steam, and motion throughout.
 
 ## Highlights
