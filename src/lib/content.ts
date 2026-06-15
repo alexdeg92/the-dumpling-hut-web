@@ -60,6 +60,8 @@ export const feedImages: Array<{ src: string; shortcode?: string }> = [
   { src: "/feed/18-golden-panfried.jpg" },
   { src: "/feed/19-takeout-tray.jpg" },
   { src: "/feed/20-pan-fried-closeup.jpg" },
+  { src: "/feed/21-haiqin-at-work.jpg" },
+  { src: "/feed/22-the-sign.jpg" },
 ];
 
 export const instagramPostHref = (shortcode: string) =>
@@ -719,6 +721,8 @@ export const copy = {
         ["Crisp and golden", "A plate of pan-fried dumplings with lacquered, golden bottoms."],
         ["Packed to go", "A tray of dumplings boxed up and ready to travel home."],
         ["Right off the pan", "Plump dumplings, glistening, with crackling golden edges."],
+        ["The hands behind the hut", "Haiqin folding tray after tray by hand — the heart of the kitchen."],
+        ["Look up for the sign", "The hanging sign on Clark — you've found the hut."],
       ] as [string, string][],
     },
     visit: {
@@ -911,6 +915,8 @@ export const copy = {
         ["Doré et croustillant", "Une assiette de dumplings poêlés aux fonds dorés et laqués."],
         ["Emporté", "Un plateau de dumplings emballé, prêt à rentrer à la maison."],
         ["Tout juste poêlés", "Des dumplings dodus et luisants, aux bords dorés et croustillants."],
+        ["Les mains derrière la maison", "Haiqin plie plateau après plateau à la main — le cœur de la cuisine."],
+        ["Levez les yeux vers l'enseigne", "L'enseigne suspendue sur Clark — vous avez trouvé la maison."],
       ] as [string, string][],
     },
     visit: {
@@ -1098,6 +1104,8 @@ export const copy = {
         ["金黄酥脆", "一盘煎饺，底部煎得金黄发亮。"],
         ["打包带走", "一盒装好的饺子，随时带回家。"],
         ["刚出锅", "饱满油亮的饺子，带着酥脆的金边。"],
+        ["小屋背后的双手", "Haiqin 一盘接一盘手工包制——厨房的灵魂所在。"],
+        ["抬头找招牌", "Clark 街上悬挂的招牌——你已经找到小屋了。"],
       ] as [string, string][],
     },
     visit: {
