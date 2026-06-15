@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Noto_Sans, Noto_Serif_SC } from "next/font/google";
+import { restaurant } from "@/lib/content";
+import { absoluteUrl, defaultOgImage, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -23,12 +25,33 @@ const notoSerifSC = Noto_Serif_SC({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://the-dumpling-hut-web.vercel.app"),
-  title: "The Dumpling Hut | La Maison Dumplings | 饺子小屋",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "The Dumpling Hut | La Maison Dumplings | 饺子小屋",
+    template: "%s",
+  },
   description:
     "A cozy, family-run Chinese dumpling house in Montreal serving hand-folded dumplings on Rue Clark.",
-  icons: {
-    icon: "/dumpling.svg",
+  applicationName: restaurant.name,
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    siteName: restaurant.name,
+    locale: "en_CA",
+    images: [
+      {
+        url: absoluteUrl(defaultOgImage),
+        width: 1200,
+        height: 1200,
+        alt: `${restaurant.name} dumplings`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 

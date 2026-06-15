@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getCopy, isLang, languages, restaurant, type Lang } from "@/lib/content";
+import { isLang, languages, type Lang } from "@/lib/content";
 import { I18nProvider } from "@/lib/i18n";
+import { buildPageMetadata } from "@/lib/seo";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { LanguageDetector } from "@/components/language-detector";
 import { OrderModalProvider } from "@/components/order-modal";
+import { RestaurantJsonLd } from "@/components/restaurant-json-ld";
 
 export function generateStaticParams() {
   return languages.map((lang) => ({ lang }));
@@ -19,22 +21,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLang(lang)) return {};
 
-  const c = getCopy(lang);
-  return {
-    title: c.metadata.title,
-    description: c.metadata.description,
-    alternates: {
-      canonical: `/${lang}`,
-      languages: Object.fromEntries(languages.map((l) => [l, `/${l}`])),
-    },
-    openGraph: {
-      title: c.metadata.title,
-      description: c.metadata.description,
-      type: "website",
-      locale: c.locale,
-      siteName: restaurant.name,
-    },
-  };
+  return buildPageMetadata(lang, "");
 }
 
 export default async function LangLayout({
@@ -50,6 +37,7 @@ export default async function LangLayout({
   return (
     <I18nProvider lang={lang as Lang}>
       <OrderModalProvider>
+        <RestaurantJsonLd />
         <LanguageDetector current={lang as Lang} />
         <div className="relative flex min-h-screen w-full max-w-full flex-col overflow-x-clip">
           <Nav />
