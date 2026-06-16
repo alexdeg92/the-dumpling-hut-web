@@ -494,14 +494,14 @@ export const menuItems: MenuItem[] = [
     imagePos: "center 70%",
     name: { en: "Cabbage & Mushroom", fr: "Chou et champignons", zh: "白菜蘑菇饺" },
     blurb: {
-      en: "Cabbage, mushroom and tofu.",
-      fr: "Chou, champignon et tofu.",
-      zh: "白菜、蘑菇与豆腐。",
+      en: "Cabbage and mushroom.",
+      fr: "Chou et champignon.",
+      zh: "白菜与蘑菇。",
     },
     detail: {
-      en: "Soft cabbage, earthy mushroom and tofu in a savoury vegan filling.",
-      fr: "Chou tendre, champignon terreux et tofu dans une farce végane savoureuse.",
-      zh: "软嫩白菜、蘑菇与豆腐，咸鲜纯素馅。",
+      en: "Soft cabbage and earthy mushroom in a savoury vegan filling.",
+      fr: "Chou tendre et champignon terreux dans une farce végane savoureuse.",
+      zh: "软嫩白菜与蘑菇，咸鲜纯素馅。",
     },
     pairs: {
       en: "Pairs with chili oil.",
