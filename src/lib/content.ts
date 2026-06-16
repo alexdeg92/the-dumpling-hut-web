@@ -202,6 +202,14 @@ export function getItemMinPrice(item: MenuItem): number {
   return item.price;
 }
 
+/**
+ * Small pre-generated thumbnail for a dish photo. Menu cards load these (fast),
+ * and the dish modal shows the cached thumbnail first while the full-res file
+ * loads in the background. Thumbnails live in /public/dishes/thumb with the
+ * same filename, e.g. /dishes/pork_dill.jpg -> /dishes/thumb/pork_dill.jpg.
+ */
+export const dishThumb = (src: string) => src.replace("/dishes/", "/dishes/thumb/");
+
 export const menuItems: MenuItem[] = [
   {
     id: "pork-cabbage",
@@ -213,7 +221,7 @@ export const menuItems: MenuItem[] = [
     price: 13.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/pork-dill-steamed.jpg",
+    image: "/dishes/pork_cabage.jpg",
     name: { en: "Pork & Cabbage", fr: "Porc et chou", zh: "猪肉白菜水饺" },
     blurb: {
       en: "Classic pork and tender cabbage.",
@@ -241,7 +249,7 @@ export const menuItems: MenuItem[] = [
     price: 13.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/pork-dill-steamed.jpg",
+    image: "/dishes/pork_dill.jpg",
     name: { en: "Pork & Dill", fr: "Porc et aneth", zh: "猪肉茴香水饺" },
     blurb: {
       en: "Fragrant dill, clean and bright finish.",
@@ -269,7 +277,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/pork-chive-steamed.jpg",
+    image: "/dishes/pork_chives.jpg",
     name: { en: "Pork & Chive", fr: "Porc et ciboulette", zh: "猪肉韭菜水饺" },
     blurb: {
       en: "The house classic: pork and garlic chive.",
@@ -297,7 +305,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/lamb-coriander-steamed.jpg",
+    image: "/dishes/beef_corriander.jpg",
     name: { en: "Beef & Coriander", fr: "Bœuf et coriandre", zh: "牛肉香菜水饺" },
     blurb: {
       en: "Savory beef with fresh coriander.",
@@ -325,7 +333,7 @@ export const menuItems: MenuItem[] = [
     price: 15.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/chicken-mushroom-steamed.jpg",
+    image: "/dishes/chicken_corriander.jpg",
     name: { en: "Chicken & Coriander", fr: "Poulet et coriandre", zh: "鸡肉香菜水饺" },
     blurb: {
       en: "Light chicken, bright coriander.",
@@ -353,7 +361,7 @@ export const menuItems: MenuItem[] = [
     price: 15.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/pork-chive-steamed.jpg",
+    image: "/dishes/pork_zukini_shrimp.jpg",
     name: {
       en: "Pork, Zucchini & Shrimp",
       fr: "Porc, courgette et crevettes",
@@ -385,7 +393,7 @@ export const menuItems: MenuItem[] = [
     price: 15.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/chicken-mushroom-steamed.jpg",
+    image: "/dishes/chicken_mushroom.jpg",
     name: { en: "Chicken & Mushroom", fr: "Poulet et champignons", zh: "鸡肉蘑菇水饺" },
     blurb: {
       en: "Ground chicken and earthy mushroom.",
@@ -413,7 +421,7 @@ export const menuItems: MenuItem[] = [
     price: 15.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/lamb-coriander-steamed.jpg",
+    image: "/dishes/lamb_corriander.jpg",
     name: { en: "Lamb & Coriander", fr: "Agneau et coriandre", zh: "羊肉香菜水饺" },
     blurb: {
       en: "Aromatic lamb, bright coriander, scallion.",
@@ -441,7 +449,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     count: null,
     emoji: "🥟",
-    image: "/dishes/pork-dill-steamed.jpg",
+    image: "/dishes/beef_onion.jpg",
     name: { en: "Beef & Onion", fr: "Bœuf et oignon", zh: "牛肉洋葱水饺" },
     blurb: {
       en: "Savory beef and sweet onion.",
@@ -469,7 +477,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     count: null,
     emoji: "🥬",
-    image: "/dishes/vegetable-mushroom.jpg",
+    image: "/dishes/cabage_mushroom.jpg",
     name: { en: "Cabbage & Mushroom", fr: "Chou et champignons", zh: "白菜蘑菇饺" },
     blurb: {
       en: "Cabbage, mushroom and tofu.",
@@ -497,7 +505,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     count: null,
     emoji: "🥬",
-    image: "/dishes/seasonal-greens.jpg",
+    image: "/dishes/egg_zukini_tofu.jpg",
     name: {
       en: "Egg, Zucchini & Tofu",
       fr: "Œuf, courgette et tofu",
@@ -529,7 +537,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     count: null,
     emoji: "🥬",
-    image: "/dishes/seasonal-greens.jpg",
+    image: "/dishes/carrot_tofu_celeri.jpg",
     name: {
       en: "Carrot, Tofu & Celery",
       fr: "Carotte, tofu et céleri",
@@ -614,7 +622,7 @@ export const menuItems: MenuItem[] = [
     price: 5.99,
     count: null,
     emoji: "🍲",
-    image: "/dishes/miso-soup.jpg",
+    image: "/dishes/miso_soup.jpg",
     name: { en: "Miso Soup", fr: "Soupe miso", zh: "味噌汤" },
     blurb: {
       en: "Warm, savory miso broth.",

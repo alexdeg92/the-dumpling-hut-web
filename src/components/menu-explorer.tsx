@@ -1,8 +1,12 @@
 "use client";
 
-import Image from "next/image";
+/* Menu cards show pre-generated thumbnails and the dish modal cross-fades to
+   the full-res file (see ProgressiveImage), so we use <img> over next/image. */
+/* eslint-disable @next/next/no-img-element */
+
 import { useEffect, useMemo, useState } from "react";
 import {
+  dishThumb,
   getItemMinPrice,
   getItemSizes,
   menuItems,
@@ -12,6 +16,7 @@ import {
 } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { CategoryCarousel } from "@/components/category-carousel";
+import { ProgressiveImage } from "@/components/progressive-image";
 
 type CookTab = "all" | CookKey;
 
@@ -21,7 +26,7 @@ const COOK_TABS: CookTab[] = ["all", "dumpling", "veg", "side"];
 const featuredRank = new Map(menuItems.map((m, i) => [m.id, i]));
 
 export function MenuExplorer() {
-  const { lang, t } = useI18n();
+  const { t } = useI18n();
   const m = t.menu;
 
   const [cook, setCook] = useState<CookTab>("all");
@@ -99,12 +104,12 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
       className="dish-card group relative flex flex-row overflow-hidden rounded-2xl border border-[var(--color-ink)]/10 bg-white/75 text-left shadow-[0_12px_28px_-22px_rgba(28,14,11,0.55)] transition hover:shadow-[0_20px_44px_-24px_rgba(4,30,141,0.5)] sm:flex-col sm:rounded-3xl sm:shadow-[0_18px_40px_-28px_rgba(28,14,11,0.6)] sm:hover:shadow-[0_28px_60px_-30px_rgba(4,30,141,0.55)]"
     >
       <div className="relative h-[5.5rem] w-[5.5rem] shrink-0 overflow-hidden bg-[var(--color-cream-2)] sm:aspect-[4/3] sm:h-auto sm:w-full">
-        <Image
-          src={item.image}
+        <img
+          src={dishThumb(item.image)}
           alt={item.name[lang]}
-          fill
-          sizes="(max-width: 640px) 88px, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <span className="absolute left-2 top-2 hidden size-9 place-items-center rounded-full bg-[var(--color-cream)]/90 text-xl shadow backdrop-blur-sm transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110 sm:grid sm:size-10 sm:text-2xl">
           {item.emoji}
@@ -190,13 +195,12 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
       >
         <div className="shrink-0">
           <div className="relative h-[clamp(11rem,36dvh,18rem)] w-full bg-[var(--color-cream-2)] sm:h-64">
-            <Image
-              src={item.image}
+            <ProgressiveImage
+              key={item.image}
+              thumb={dishThumb(item.image)}
+              full={item.image}
               alt={item.name[lang]}
-              fill
-              sizes="(max-width: 640px) 100vw, 32rem"
-              className="object-contain"
-              priority
+              fit="contain"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[var(--color-lacquer)] to-transparent sm:h-14" />
             <button

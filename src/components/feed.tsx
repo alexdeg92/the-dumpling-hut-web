@@ -7,11 +7,12 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { createPortal } from "react-dom";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { feedImages, feedThumb, instagramPostHref, restaurant } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
+import { ProgressiveImage } from "@/components/progressive-image";
 
 /**
  * Instagram feed — compact editorial gallery with a responsive grid.
@@ -169,52 +170,6 @@ export function Feed() {
   );
 }
 
-/**
- * Lightbox image with a seamless thumbnail → full-res hand-off.
- *
- * The thumbnail (already cached from the grid) paints instantly, while the
- * full-res file loads underneath. Once it's ready we cross-fade the full-res
- * layer in over the thumbnail. Mounted with a `key` per photo so navigating
- * resets the fade. Falls back to the imperative `complete` check for full-res
- * files already in the browser cache, where `onLoad` may not fire after mount.
- */
-function FullResImage({
-  thumb,
-  full,
-  alt,
-}: {
-  thumb: string;
-  full: string;
-  alt: string;
-}) {
-  const [loaded, setLoaded] = useState(false);
-  const ref = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    if (ref.current?.complete) setLoaded(true);
-  }, []);
-
-  return (
-    <>
-      <img
-        src={thumb}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center"
-      />
-      <img
-        ref={ref}
-        src={full}
-        alt={alt}
-        onLoad={() => setLoaded(true)}
-        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
-          loaded ? "opacity-100" : "opacity-0"
-        }`}
-      />
-    </>
-  );
-}
-
 function Lightbox({
   index,
   onIndexChange,
@@ -305,7 +260,7 @@ function Lightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative min-h-0 flex-1 overflow-hidden bg-[var(--color-ink)]">
-          <FullResImage
+          <ProgressiveImage
             key={img.src}
             thumb={feedThumb(img.src)}
             full={img.src}
