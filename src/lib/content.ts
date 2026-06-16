@@ -272,14 +272,14 @@ export const menuItems: MenuItem[] = [
     image: "/dishes/pork-chive-steamed.jpg",
     name: { en: "Pork & Chive", fr: "Porc et ciboulette", zh: "猪肉韭菜水饺" },
     blurb: {
-      en: "The house classic: pork, garlic chive, ginger.",
-      fr: "Le classique: porc, ciboulette ail, gingembre.",
-      zh: "店内经典：猪肉、韭菜、姜香平衡。",
+      en: "The house classic: pork and garlic chive.",
+      fr: "Le classique : porc et ciboulette à l'ail.",
+      zh: "店内经典：猪肉与韭菜。",
     },
     detail: {
-      en: "The one everyone orders first. Juicy ground pork, fragrant garlic chive and a whisper of ginger in a tender hand-rolled wrapper.",
-      fr: "Celui que tout le monde commande en premier. Porc haché juteux, ciboulette à l'ail parfumée et un soupçon de gingembre dans une pâte tendre roulée à la main.",
-      zh: "几乎人人第一份都点它。多汁猪肉、香气十足的韭菜，加一丝姜香，包进手擀的柔软面皮。",
+      en: "The one everyone orders first. Juicy ground pork and fragrant garlic chive in a tender hand-rolled wrapper.",
+      fr: "Celui que tout le monde commande en premier. Porc haché juteux et ciboulette à l'ail parfumée dans une pâte tendre roulée à la main.",
+      zh: "几乎人人第一份都点它。多汁猪肉与香气十足的韭菜，包进手擀的柔软面皮。",
     },
     pairs: {
       en: "Pairs with cucumber salad.",
@@ -388,14 +388,14 @@ export const menuItems: MenuItem[] = [
     image: "/dishes/chicken-mushroom-steamed.jpg",
     name: { en: "Chicken & Mushroom", fr: "Poulet et champignons", zh: "鸡肉蘑菇水饺" },
     blurb: {
-      en: "Ground chicken, earthy mushroom, sesame.",
-      fr: "Poulet haché, champignons terreux, sésame.",
-      zh: "鸡肉、蘑菇与芝麻，鲜味十足。",
+      en: "Ground chicken and earthy mushroom.",
+      fr: "Poulet haché et champignons terreux.",
+      zh: "鸡肉与蘑菇，鲜味十足。",
     },
     detail: {
-      en: "The lighter pick. Tender ground chicken with earthy mushrooms and a drop of sesame oil: gentle, savoury, and very easy to keep eating.",
-      fr: "Le choix plus léger. Poulet haché tendre, champignons terreux et une goutte d'huile de sésame : doux, savoureux et facile à enchaîner.",
-      zh: "更清爽的选择。嫩鸡肉配上带泥土香的蘑菇和一点芝麻油，温和鲜香，一口接一口。",
+      en: "The lighter pick. Tender ground chicken with earthy mushrooms: gentle, savoury, and very easy to keep eating.",
+      fr: "Le choix plus léger. Poulet haché tendre et champignons terreux : doux, savoureux et facile à enchaîner.",
+      zh: "更清爽的选择。嫩鸡肉配上带泥土香的蘑菇，温和鲜香，一口接一口。",
     },
     pairs: {
       en: "Pairs with cucumber salad.",
@@ -472,14 +472,14 @@ export const menuItems: MenuItem[] = [
     image: "/dishes/vegetable-mushroom.jpg",
     name: { en: "Cabbage & Mushroom", fr: "Chou et champignons", zh: "白菜蘑菇饺" },
     blurb: {
-      en: "Cabbage, mushroom, tofu and sesame.",
-      fr: "Chou, champignon, tofu et sésame.",
-      zh: "白菜、蘑菇、豆腐与芝麻。",
+      en: "Cabbage, mushroom and tofu.",
+      fr: "Chou, champignon et tofu.",
+      zh: "白菜、蘑菇与豆腐。",
     },
     detail: {
-      en: "Cabbage, mushroom and tofu seasoned with sesame and ginger. Fully vegan.",
-      fr: "Chou, champignon et tofu assaisonnés de sésame et de gingembre. Entièrement végétalien.",
-      zh: "白菜、蘑菇、豆腐，用芝麻和姜调味。纯素。",
+      en: "Soft cabbage, earthy mushroom and tofu in a savoury vegan filling.",
+      fr: "Chou tendre, champignon terreux et tofu dans une farce végane savoureuse.",
+      zh: "软嫩白菜、蘑菇与豆腐，咸鲜纯素馅。",
     },
     pairs: {
       en: "Pairs with chili oil.",
