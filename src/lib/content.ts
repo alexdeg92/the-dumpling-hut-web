@@ -756,7 +756,7 @@ export const copy = {
     story: {
       eyebrow: "Our story",
       title: "A hand-folded dumpling house with an open-kitchen heart.",
-      lead: "Tucked inside a converted house on Rue Clark, The Dumpling Hut feels more like a neighbourhood secret than a restaurant built for show.",
+      lead: "Tucked inside a converted house on Rue Clark since 2016, The Dumpling Hut feels more like a neighbourhood secret than a restaurant built for show.",
       blocks: [
         {
           k: "01",
@@ -951,7 +951,7 @@ export const copy = {
     story: {
       eyebrow: "Notre histoire",
       title: "Une maison de dumplings faits main au cœur de cuisine ouverte.",
-      lead: "Installée dans une maison convertie sur la rue Clark, La Maison Dumplings ressemble plus à un secret de quartier qu'à un restaurant de spectacle.",
+      lead: "Installée depuis 2016 dans une maison convertie sur la rue Clark, La Maison Dumplings ressemble plus à un secret de quartier qu'à un restaurant de spectacle.",
       blocks: [
         {
           k: "01",
@@ -1146,7 +1146,7 @@ export const copy = {
     story: {
       eyebrow: "我们的故事",
       title: "一家以开放式厨房为心脏的手工饺子小馆。",
-      lead: "藏身于 Clark 街一栋改建的小房子里，饺子小屋更像一个街坊口口相传的隐藏小店，而非用来展示的餐厅。",
+      lead: "自 2016 年藏身于 Clark 街一栋改建的小房子里，饺子小屋更像一个街坊口口相传的隐藏小店，而非用来展示的餐厅。",
       blocks: [
         {
           k: "01",
