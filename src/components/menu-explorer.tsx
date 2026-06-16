@@ -109,6 +109,7 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
           alt={item.name[lang]}
           loading="lazy"
           decoding="async"
+          style={{ objectPosition: item.imagePos ?? "center" }}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <span className="absolute left-2 top-2 hidden size-9 place-items-center rounded-full bg-[var(--color-cream)]/90 text-xl shadow backdrop-blur-sm transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110 sm:grid sm:size-10 sm:text-2xl">
