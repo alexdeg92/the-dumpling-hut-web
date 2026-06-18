@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
 
 import {
-  adminCredentials,
   adminSessionCookie,
   createSessionToken,
+  isAdminAuthConfigured,
   verifyAdminLogin,
 } from "@/lib/admin-session";
 
 export async function POST(request: Request) {
+  if (!isAdminAuthConfigured()) {
+    return NextResponse.json({ error: "Admin login is not configured" }, { status: 503 });
+  }
+
   const body = (await request.json()) as { username?: string; password?: string };
   const username = body.username?.trim() ?? "";
   const password = body.password ?? "";
@@ -26,8 +30,4 @@ export async function POST(request: Request) {
     maxAge: adminSessionCookie.maxAge,
   });
   return response;
-}
-
-export async function GET() {
-  return NextResponse.json({ username: adminCredentials().username });
 }

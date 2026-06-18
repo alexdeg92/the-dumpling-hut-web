@@ -4,15 +4,27 @@ import { cookies } from "next/headers";
 const COOKIE_NAME = "dumpling_admin";
 const MAX_AGE_SEC = 60 * 60 * 24 * 7;
 
-function adminSecret(): string {
-  return process.env.ADMIN_SECRET ?? "dumpling-hut-dev-secret";
+export function isAdminAuthConfigured(): boolean {
+  return Boolean(
+    process.env.ADMIN_USERNAME?.trim() &&
+      process.env.ADMIN_PASSWORD &&
+      process.env.ADMIN_SECRET,
+  );
 }
 
-export function adminCredentials() {
-  return {
-    username: process.env.ADMIN_USERNAME ?? "admin",
-    password: process.env.ADMIN_PASSWORD ?? "12345678",
-  };
+function adminSecret(): string {
+  const secret = process.env.ADMIN_SECRET;
+  if (!secret) {
+    throw new Error("ADMIN_SECRET is not set");
+  }
+  return secret;
+}
+
+export function adminCredentials(): { username: string; password: string } | null {
+  const username = process.env.ADMIN_USERNAME?.trim();
+  const password = process.env.ADMIN_PASSWORD;
+  if (!username || !password) return null;
+  return { username, password };
 }
 
 function sign(payload: string): string {
@@ -26,11 +38,17 @@ export function createSessionToken(): string {
 }
 
 export function verifySessionToken(token: string | undefined): boolean {
-  if (!token) return false;
+  if (!isAdminAuthConfigured() || !token) return false;
   const [payload, signature] = token.split(".");
   if (!payload || !signature) return false;
 
-  const expected = sign(payload);
+  let expected: string;
+  try {
+    expected = sign(payload);
+  } catch {
+    return false;
+  }
+
   try {
     if (signature.length !== expected.length) return false;
     if (!timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return false;
@@ -45,7 +63,9 @@ export function verifySessionToken(token: string | undefined): boolean {
 }
 
 export function verifyAdminLogin(username: string, password: string): boolean {
+  if (!isAdminAuthConfigured()) return false;
   const creds = adminCredentials();
+  if (!creds) return false;
   return username === creds.username && password === creds.password;
 }
 

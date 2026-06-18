@@ -8,7 +8,7 @@ import { useI18n } from "@/lib/i18n";
 export function AdminLoginForm() {
   const { lang } = useI18n();
   const router = useRouter();
-  const [username, setUsername] = useState("admin");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
