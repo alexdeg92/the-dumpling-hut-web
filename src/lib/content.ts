@@ -1,3 +1,5 @@
+import { withWebsiteUtm } from "@/lib/site";
+
 export const languages = ["en", "fr", "zh"] as const;
 
 export type Lang = (typeof languages)[number];
@@ -23,10 +25,15 @@ export const restaurant = {
     "https://www.google.com/maps/search/?api=1&query=3591%20Rue%20Clark%2C%20Montr%C3%A9al%2C%20QC%20H2X%202R9",
   mapEmbed:
     "https://www.google.com/maps?q=3591+Rue+Clark,+Montr%C3%A9al,+QC+H2X+2R9&output=embed",
-  uberEatsHref:
+  uberEatsHref: withWebsiteUtm(
     "https://www.ubereats.com/ca/store/the-dumpling-hut/3zZmcz7aVzaRk8etoaTE5Q",
-  doorDashHref:
+  ),
+  doorDashHref: withWebsiteUtm(
     "https://www.doordash.com/en/store/the-dumpling-hut-montr%C3%A9al-714824/",
+  ),
+  skipTheDishesHref: withWebsiteUtm(
+    "https://www.skipthedishes.com/fr/the-dumpling-hut-3591-rue-clark?serviceType=collection",
+  ),
 } as const;
 
 /**
@@ -75,7 +82,7 @@ export const instagramPostHref = (shortcode: string) =>
  */
 export const feedThumb = (src: string) => src.replace("/feed/", "/feed/thumb/");
 
-export type DeliveryKey = "doordash" | "ubereats";
+export type DeliveryKey = "doordash" | "skipthedishes" | "ubereats";
 
 export type DeliveryPlatform = {
   key: DeliveryKey;
@@ -122,6 +129,21 @@ export const deliveryPlatforms: DeliveryPlatform[] = [
       zh: "自取或外送",
     },
     color: "#ef322a",
+  },
+  {
+    key: "skipthedishes",
+    name: "SkipTheDishes",
+    href: restaurant.skipTheDishesHref,
+    logoSrc: "/skip-the-dishes.png",
+    logoWidth: 300,
+    logoHeight: 88,
+    logoClassName: "h-7 w-auto max-w-[9.5rem] object-contain object-left sm:h-8",
+    tagline: {
+      en: "Pickup or delivery",
+      fr: "Cueillette ou livraison",
+      zh: "自取或外送",
+    },
+    color: "#f36602",
   },
 ];
 

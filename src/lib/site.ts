@@ -16,3 +16,12 @@ export function absoluteUrl(path: string): string {
 }
 
 export const defaultOgImage = "/feed/02-steamed-plate.jpg";
+
+/** Append standard website referral UTMs for delivery / ordering links. */
+export function withWebsiteUtm(href: string, campaign = "foodorder"): string {
+  const url = new URL(href);
+  url.searchParams.set("utm_source", "website");
+  url.searchParams.set("utm_medium", "organic");
+  url.searchParams.set("utm_campaign", campaign);
+  return url.toString();
+}
