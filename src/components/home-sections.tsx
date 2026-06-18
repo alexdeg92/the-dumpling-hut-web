@@ -2,13 +2,13 @@
 
 import { FeaturedDishOrbit } from "@/components/featured-dish-orbit";
 import Link from "next/link";
-import { restaurant } from "@/lib/content";
+import { restaurant, type MenuItem } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { useReveal } from "@/lib/use-reveal";
 import { ChiliSprig, Seal } from "@/components/art";
 
 /** Circular orbit of signature dishes with auto-rotating spotlight. */
-export function FeaturedDishes() {
+export function FeaturedDishes({ menuItems }: { menuItems: MenuItem[] }) {
   const { lang, t } = useI18n();
   const ref = useReveal<HTMLDivElement>();
 
@@ -30,7 +30,7 @@ export function FeaturedDishes() {
       </div>
 
       <div className="reveal">
-        <FeaturedDishOrbit />
+        <FeaturedDishOrbit menuItems={menuItems} />
       </div>
     </section>
   );

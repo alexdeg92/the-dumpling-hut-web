@@ -3,11 +3,10 @@ import { notFound } from "next/navigation";
 import { isLang, languages, type Lang } from "@/lib/content";
 import { I18nProvider } from "@/lib/i18n";
 import { buildPageMetadata } from "@/lib/seo";
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 import { LanguageDetector } from "@/components/language-detector";
 import { OrderModalProvider } from "@/components/order-modal";
 import { RestaurantJsonLd } from "@/components/restaurant-json-ld";
+import { SiteChrome } from "@/components/site-chrome";
 
 export function generateStaticParams() {
   return languages.map((lang) => ({ lang }));
@@ -39,11 +38,7 @@ export default async function LangLayout({
       <OrderModalProvider>
         <RestaurantJsonLd />
         <LanguageDetector current={lang as Lang} />
-        <div className="relative flex min-h-screen w-full max-w-full flex-col overflow-x-clip">
-          <Nav />
-          <main className="relative z-10 flex-1 overflow-x-clip">{children}</main>
-          <Footer />
-        </div>
+        <SiteChrome>{children}</SiteChrome>
       </OrderModalProvider>
     </I18nProvider>
   );

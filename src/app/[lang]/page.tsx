@@ -6,13 +6,18 @@ import {
   StoryStrip,
 } from "@/components/home-sections";
 import { Feed } from "@/components/feed";
+import { loadMenuItems } from "@/lib/menu-db";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const menuItems = await loadMenuItems();
+
   return (
     <>
       <Hero />
       <Marquee />
-      <FeaturedDishes />
+      <FeaturedDishes menuItems={menuItems} />
       <StoryStrip />
       <StatsBand />
       <section className="mx-auto max-w-6xl px-5 py-8 sm:px-8">
