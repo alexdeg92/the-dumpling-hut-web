@@ -165,8 +165,11 @@ export type ProteinKey = "pork" | "lamb" | "chicken" | "beef" | "veggie";
 export type DietKey = "vegetarian" | "vegan" | "spicy" | "signature";
 
 export type MenuSize = {
-  count: number;
+  /** Stable id from the database (for React keys when counts repeat). */
+  id?: number;
+  count?: number;
   price: number;
+  label?: Partial<Record<Lang, string>>;
 };
 
 /** Tablet menu tiers: Small (10) and Regular (16). */

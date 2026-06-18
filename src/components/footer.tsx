@@ -148,6 +148,14 @@ export function Footer() {
           <p className="hidden shrink-0 sm:block">{t.footer.tag}</p>
           <Seal text="鲜" className="size-8 shrink-0 text-[0.75rem] sm:size-10 sm:text-[0.85rem]" />
         </div>
+        <div className="border-t border-[var(--color-cream)]/5 px-5 py-3 text-center md:px-8">
+          <Link
+            href={`/${lang}/admin/login`}
+            className="text-[0.65rem] font-semibold text-[var(--color-cream)]/40 transition hover:text-[var(--color-gold)] sm:text-xs"
+          >
+            Staff login
+          </Link>
+        </div>
       </div>
     </footer>
   );

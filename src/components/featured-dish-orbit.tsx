@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getItemSizes, menuItems, type MenuItem } from "@/lib/content";
+import { getItemSizes, type MenuItem } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 
 const ORBIT_DISH_IDS = [
@@ -16,7 +16,7 @@ const ORBIT_DISH_IDS = [
 
 const CARD_SIZE = "clamp(6.25rem, 30vw, 10.5rem)";
 
-function getOrbitDishes(): MenuItem[] {
+function getOrbitDishes(menuItems: MenuItem[]): MenuItem[] {
   return ORBIT_DISH_IDS.map((id) => menuItems.find((m) => m.id === id)).filter(
     (item): item is MenuItem => item != null,
   );
@@ -27,9 +27,9 @@ function stackTilt(index: number, count: number): number {
   return (index - mid) * 9;
 }
 
-export function FeaturedDishOrbit() {
+export function FeaturedDishOrbit({ menuItems }: { menuItems: MenuItem[] }) {
   const { lang, t } = useI18n();
-  const items = getOrbitDishes();
+  const items = getOrbitDishes(menuItems);
   const count = items.length;
   const step = 360 / count;
 

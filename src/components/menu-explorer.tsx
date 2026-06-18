@@ -4,15 +4,17 @@
    the full-res file (see ProgressiveImage), so we use <img> over next/image. */
 /* eslint-disable @next/next/no-img-element */
 
+import { createPortal } from "react-dom";
 import { useEffect, useMemo, useState } from "react";
 import {
   dishThumb,
   getItemMinPrice,
   getItemSizes,
-  menuItems,
   restaurant,
   type CookKey,
+  type Lang,
   type MenuItem,
+  type MenuSize,
 } from "@/lib/content";
 import { useI18n } from "@/lib/i18n";
 import { CategoryCarousel } from "@/components/category-carousel";
@@ -22,12 +24,20 @@ type CookTab = "all" | CookKey;
 
 const COOK_TABS: CookTab[] = ["all", "dumpling", "veg", "side"];
 
-// stable "featured" order = source order, signatures gently floated up
-const featuredRank = new Map(menuItems.map((m, i) => [m.id, i]));
+function sizeSubtitle(size: MenuSize, lang: Lang, countLabel: string): string {
+  if (size.label?.[lang]) return size.label[lang]!;
+  if (size.count != null) return `${size.count} ${countLabel}`;
+  return "";
+}
 
-export function MenuExplorer() {
+export function MenuExplorer({ items }: { items: MenuItem[] }) {
   const { t } = useI18n();
   const m = t.menu;
+
+  const featuredRank = useMemo(
+    () => new Map(items.map((item, index) => [item.id, index])),
+    [items],
+  );
 
   const [cook, setCook] = useState<CookTab>("all");
   const [active, setActive] = useState<MenuItem | null>(null);
@@ -37,7 +47,7 @@ export function MenuExplorer() {
   };
 
   const filtered = useMemo(() => {
-    const list = menuItems.filter((item) => {
+    const list = items.filter((item) => {
       if (cook !== "all" && item.cook !== cook) return false;
       return true;
     });
@@ -45,7 +55,7 @@ export function MenuExplorer() {
     return [...list].sort(
       (a, b) => (featuredRank.get(a.id) ?? 0) - (featuredRank.get(b.id) ?? 0),
     );
-  }, [cook]);
+  }, [cook, featuredRank, items]);
 
   const hasFilters = cook !== "all";
   const count = filtered.length;
@@ -148,7 +158,7 @@ function DishCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
           <SpiceMeter level={item.spice} />
           {sizes.length > 0 ? (
             <span className="ml-auto text-[0.65rem] font-bold text-[var(--color-ink)]/45 sm:text-xs">
-              {sizes.map((size) => size.count).join(" · ")}
+              {sizes.map((size) => sizeSubtitle(size, lang, t.menu.countLabel) || String(size.price)).join(" · ")}
             </span>
           ) : (
             item.count != null && (
@@ -182,7 +192,9 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
     };
   }, [onClose]);
 
-  return (
+  // Portal to <body> so the fixed overlay escapes <main>'s stacking context
+  // (main is `relative z-10`) and reliably covers the nav and footer.
+  return createPortal(
     <div
       className="modal-backdrop fixed inset-0 z-[100] flex items-end justify-center bg-[var(--color-ink)]/55 p-0 backdrop-blur-sm sm:items-center sm:p-6"
       onClick={onClose}
@@ -221,17 +233,19 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
             <h3 className="font-display mt-2 text-2xl sm:mt-3 sm:text-3xl">{item.name[lang]}</h3>
             <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-3 sm:gap-3">
               {sizes.length > 0 ? (
-                sizes.map((size) => (
+                sizes.map((size, index) => (
                   <span
-                    key={size.count}
+                    key={size.id ?? `tier-${index}`}
                     className="inline-flex flex-wrap items-center gap-2 rounded-full bg-[var(--color-lacquer)]/35 px-2 py-1 sm:px-2.5"
                   >
                     <span className="rounded-full bg-[var(--color-gold)] px-3 py-1 text-sm font-extrabold text-[var(--color-ink)]">
                       ${size.price.toFixed(2)}
                     </span>
-                    <span className="text-sm font-semibold text-[var(--color-cream)]/80">
-                      {size.count} {t.menu.countLabel}
-                    </span>
+                    {sizeSubtitle(size, lang, t.menu.countLabel) && (
+                      <span className="text-sm font-semibold text-[var(--color-cream)]/80">
+                        {sizeSubtitle(size, lang, t.menu.countLabel)}
+                      </span>
+                    )}
                   </span>
                 ))
               ) : (
@@ -283,7 +297,8 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           </a>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
